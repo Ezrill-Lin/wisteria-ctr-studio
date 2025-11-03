@@ -3,6 +3,7 @@ Wisteria-AI-CTR-Studio.zip
 
 # Python cache files
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 SiliconSampling/data/data.parquet
