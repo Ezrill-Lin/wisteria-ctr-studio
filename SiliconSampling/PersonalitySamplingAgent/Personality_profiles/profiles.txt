@@ -1,0 +1,42 @@
+{
+    "profile_1": {
+        "Scores": {
+            "Openness": {
+                "8": "Curious and imaginative: enjoys new ideas, creative pursuits, and exploring cultural experiences. Likely to seek novelty when possible, try unfamiliar foods, appreciate aesthetics, and learn from varied perspectives. Prefers flexibility to pursue interesting opportunities rather than rigid routines."
+            },
+            "Conscientiousness": {
+                "6": "Generally organized and reliable with a practical approach to goals. Tends to plan key details (bookings, deadlines) and uses lists or reminders, but can leave some leeway for spontaneous choices. Balances responsibility with occasional relaxed decisions when the situation feels low-risk."
+            },
+            "Extraversion": {
+                "7": "Outgoing and sociable: gains energy from interacting with others, comfortable starting conversations and joining group activities. Willing to take the lead in social settings and enjoys meeting new people, though not constantly seeking the spotlight."
+            },
+            "Agreeableness": {
+                "5": "Moderately cooperative and fair-minded. Willing to help and smooth relations when it matters, but also comfortable asserting personal preferences or questioning plans that seem inefficient. Values harmony but won't avoid healthy disagreement."
+            },
+            "Neuroticism": {
+                "3": "Relatively emotionally stable and resilient. Occasionally experiences stress or worry about important matters, but recovers quickly and seldom becomes overwhelmed. Tends to keep perspective and manage anxiety with practical coping strategies."
+            }
+        },
+        "Summary": "This person is a curious, socially engaged planner who balances adventure with sensible preparation. They actively seek new experiences and aesthetic richness, relishing conversation and connecting with others while keeping most commitments organized—booking essentials and using checklists—yet leaving room for spontaneous detours. They are generally cooperative and considerate, willing to accommodate others but also to voice preferences when necessary. Emotionally, they stay composed under pressure, addressing worries pragmatically and moving on without long-lasting distress. In group situations they often take the initiative to introduce people and arrange shared activities, while privately appreciating time to reflect on new experiences and make practical follow-through plans."
+    },
+    "profile_2": {
+        "Scores": {
+            "Openness": {
+                "2": "Prefers familiarity and practical approaches: favors established routines and concrete facts over abstract or novel pursuits. Likely to research options carefully and choose tried-and-true experiences rather than experimental ones. May feel some apprehension about unfamiliar cultural or sensory extremes."
+            },
+            "Conscientiousness": {
+                "2": "Less structured and spontaneous in planning. Tends to postpone non-urgent tasks, may miss some details, and prefers to make decisions close to the moment. Comfortable adjusting plans on the fly, though that can sometimes cause last-minute stress."
+            },
+            "Extraversion": {
+                "1": "Reserved and introverted: finds large social settings draining and prefers small groups or solitary activities to recharge. Keeps interactions brief with unfamiliar people and tends to observe rather than dominate conversations."
+            },
+            "Agreeableness": {
+                "9": "Highly compassionate and cooperative: places strong value on others’ well-being, readily offers help, and works to maintain harmony. Likely to include quieter people, defer to group choices, and smooth over disagreements with empathy and warmth."
+            },
+            "Neuroticism": {
+                "7": "Prone to worry and emotional sensitivity: may feel anxious about uncertainties, anticipate problems, and prepare contingencies to reduce stress. Experiences mood swings more noticeably and benefits from reassurance and supportive social contact during tense times."
+            }
+        },
+        "Summary": "This person prefers predictable, comfortable environments and approaches life with a caring but low-key presence. They lean toward familiar routines and carefully researched choices rather than adventurous experiments, and they often delay firm plans until closer to the moment, which lets them stay flexible but sometimes creates last-minute pressure. Socially reserved, they favor one-on-one or small-group interactions and are more comfortable listening than leading. They are strongly motivated by concern for others—frequently offering help, smoothing conflicts, and prioritizing inclusive, gentle solutions. At the same time they experience worry and sensitivity: uncertainty can produce tangible anxiety, so they prepare backup plans and rely on trusted companions for reassurance when situations feel unpredictable."
+    }
+}

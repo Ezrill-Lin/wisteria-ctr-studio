@@ -6,7 +6,8 @@ for creating diverse demographic profiles for research and simulation purposes.
 
 Main Components:
 - sampler: Core sampling utilities and identity bank loading
-- data: Identity bank configurations and demographic distributions
+- data: Identity bank configurations and demographic distributions  
+- PersonalitySamplingAgent: Big Five personality profile generation and testing
 """
 
 from .sampler import load_identity_bank, sample_identities
