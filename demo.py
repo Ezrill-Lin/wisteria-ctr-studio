@@ -91,17 +91,17 @@ def main(args=None):
         if args.auto_model:
             if args.population_size < 5000:
                 model = "llama-70b"      # High accuracy for small tests
-                print(f"📊 Auto-selected Llama 70B for {args.population_size:,} profiles (high accuracy)")
+                print(f"[Auto-selected] Llama 70B for {args.population_size:,} profiles (high accuracy)")
             else:
                 model = "llama-8b"       # Cost-effective for large scale
-                print(f"📊 Auto-selected Llama 8B for {args.population_size:,} profiles (cost-effective)")
+                print(f"[Auto-selected] Llama 8B for {args.population_size:,} profiles (cost-effective)")
         else:
             model = args.runpod_model
         
-        # Adjust batch size for RunPod (larger batches are more efficient)
-        batch_size = max(args.batch_size, 100) if args.population_size > 1000 else args.batch_size
+        # Use the specified batch size directly
+        batch_size = args.batch_size
         
-        print(f"🏃 Using RunPod with {model} model (batch size: {batch_size})")
+        print(f"[RunPod] Using {model} model (batch size: {batch_size})")
         
         predictor = LLMClickPredictor(
             provider=args.provider,
@@ -138,13 +138,25 @@ def main(args=None):
     runtime = end_time - start_time
     
     ctr = compute_ctr(clicks)
-    model_provider = args.provider if not args.use_mock else "None"
-    model = args.model if not args.use_mock else "mock model (none LLM)"
+    
+    # Check if fallback to mock was used during prediction
+    used_fallback = hasattr(predictor, '_client') and hasattr(predictor._client, 'used_fallback') and predictor._client.used_fallback
+    
+    model_provider = args.provider if not args.use_mock and not used_fallback else "mock"
+    
+    # Get the actual model name used
+    if args.use_mock or used_fallback:
+        model_name = "mock model (no LLM)"
+    elif args.provider == "runpod":
+        # For RunPod, use the actual model that was configured
+        model_name = predictor._client.model if hasattr(predictor, '_client') and hasattr(predictor._client, 'model') else args.runpod_model
+    else:
+        model_name = args.model
     
     print(f"Sampled identities: {len(identities)}")
     print(f"Ad platform: {args.ad_platform}")
     print(f"Batch size: {args.batch_size}")
-    print(f"Model Provider: {model_provider} | Model: {model}")
+    print(f"Model Provider: {model_provider} | Model: {model_name}")
     print(f"Processing mode: {'synchronous' if args.use_sync else 'asynchronous parallel'}")
     print(f"Clicks: {sum(clicks)} | Non-clicks: {len(clicks) - sum(clicks)}")
     print(f"CTR: {ctr:.4f}")

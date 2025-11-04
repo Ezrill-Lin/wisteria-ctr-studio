@@ -215,6 +215,7 @@ class BaseLLMClient(ABC):
         self.api_key = api_key
         self.provider_name = "base"
         self.env_key_name = "API_KEY"
+        self.used_fallback = False  # Track if mock fallback was used
     
     def has_api_key(self) -> bool:
         """Check if API key is available."""
@@ -227,6 +228,7 @@ class BaseLLMClient(ABC):
     
     def _fallback_to_mock(self, ad_text: str, chunk: List[Dict[str, Any]], reason: str) -> List[int]:
         """Fallback to mock prediction with logging."""
+        self.used_fallback = True  # Mark that fallback was used
         _print_fallback(f"{reason}; using mock for this chunk.")
         return _mock_predict(ad_text, chunk)
     
@@ -234,6 +236,7 @@ class BaseLLMClient(ABC):
         """Parse and validate LLM response."""
         arr = _try_parse_json_array(content or "")
         if arr is None:
+            self.used_fallback = True  # Mark that fallback was used
             _print_fallback(f"{provider_name} output parse failed; using mock for this chunk.")
             arr = _mock_predict(ad_text, chunk)
         

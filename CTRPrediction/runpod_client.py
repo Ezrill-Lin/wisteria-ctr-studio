@@ -28,14 +28,14 @@ class RunPodClient(BaseLLMClient):
                  api_key: Optional[str] = None,
                  endpoint_id: Optional[str] = None,
                  base_url: Optional[str] = None,
-                 timeout: int = 300):
+                 timeout: int = 5):
         """Initialize RunPod client.
         
         Args:
             model: Model name (llama-8b, llama-70b).
             api_key: RunPod API key. If None, uses RUNPOD_API_KEY env var.
             endpoint_id: RunPod endpoint ID for serverless.
-            timeout: Request timeout in seconds.
+            timeout: Request timeout in seconds (default: 30).
         """
         super().__init__(model, api_key)
         
@@ -46,7 +46,7 @@ class RunPodClient(BaseLLMClient):
         # Get API key
         self.runpod_api_key = api_key or os.getenv("RUNPOD_API_KEY")
         if not self.runpod_api_key:
-            print("⚠️ RunPod API key not found. Will use mock predictions.")
+            print("[WARNING] RunPod API key not found. Will use mock predictions.")
         
         # Model configurations
         self.model_configs = {
@@ -78,14 +78,14 @@ class RunPodClient(BaseLLMClient):
 
         # Decide mode (prefer HTTP if base URL provided)
         self.mode = "http" if self.http_base_url else "jobs"
-        print(f"🏃 RunPod {model} configured: {'HTTP (OpenAI)' if self.mode == 'http' else 'serverless jobs'} mode")
+        print(f"[RunPod] {model} configured: {'HTTP (OpenAI)' if self.mode == 'http' else 'serverless jobs'} mode")
     
     def _get_endpoint_id(self) -> Optional[str]:
         """Get endpoint ID from environment variables."""
         config = self.model_configs[self.model]
         endpoint_id = os.getenv(config["endpoint_var"])
         if not endpoint_id:
-            print(f"⚠️ {config['endpoint_var']} not set. Set up endpoints first.")
+            print(f"[WARNING] {config['endpoint_var']} not set. Set up endpoints first.")
         return endpoint_id
     
     def _configure_jobs_url(self) -> str:
@@ -113,22 +113,17 @@ class RunPodClient(BaseLLMClient):
             return await self._predict_http_async(ad_text, profiles, ad_platform)
 
         if not self.has_api_key() or "mock://" in self.base_url:
-            # Fallback to mock prediction
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            return self._fallback_to_mock(ad_text, profiles, "RunPod API key not configured")
         
         try:
             prompt = self._build_prompt(ad_text, profiles, ad_platform)
             
-            response_text = await self._predict_serverless(prompt)
+            response_text = await self._predict_serverless(prompt, len(profiles))
             
             return self._parse_and_validate_response(response_text, profiles, ad_text, "RunPod Jobs")
             
         except Exception as e:
-            print(f"[RunPod Error] {str(e)}")
-            # Fallback to mock prediction
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            return self._fallback_to_mock(ad_text, profiles, f"RunPod Jobs API error ({type(e).__name__}: {str(e)})")
     
     def predict_chunk(self, ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str = "facebook") -> List[int]:
         """Predict clicks for a chunk of profiles synchronously."""
@@ -137,31 +132,29 @@ class RunPodClient(BaseLLMClient):
             return self._predict_http_sync(ad_text, profiles, ad_platform)
 
         if not self.has_api_key() or "mock://" in self.base_url:
-            # Fallback to mock prediction
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            return self._fallback_to_mock(ad_text, profiles, "RunPod API key not configured")
         
         try:
             prompt = self._build_prompt(ad_text, profiles, ad_platform)
             
-            response_text = self._predict_serverless_sync(prompt)
+            response_text = self._predict_serverless_sync(prompt, len(profiles))
             
             return self._parse_and_validate_response(response_text, profiles, ad_text, "RunPod Jobs")
             
         except Exception as e:
-            print(f"[RunPod Error] {str(e)}")
-            # Fallback to mock prediction
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            return self._fallback_to_mock(ad_text, profiles, f"RunPod Jobs API error ({type(e).__name__}: {str(e)})")
     
-    async def _predict_serverless(self, prompt: str) -> str:
+    async def _predict_serverless(self, prompt: str, batch_size: int) -> str:
         """Make async request to RunPod serverless endpoint."""
         config = self.model_configs[self.model]
+        
+        # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
+        max_tokens = int(batch_size * 1.5) + 10  # +10 for safety margin
         
         payload = {
             "input": {
                 "prompt": prompt,
-                "max_tokens": config["max_tokens"],
+                "max_tokens": max_tokens,
                 "temperature": config["temperature"],
                 "model": config["model_name"]
             }
@@ -192,14 +185,17 @@ class RunPodClient(BaseLLMClient):
                 else:
                     raise Exception(f"RunPod job failed: {result}")
     
-    def _predict_serverless_sync(self, prompt: str) -> str:
+    def _predict_serverless_sync(self, prompt: str, batch_size: int) -> str:
         """Make sync request to RunPod serverless endpoint."""
         config = self.model_configs[self.model]
+        
+        # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
+        max_tokens = int(batch_size * 1.5) + 10  # +10 for safety margin
         
         payload = {
             "input": {
                 "prompt": prompt,
-                "max_tokens": config["max_tokens"],
+                "max_tokens": max_tokens,
                 "temperature": config["temperature"],
                 "model": config["model_name"]
             }
@@ -239,42 +235,48 @@ class RunPodClient(BaseLLMClient):
 
     def _predict_http_sync(self, ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str) -> List[int]:
         if not self.http_base_url:
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            return self._fallback_to_mock(ad_text, profiles, "RunPod HTTP base URL not configured")
         prompt = self._build_prompt(ad_text, profiles, ad_platform)
         try:
             from openai import OpenAI
-            client = OpenAI(api_key=os.getenv("RUNPOD_HTTP_API_KEY", "dummy"), base_url=self.http_base_url)
+            # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
+            max_tokens = int(len(profiles) * 1.5) + 10  # +10 for safety margin
+            # Use RunPod API key for authentication
+            api_key = self.runpod_api_key or os.getenv("RUNPOD_API_KEY", "dummy")
+            client = OpenAI(api_key=api_key, base_url=self.http_base_url, timeout=self.timeout)
             resp = client.chat.completions.create(
                 model=self.model_configs[self.model]["model_name"],
                 messages=self._create_messages(prompt),
                 temperature=self.model_configs[self.model]["temperature"],
-                max_tokens=self.model_configs[self.model]["max_tokens"],
+                max_tokens=max_tokens,
             )
             content = resp.choices[0].message.content
-        except Exception:
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            
+        except Exception as e:
+            return self._fallback_to_mock(ad_text, profiles, f"RunPod HTTP sync error ({type(e).__name__}: {str(e)})")
         return self._parse_and_validate_response(content, profiles, ad_text, "RunPod HTTP")
 
     async def _predict_http_async(self, ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str) -> List[int]:
         if not self.http_base_url:
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            return self._fallback_to_mock(ad_text, profiles, "RunPod HTTP base URL not configured")
         prompt = self._build_prompt(ad_text, profiles, ad_platform)
         try:
             from openai import AsyncOpenAI
-            client = AsyncOpenAI(api_key=os.getenv("RUNPOD_HTTP_API_KEY", "dummy"), base_url=self.http_base_url)
+            # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
+            max_tokens = int(len(profiles) * 1.5) + 10  # +10 for safety margin
+            # Use RunPod API key for authentication
+            api_key = self.runpod_api_key or os.getenv("RUNPOD_API_KEY", "dummy")
+            client = AsyncOpenAI(api_key=api_key, base_url=self.http_base_url, timeout=self.timeout)
             resp = await client.chat.completions.create(
                 model=self.model_configs[self.model]["model_name"],
                 messages=self._create_messages(prompt),
                 temperature=self.model_configs[self.model]["temperature"],
-                max_tokens=self.model_configs[self.model]["max_tokens"],
+                max_tokens=max_tokens,
             )
             content = resp.choices[0].message.content
-        except Exception:
-            from .base_client import _mock_predict
-            return _mock_predict(ad_text, profiles)
+            
+        except Exception as e:
+            return self._fallback_to_mock(ad_text, profiles, f"RunPod HTTP async error ({type(e).__name__}: {str(e)})")
         return self._parse_and_validate_response(content, profiles, ad_text, "RunPod HTTP")
     
     def get_model_info(self) -> Dict[str, Any]:
