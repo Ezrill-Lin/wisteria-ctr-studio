@@ -66,14 +66,14 @@ def main(args=None):
         parser.add_argument("--population-size", type=int, default=1000, help="Number of identities to sample")
         parser.add_argument("--identity-bank", default=os.path.join("SiliconSampling", "data", "identity_bank.json"), help="Path to identity bank JSON")
         parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-        parser.add_argument("--provider", choices=["openai", "deepseek", "vllm", "mock"], 
+        parser.add_argument("--provider", choices=["openai", "deepseek", "runpod", "mock"], 
                            default="openai", help="LLM provider (default: openai)")
         parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name")
-        parser.add_argument("--vllm-model", choices=["llama-8b", "llama-70b"], 
-                           default="llama-8b", help="vLLM model selection (llama-8b, llama-70b)")
-        parser.add_argument("--vllm-url", default=None, help="vLLM server URL (optional)")
+        parser.add_argument("--runpod-model", choices=["llama-8b", "llama-70b"], 
+                           default="llama-8b", help="RunPod model selection (llama-8b, llama-70b)")
+        parser.add_argument("--runpod-endpoint", help="RunPod endpoint ID for serverless")
         parser.add_argument("--auto-model", action="store_true", 
-                           help="Auto-select vLLM model based on population size")
+                           help="Auto-select RunPod model based on population size")
         parser.add_argument("--batch-size", type=int, default=50, help="Batch size per LLM call")
         parser.add_argument("--use-mock", action="store_true", help="Force mock LLM (no network)")
         parser.add_argument("--use-sync", action="store_true", help="Use synchronous sequential processing instead of async parallel")
@@ -85,8 +85,8 @@ def main(args=None):
     bank = load_identity_bank(args.identity_bank)
     identities = sample_identities(args.population_size, bank, seed=args.seed)
 
-    # Handle vLLM-specific configuration
-    if args.provider == "vllm":
+    # Handle RunPod-specific configuration
+    if args.provider == "runpod":
         # Auto-select model based on population size if requested
         if args.auto_model:
             if args.population_size < 5000:
@@ -96,12 +96,12 @@ def main(args=None):
                 model = "llama-8b"       # Cost-effective for large scale
                 print(f"📊 Auto-selected Llama 8B for {args.population_size:,} profiles (cost-effective)")
         else:
-            model = args.vllm_model
+            model = args.runpod_model
         
-        # Adjust batch size for vLLM (larger batches are more efficient)
+        # Adjust batch size for RunPod (larger batches are more efficient)
         batch_size = max(args.batch_size, 100) if args.population_size > 1000 else args.batch_size
         
-        print(f"🚀 Using vLLM with {model} model (batch size: {batch_size})")
+        print(f"🏃 Using RunPod with {model} model (batch size: {batch_size})")
         
         predictor = LLMClickPredictor(
             provider=args.provider,
@@ -110,7 +110,7 @@ def main(args=None):
             use_mock=args.use_mock,
             use_async=True,  # Keep this True since we handle sync/async at call level
             api_key=args.api_key,
-            vllm_base_url=args.vllm_url
+            runpod_endpoint_id=args.runpod_endpoint
         )
     else:
         # Standard configuration for other providers

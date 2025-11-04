@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: vllm
-  labels:
-    name: vllm
-    purpose: llm-inference

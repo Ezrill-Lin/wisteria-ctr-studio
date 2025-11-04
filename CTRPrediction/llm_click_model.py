@@ -7,7 +7,7 @@ from typing import Any, Dict, Iterable, List, Optional
 
 from .openai_client import OpenAIClient
 from .deepseek_client import DeepSeekClient
-from .vllm_client import VLLMClient
+from .runpod_client import RunPodClient
 # from .template_client import TemplateClient  # TODO: Add other clients as needed
 
 
@@ -29,7 +29,7 @@ def _chunked(seq: List[Any], n: int) -> Iterable[List[Any]]:
 CLIENT_REGISTRY = {
     "openai": OpenAIClient,
     "deepseek": DeepSeekClient,
-    "vllm": VLLMClient,
+    "runpod": RunPodClient,  # RunPod for distributed inference with serverless scaling
     # "template": TemplateClient,  # TODO: Add other clients here
 }
 
@@ -72,13 +72,13 @@ class LLMClickPredictor:
     registering it in CLIENT_REGISTRY.
 
     Attributes:
-        provider: LLM provider identifier (e.g., "openai", "deepseek", "vllm").
+        provider: LLM provider identifier (e.g., "openai", "deepseek", "runpod").
         model: Model name for the provider.
         batch_size: Number of profiles per request.
         use_mock: If True, always use the mock predictor.
         use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
-        vllm_base_url: Optional vLLM server URL (only used for vllm provider).
+        runpod_endpoint_id: RunPod endpoint ID for serverless deployments.
     """
     provider: str = "openai"
     model: str = "gpt-4o-mini"
@@ -86,7 +86,7 @@ class LLMClickPredictor:
     use_mock: bool = False
     use_async: bool = True
     api_key: Optional[str] = None
-    vllm_base_url: Optional[str] = None
+    runpod_endpoint_id: Optional[str] = None
 
     def __post_init__(self):
         """Initialize the appropriate client after dataclass creation."""
@@ -95,12 +95,12 @@ class LLMClickPredictor:
         
         client_class = CLIENT_REGISTRY[self.provider]
         
-        # Handle vLLM-specific initialization
-        if self.provider == "vllm":
-            self._client = client_class(
+        # Handle RunPod-specific initialization
+        if self.provider == "runpod":
+            return RunPodClient(
                 model=self.model,
                 api_key=self.api_key,
-                base_url=self.vllm_base_url
+                endpoint_id=self.runpod_endpoint_id
             )
         else:
             # Standard initialization for other providers
