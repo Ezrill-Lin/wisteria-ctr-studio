@@ -1,0 +1,43 @@
+{
+  "name": "Wisteria CTR Llama 70B",
+  "image": {
+    "repository": "Ezrill-Lin/Wisteria-CTR-Studio", 
+    "tag": "main"
+  },
+  "readme": "# Wisteria CTR Studio - Llama 70B\n\nThis template deploys Llama 3.1 70B Instruct model using vLLM for OpenAI-compatible API.\n\n## Usage\n\n- **Endpoint**: Your RunPod endpoint URL\n- **Model**: meta-llama/Llama-3.1-70B-Instruct\n- **API**: OpenAI-compatible\n- **Port**: 8000\n- **GPU**: Requires A100 or H100 (tensor parallel)\n\n## Example Request\n\n```bash\ncurl -X POST \"https://your-endpoint.runpod.net/v1/chat/completions\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"meta-llama/Llama-3.1-70B-Instruct\",\n    \"messages\": [{\"role\": \"user\", \"content\": \"Hello!\"}],\n    \"max_tokens\": 100\n  }'\n```",
+  "docker": {
+    "file": "deploy/runpod/Dockerfile",
+    "buildContext": ".",
+    "buildArgs": {}
+  },
+  "container": {
+    "image": "vllm/vllm-openai:latest",
+    "registryAuth": false,
+    "env": [
+      {
+        "key": "HF_HOME",
+        "value": "/runpod-volume/cache"
+      },
+      {
+        "key": "TRANSFORMERS_CACHE",
+        "value": "/runpod-volume/cache"
+      },
+      {
+        "key": "MODEL_NAME", 
+        "value": "meta-llama/Llama-3.1-70B-Instruct"
+      }
+    ],
+    "startScript": "bash deploy/runpod/start-llama-70b.sh",
+    "ports": "8000/http",
+    "volumePath": "/runpod-volume",
+    "volumeSize": 150
+  },
+  "serverless": {
+    "gpuTypes": ["A100_PCIE_40GB", "A100_SXM4_40GB", "H100_PCIE", "H100_SXM5"],
+    "workersMin": 0,
+    "workersMax": 1,
+    "idleTimeout": 300,
+    "scaleType": "QUEUE_DELAY", 
+    "queueDelay": 5
+  }
+}
