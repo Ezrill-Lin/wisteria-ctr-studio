@@ -66,8 +66,14 @@ def main(args=None):
         parser.add_argument("--population-size", type=int, default=1000, help="Number of identities to sample")
         parser.add_argument("--identity-bank", default=os.path.join("SiliconSampling", "data", "identity_bank.json"), help="Path to identity bank JSON")
         parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-        parser.add_argument("--provider", default="openai", help="LLM provider (default: openai)")
+        parser.add_argument("--provider", choices=["openai", "deepseek", "vllm", "mock"], 
+                           default="openai", help="LLM provider (default: openai)")
         parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name")
+        parser.add_argument("--vllm-model", choices=["llama-8b", "llama-70b"], 
+                           default="llama-8b", help="vLLM model selection (llama-8b, llama-70b)")
+        parser.add_argument("--vllm-url", default=None, help="vLLM server URL (optional)")
+        parser.add_argument("--auto-model", action="store_true", 
+                           help="Auto-select vLLM model based on population size")
         parser.add_argument("--batch-size", type=int, default=50, help="Batch size per LLM call")
         parser.add_argument("--use-mock", action="store_true", help="Force mock LLM (no network)")
         parser.add_argument("--use-sync", action="store_true", help="Use synchronous sequential processing instead of async parallel")
@@ -79,14 +85,43 @@ def main(args=None):
     bank = load_identity_bank(args.identity_bank)
     identities = sample_identities(args.population_size, bank, seed=args.seed)
 
-    predictor = LLMClickPredictor(
-        provider=args.provider,
-        model=args.model,
-        batch_size=args.batch_size,
-        use_mock=args.use_mock,
-        use_async=True,  # Keep this True since we handle sync/async at call level
-        api_key=args.api_key,
-    )
+    # Handle vLLM-specific configuration
+    if args.provider == "vllm":
+        # Auto-select model based on population size if requested
+        if args.auto_model:
+            if args.population_size < 5000:
+                model = "llama-70b"      # High accuracy for small tests
+                print(f"📊 Auto-selected Llama 70B for {args.population_size:,} profiles (high accuracy)")
+            else:
+                model = "llama-8b"       # Cost-effective for large scale
+                print(f"📊 Auto-selected Llama 8B for {args.population_size:,} profiles (cost-effective)")
+        else:
+            model = args.vllm_model
+        
+        # Adjust batch size for vLLM (larger batches are more efficient)
+        batch_size = max(args.batch_size, 100) if args.population_size > 1000 else args.batch_size
+        
+        print(f"🚀 Using vLLM with {model} model (batch size: {batch_size})")
+        
+        predictor = LLMClickPredictor(
+            provider=args.provider,
+            model=model,
+            batch_size=batch_size,
+            use_mock=args.use_mock,
+            use_async=True,  # Keep this True since we handle sync/async at call level
+            api_key=args.api_key,
+            vllm_base_url=args.vllm_url
+        )
+    else:
+        # Standard configuration for other providers
+        predictor = LLMClickPredictor(
+            provider=args.provider,
+            model=args.model,
+            batch_size=args.batch_size,
+            use_mock=args.use_mock,
+            use_async=True,  # Keep this True since we handle sync/async at call level
+            api_key=args.api_key,
+        )
 
     # Start timing the prediction process
     start_time = time.time()
@@ -128,11 +163,11 @@ if __name__ == "__main__":
         args = Args()
         args.ad = '''Discover the ultimate travel experience with our exclusive vacation packages! Book now and save big on your next adventure.'''
         args.ad_platform = "facebook"
-        args.population_size = 100
-        args.batch_size = 10
+        args.population_size = 1000
+        args.batch_size = 1
         args.provider = "deepseek"  
         args.model = "deepseek-chat" 
-        args.use_mock = False  
+        args.use_mock = False
         args.use_sync = False
         args.identity_bank = os.path.join("SiliconSampling", "data", "identity_bank.json")
         args.seed = 42

@@ -1,0 +1,155 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-router
+  namespace: vllm
+  labels:
+    app: model-router
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: model-router
+  template:
+    metadata:
+      labels:
+        app: model-router
+    spec:
+      containers:
+      - name: router
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 30
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: model-router-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: model-router-config
+  namespace: vllm
+data:
+  nginx.conf: |
+    events {
+        worker_connections 1024;
+    }
+    
+    http {
+        upstream llama-8b {
+            server vllm-llama-8b:8000;
+        }
+        
+        upstream llama-70b {
+            server vllm-llama-70b:8000;
+        }
+        
+        # Rate limiting
+        limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+        
+        server {
+            listen 80;
+            
+            # Health check endpoint
+            location /health {
+                access_log off;
+                return 200 "healthy\n";
+                add_header Content-Type text/plain;
+            }
+            
+            # Route to llama-8b
+            location /v1/llama-8b/ {
+                limit_req zone=api burst=20 nodelay;
+                rewrite ^/v1/llama-8b/(.*) /v1/$1 break;
+                proxy_pass http://llama-8b;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_timeout 300s;
+                proxy_read_timeout 300s;
+                proxy_send_timeout 300s;
+            }
+            
+            # Route to llama-70b
+            location /v1/llama-70b/ {
+                limit_req zone=api burst=10 nodelay;
+                rewrite ^/v1/llama-70b/(.*) /v1/$1 break;
+                proxy_pass http://llama-70b;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_timeout 600s;  # Longer timeout for 70B model
+                proxy_read_timeout 600s;
+                proxy_send_timeout 600s;
+            }
+            
+            # Default route to llama-8b for backward compatibility
+            location /v1/ {
+                limit_req zone=api burst=20 nodelay;
+                proxy_pass http://llama-8b;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_timeout 300s;
+                proxy_read_timeout 300s;
+                proxy_send_timeout 300s;
+            }
+        }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-router
+  namespace: vllm
+  labels:
+    app: model-router
+spec:
+  selector:
+    app: model-router
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vllm-ingress
+  namespace: vllm
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "vllm-ip"  # Optional: reserve static IP
+    networking.gke.io/managed-certificates: "vllm-ssl-cert"  # Optional: SSL cert
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: model-router
+            port:
+              number: 80

@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-llama-8b
+  namespace: vllm
+  labels:
+    app: vllm-server
+    model: llama-8b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm-server
+      model: llama-8b
+  template:
+    metadata:
+      labels:
+        app: vllm-server
+        model: llama-8b
+    spec:
+      # Schedule on T4 GPU nodes
+      nodeSelector:
+        gpu-type: t4
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Equal
+        value: present
+        effect: NoSchedule
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:latest
+        args:
+        - --model=meta-llama/Llama-3.1-8B-Instruct
+        - --served-model-name=llama-8b
+        - --host=0.0.0.0
+        - --port=8000
+        - --max-model-len=4096
+        - --trust-remote-code
+        ports:
+        - containerPort: 8000
+          name: http
+        resources:
+          requests:
+            nvidia.com/gpu: 1
+            memory: "8Gi"
+            cpu: "2"
+          limits:
+            nvidia.com/gpu: 1
+            memory: "16Gi"
+            cpu: "4"
+        env:
+        - name: CUDA_VISIBLE_DEVICES
+          value: "0"
+        - name: HF_HOME
+          value: "/tmp/huggingface"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 300  # Model loading takes time
+          periodSeconds: 30
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 600
+          periodSeconds: 60
+          timeoutSeconds: 30
+        volumeMounts:
+        - name: cache-volume
+          mountPath: /tmp/huggingface
+      volumes:
+      - name: cache-volume
+        emptyDir:
+          sizeLimit: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-llama-8b
+  namespace: vllm
+  labels:
+    app: vllm-server
+    model: llama-8b
+spec:
+  selector:
+    app: vllm-server
+    model: llama-8b
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: vllm-llama-8b-hpa
+  namespace: vllm
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: vllm-llama-8b
+  minReplicas: 0  # Scale to zero when not used
+  maxReplicas: 5  # Can scale up for high demand
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300  # Wait 5 minutes before scaling down
+    scaleUp:
+      stabilizationWindowSeconds: 60   # Scale up quickly

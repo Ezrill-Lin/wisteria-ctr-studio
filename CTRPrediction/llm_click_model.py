@@ -7,6 +7,7 @@ from typing import Any, Dict, Iterable, List, Optional
 
 from .openai_client import OpenAIClient
 from .deepseek_client import DeepSeekClient
+from .vllm_client import VLLMClient
 # from .template_client import TemplateClient  # TODO: Add other clients as needed
 
 
@@ -28,6 +29,7 @@ def _chunked(seq: List[Any], n: int) -> Iterable[List[Any]]:
 CLIENT_REGISTRY = {
     "openai": OpenAIClient,
     "deepseek": DeepSeekClient,
+    "vllm": VLLMClient,
     # "template": TemplateClient,  # TODO: Add other clients here
 }
 
@@ -70,12 +72,13 @@ class LLMClickPredictor:
     registering it in CLIENT_REGISTRY.
 
     Attributes:
-        provider: LLM provider identifier (e.g., "openai", "deepseek").
+        provider: LLM provider identifier (e.g., "openai", "deepseek", "vllm").
         model: Model name for the provider.
         batch_size: Number of profiles per request.
         use_mock: If True, always use the mock predictor.
         use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
+        vllm_base_url: Optional vLLM server URL (only used for vllm provider).
     """
     provider: str = "openai"
     model: str = "gpt-4o-mini"
@@ -83,6 +86,7 @@ class LLMClickPredictor:
     use_mock: bool = False
     use_async: bool = True
     api_key: Optional[str] = None
+    vllm_base_url: Optional[str] = None
 
     def __post_init__(self):
         """Initialize the appropriate client after dataclass creation."""
@@ -90,10 +94,20 @@ class LLMClickPredictor:
             raise ValueError(f"Unknown provider '{self.provider}'. Available providers: {list(CLIENT_REGISTRY.keys())}")
         
         client_class = CLIENT_REGISTRY[self.provider]
-        self._client = client_class(
-            model=self.model,
-            api_key=self.api_key
-        )
+        
+        # Handle vLLM-specific initialization
+        if self.provider == "vllm":
+            self._client = client_class(
+                model=self.model,
+                api_key=self.api_key,
+                base_url=self.vllm_base_url
+            )
+        else:
+            # Standard initialization for other providers
+            self._client = client_class(
+                model=self.model,
+                api_key=self.api_key
+            )
 
     def _use_real(self) -> bool:
         """Return True if real API calls should be used.
