@@ -35,47 +35,52 @@ Compare to:
    $env:RUNPOD_API_KEY="your-api-key-here"
    ```
 
-### **2. Automated Setup (Recommended)**
-Run the setup script to automatically create endpoints:
+### **2. Create Serverless vLLM Endpoints (Console)**
+Create OpenAI-compatible vLLM endpoints in the RunPod console:
 
-```bash
-# Linux/Mac
-cd deploy/runpod
-chmod +x setup-runpod.sh
-./setup-runpod.sh
+1. Open https://runpod.io/console/serverless and click "New Endpoint"
+2. Image: `vllm/vllm-openai:latest`
+3. Container start command:
 
+   python -m vllm.entrypoints.openai.api_server --model=meta-llama/Llama-3.1-8B-Instruct --host=0.0.0.0 --port=8000 --trust-remote-code --download-dir=/runpod-volume/cache
+
+   For 70B add: `--tensor-parallel-size=2`
+
+4. Ports: `8000/http`
+5. Volume Path: `/runpod-volume`; Size: `80 GB` (8B) / `150 GB` (70B)
+6. GPU: `RTX 4090` (8B) or `A100 40GB/H100` (70B)
+7. Workers: Min `0`, Max `3` (8B) or `1` (70B). Idle Timeout `300s`
+8. Create the endpoint and wait for the first cold start (initial model download)
+
+### **3. Configure Client URLs**
+After the endpoint is created, copy its HTTP base URL (looks like `https://xxxx-xxxx.runpod.run/v1`). Set these environment variables so the CTR predictor uses HTTP mode:
+
+```powershell
 # Windows PowerShell
-cd deploy/runpod
-.\setup-runpod.ps1
+$env:RUNPOD_LLAMA_8B_URL="https://<your-8b-endpoint>.runpod.run/v1"
+$env:RUNPOD_LLAMA_70B_URL="https://<your-70b-endpoint>.runpod.run/v1"
+# Optional single override
+# $env:RUNPOD_BASE_URL="https://<endpoint>.runpod.run/v1"
 ```
 
-The script will:
-- Create optimized vLLM endpoints for Llama 8B and 70B
-- Configure auto-scaling settings
-- Generate environment configuration files
+On Linux/Mac:
 
-### **3. Load Configuration**
 ```bash
-# Linux/Mac
-source deploy/runpod/runpod-config.env
-
-# Windows PowerShell
-. deploy/runpod/runpod-config.ps1
+export RUNPOD_LLAMA_8B_URL="https://<your-8b-endpoint>.runpod.run/v1"
+export RUNPOD_LLAMA_70B_URL="https://<your-70b-endpoint>.runpod.run/v1"
+# export RUNPOD_BASE_URL="https://<endpoint>.runpod.run/v1"
 ```
 
 ### **4. Test the Integration**
-```bash
-# Test basic functionality
-python deploy/runpod/test-runpod.py
-
-# Run demo with RunPod
+```powershell
+# Run demo with RunPod (8B)
 python demo.py --provider runpod --runpod-model llama-8b --ad "Test ad" --population-size 100
 ```
 
 ## 🎮 **Usage Examples**
 
 ### **Basic Usage**
-```bash
+```powershell
 # Cost-effective prediction with Llama 8B
 python demo.py --provider runpod --runpod-model llama-8b --ad "Special offer!" --population-size 10000
 
@@ -84,15 +89,16 @@ python demo.py --provider runpod --runpod-model llama-70b --ad "Investment advic
 ```
 
 ### **Auto Model Selection**
-```bash
+```powershell
 # Automatically choose model based on population size
 python demo.py --provider runpod --auto-model --ad "Tech gadgets" --population-size 25000
 ```
 
 ### **Always-On Pod (if available)**
-```bash
-# For consistent high-volume usage
-python demo.py --provider runpod --runpod-pod-type pod --runpod-url "https://your-pod.runpod.net" --ad "Marketing campaign"
+```powershell
+# For consistent high-volume usage (always-on pod)
+$env:RUNPOD_BASE_URL="https://your-pod.runpod.net/v1"
+python demo.py --provider runpod --runpod-model llama-8b --ad "Marketing campaign"
 ```
 
 ## ⚡ **Performance Expectations**
@@ -112,10 +118,11 @@ python demo.py --provider runpod --runpod-pod-type pod --runpod-url "https://you
 ## 📝 **Configuration Options**
 
 ### **Environment Variables**
-```bash
-export RUNPOD_API_KEY="your-api-key"                    # Required
-export RUNPOD_LLAMA_8B_ENDPOINT="endpoint-id-for-8b"    # Auto-set by setup
-export RUNPOD_LLAMA_70B_ENDPOINT="endpoint-id-for-70b"  # Auto-set by setup
+```powershell
+# Windows PowerShell
+$env:RUNPOD_LLAMA_8B_URL = "https://<your-8b-endpoint>.runpod.run/v1"
+$env:RUNPOD_LLAMA_70B_URL = "https://<your-70b-endpoint>.runpod.run/v1"
+# Optional: $env:RUNPOD_BASE_URL to override both
 ```
 
 ### **Command Line Options**
@@ -138,29 +145,22 @@ export RUNPOD_LLAMA_70B_ENDPOINT="endpoint-id-for-70b"  # Auto-set by setup
    ```
 
 2. **"Endpoint not configured"**
-   ```bash
-   # Run setup script to create endpoints
-   ./setup-runpod.sh
-   source runpod-config.env
-   ```
+   - Ensure RUNPOD_LLAMA_8B_URL or RUNPOD_BASE_URL is set to your endpoint HTTP base URL (ends with `/v1`)
 
 3. **Cold start timeout**
-   ```bash
-   # Increase timeout or use always-on pod
-   python demo.py --provider runpod --runpod-pod-type pod
-   ```
+   - First boot downloads the model; subsequent starts are 30–90s. Consider an always-on pod for latency-critical paths
 
 ## 🎯 **Migration from Previous Setup**
 
 The RunPod integration is a **drop-in replacement** for the previous distributed inference setup:
 
 ### **Before (Previous Setup)**
-```bash
+```powershell
 python demo.py --provider vllm --vllm-model llama-8b --vllm-url http://cluster-ip
 ```
 
 ### **After (RunPod)**
-```bash
+```powershell
 python demo.py --provider runpod --runpod-model llama-8b
 ```
 

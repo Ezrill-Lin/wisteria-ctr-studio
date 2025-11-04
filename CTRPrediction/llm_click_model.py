@@ -89,15 +89,18 @@ class LLMClickPredictor:
     runpod_endpoint_id: Optional[str] = None
 
     def __post_init__(self):
-        """Initialize the appropriate client after dataclass creation."""
+        """Initialize the appropriate client after dataclass creation.
+
+        Note: Must set self._client; do not return a different object here.
+        """
         if self.provider not in CLIENT_REGISTRY:
             raise ValueError(f"Unknown provider '{self.provider}'. Available providers: {list(CLIENT_REGISTRY.keys())}")
-        
+
         client_class = CLIENT_REGISTRY[self.provider]
-        
+
         # Handle RunPod-specific initialization
         if self.provider == "runpod":
-            return RunPodClient(
+            self._client = RunPodClient(
                 model=self.model,
                 api_key=self.api_key,
                 endpoint_id=self.runpod_endpoint_id

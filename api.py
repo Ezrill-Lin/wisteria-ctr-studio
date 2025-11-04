@@ -132,7 +132,7 @@ app = FastAPI(
 
 # Global configuration
 DEFAULT_IDENTITY_BANK_PATH = os.path.join("SiliconSampling", "data", "identity_bank.json")
-AVAILABLE_PROVIDERS = ["openai", "deepseek"]
+AVAILABLE_PROVIDERS = ["openai", "deepseek", "runpod"]
 AVAILABLE_PLATFORMS = ["facebook", "tiktok", "amazon"]
 
 # Google Cloud Storage configuration
@@ -324,7 +324,8 @@ def get_default_model(provider: str) -> str:
     """Get default model for a provider."""
     defaults = {
         "openai": "gpt-4o-mini",
-        "deepseek": "deepseek-chat"
+        "deepseek": "deepseek-chat",
+        "runpod": "llama-8b",
     }
     return defaults.get(provider, "gpt-4o-mini")
 
@@ -501,6 +502,11 @@ async def list_providers():
             "default_model": "deepseek-chat", 
             "description": "DeepSeek models",
             "env_var": "DEEPSEEK_API_KEY"
+        },
+        "runpod": {
+            "default_model": "llama-8b",
+            "description": "RunPod-hosted vLLM (OpenAI-compatible)",
+            "env_var": "RUNPOD_API_KEY (for serverless jobs), RUNPOD_LLAMA_8B_ENDPOINT / RUNPOD_LLAMA_70B_ENDPOINT (jobs) or RUNPOD_LLAMA_8B_URL / RUNPOD_LLAMA_70B_URL (HTTP)"
         }
     }
     
