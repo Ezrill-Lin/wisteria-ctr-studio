@@ -28,7 +28,7 @@ class RunPodClient(BaseLLMClient):
                  api_key: Optional[str] = None,
                  endpoint_id: Optional[str] = None,
                  base_url: Optional[str] = None,
-                 timeout: int = 5):
+                 timeout: int = 300):
         """Initialize RunPod client.
         
         Args:
@@ -51,19 +51,15 @@ class RunPodClient(BaseLLMClient):
         # Model configurations
         self.model_configs = {
             "llama-8b": {
-                "model_name": "meta-llama/Llama-3.1-8B-Instruct",
+                "model_name": "meta-llama/Meta-Llama-3.1-8B-Instruct",  # Correct model name for vLLM
                 "max_tokens": 10,
                 "temperature": 0.1,
-                "gpu_type": "RTX4090",
-                "cost_per_hour": 0.39,
                 "endpoint_var": "RUNPOD_LLAMA_8B_ENDPOINT"
             },
             "llama-70b": {
                 "model_name": "meta-llama/Llama-3.1-70B-Instruct", 
                 "max_tokens": 10,
                 "temperature": 0.1,
-                "gpu_type": "A100",
-                "cost_per_hour": 1.89,
                 "endpoint_var": "RUNPOD_LLAMA_70B_ENDPOINT"
             }
         }
@@ -239,8 +235,8 @@ class RunPodClient(BaseLLMClient):
         prompt = self._build_prompt(ad_text, profiles, ad_platform)
         try:
             from openai import OpenAI
-            # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
-            max_tokens = int(len(profiles) * 1.5) + 10  # +10 for safety margin
+            # Calculate max_tokens more generously: each integer needs ~2-3 tokens, plus array formatting
+            max_tokens = max(20, len(profiles) * 5 + 10)  # Much more generous token limit
             # Use RunPod API key for authentication
             api_key = self.runpod_api_key or os.getenv("RUNPOD_API_KEY", "dummy")
             client = OpenAI(api_key=api_key, base_url=self.http_base_url, timeout=self.timeout)
@@ -262,8 +258,8 @@ class RunPodClient(BaseLLMClient):
         prompt = self._build_prompt(ad_text, profiles, ad_platform)
         try:
             from openai import AsyncOpenAI
-            # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
-            max_tokens = int(len(profiles) * 1.5) + 10  # +10 for safety margin
+            # Calculate max_tokens more generously: each integer needs ~2-3 tokens, plus array formatting
+            max_tokens = max(20, len(profiles) * 5 + 10)  # Much more generous token limit
             # Use RunPod API key for authentication
             api_key = self.runpod_api_key or os.getenv("RUNPOD_API_KEY", "dummy")
             client = AsyncOpenAI(api_key=api_key, base_url=self.http_base_url, timeout=self.timeout)
@@ -286,9 +282,7 @@ class RunPodClient(BaseLLMClient):
             "provider": "runpod",
             "model": self.model,
             "model_name": config["model_name"],
-            "gpu_type": config["gpu_type"],
             "deployment": "http" if self.mode == "http" else "serverless",
-            "cost_per_hour": config["cost_per_hour"],
             "endpoint_id": self.endpoint_id,
             "base_url": self.http_base_url or self.base_url,
             "has_api_key": self.has_api_key()

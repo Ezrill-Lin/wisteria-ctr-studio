@@ -8,6 +8,7 @@ from typing import Any, Dict, Iterable, List, Optional
 from .openai_client import OpenAIClient
 from .deepseek_client import DeepSeekClient
 from .runpod_client import RunPodClient
+from .base_client import _print_fallback, _mock_predict
 # from .template_client import TemplateClient  # TODO: Add other clients as needed
 
 
@@ -32,35 +33,6 @@ CLIENT_REGISTRY = {
     "runpod": RunPodClient,  # RunPod for distributed inference with serverless scaling
     # "template": TemplateClient,  # TODO: Add other clients here
 }
-
-
-def _print_fallback(msg: str) -> None:
-    """Print a concise notice when falling back to the mock model.
-
-    Args:
-        msg: Short human-readable reason, e.g., provider/step that failed.
-    """
-    try:
-        print(f"[Mock Fallback] {msg}")
-    except Exception:
-        pass
-
-
-def _mock_predict(ad_text: str, profiles: List[Dict[str, Any]]) -> List[int]:
-    """Generate binary click predictions using the mock heuristic.
-
-    Uses a fixed RNG seed for reproducibility across runs.
-
-    Args:
-        ad_text: Advertisement text.
-        profiles: List of profiles to score.
-
-    Returns:
-        List of 0/1 integers aligned with ``profiles``.
-    """
-    # Import mock prediction logic from base_client to avoid duplication
-    from .base_client import _mock_predict as base_mock_predict
-    return base_mock_predict(ad_text, profiles)
 
 
 @dataclass
