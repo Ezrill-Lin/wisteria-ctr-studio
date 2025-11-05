@@ -76,6 +76,17 @@ class RunPodClient(BaseLLMClient):
         self.mode = "http" if self.http_base_url else "jobs"
         print(f"[RunPod] {model} configured: {'HTTP (OpenAI)' if self.mode == 'http' else 'serverless jobs'} mode")
     
+    def _calculate_max_tokens(self, batch_size: int) -> int:
+        """Calculate max_tokens based on batch size.
+        
+        Args:
+            batch_size: Number of profiles in the batch
+            
+        Returns:
+            Calculated max_tokens value
+        """
+        return max(50, batch_size*10 + 20)
+    
     def _get_endpoint_id(self) -> Optional[str]:
         """Get endpoint ID from environment variables."""
         config = self.model_configs[self.model]
@@ -144,8 +155,8 @@ class RunPodClient(BaseLLMClient):
         """Make async request to RunPod serverless endpoint."""
         config = self.model_configs[self.model]
         
-        # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
-        max_tokens = int(batch_size * 1.5) + 10  # +10 for safety margin
+        # Calculate max_tokens based on batch size
+        max_tokens = self._calculate_max_tokens(batch_size)
         
         payload = {
             "input": {
@@ -185,8 +196,8 @@ class RunPodClient(BaseLLMClient):
         """Make sync request to RunPod serverless endpoint."""
         config = self.model_configs[self.model]
         
-        # Calculate max_tokens dynamically: 1.5 * batch_size (rounded up)
-        max_tokens = int(batch_size * 1.5) + 10  # +10 for safety margin
+        # Calculate max_tokens based on batch size
+        max_tokens = self._calculate_max_tokens(batch_size)
         
         payload = {
             "input": {
@@ -235,8 +246,8 @@ class RunPodClient(BaseLLMClient):
         prompt = self._build_prompt(ad_text, profiles, ad_platform)
         try:
             from openai import OpenAI
-            # Calculate max_tokens more generously: each integer needs ~2-3 tokens, plus array formatting
-            max_tokens = max(20, len(profiles) * 5 + 10)  # Much more generous token limit
+            # Calculate max_tokens based on batch size
+            max_tokens = self._calculate_max_tokens(len(profiles))
             # Use RunPod API key for authentication
             api_key = self.runpod_api_key or os.getenv("RUNPOD_API_KEY", "dummy")
             client = OpenAI(api_key=api_key, base_url=self.http_base_url, timeout=self.timeout)
@@ -258,8 +269,8 @@ class RunPodClient(BaseLLMClient):
         prompt = self._build_prompt(ad_text, profiles, ad_platform)
         try:
             from openai import AsyncOpenAI
-            # Calculate max_tokens more generously: each integer needs ~2-3 tokens, plus array formatting
-            max_tokens = max(20, len(profiles) * 5 + 10)  # Much more generous token limit
+            # Calculate max_tokens based on batch size
+            max_tokens = self._calculate_max_tokens(len(profiles))
             # Use RunPod API key for authentication
             api_key = self.runpod_api_key or os.getenv("RUNPOD_API_KEY", "dummy")
             client = AsyncOpenAI(api_key=api_key, base_url=self.http_base_url, timeout=self.timeout)

@@ -59,10 +59,14 @@ def _build_prompt(ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str
     )
     rules = (
         "\n\nRules:\n"
-        "- Output ONLY a JSON array of 0/1 integers, no commentary.\n"
+        "- Output ONLY a simple JSON list of 0/1 integers, no commentary.\n"
+        "- Format: [0,1,0,1] (compact, NO SPACES between elements)\n"
+        "- NOT this: [0, 1, 0, 1] (no spaces after commas)\n"
+        "- NOT objects: [{'0':0}] or nested structures\n"
         "- The array length must equal the number of profiles.\n"
         "- 1 means 'would click', 0 means 'would not click'.\n"
         "- Consider the platform context when making decisions.\n"
+        "- Stop after closing bracket ']'\n"
     )
     cols = (
         "\n\nProfiles (index|gender|age|region|occupation|salary|liability|married|health|illness):\n"
@@ -73,22 +77,70 @@ def _build_prompt(ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str
     return header + ad_text + rules + cols + "\n".join(lines)
 
 
-def _try_parse_json_array(s: str) -> Optional[List[int]]:
+def _fix_truncated_response(s: str, expected_length: int) -> str:
+    """Fix truncated model responses by trimming to exact expected length.
+    
+    Open source models often pad responses to max_tokens. This function:
+    1. Calculates the expected compact JSON format length: [0,1,0,1]
+    2. Trims the response to that exact length
+    3. Ensures proper JSON format with closing bracket
+    
+    Args:
+        s: Raw response text that may be truncated/padded
+        expected_length: Number of elements expected in the array
+        
+    Returns:
+        Fixed response string in compact JSON format
+    """
+    s = s.strip()
+    
+    # Expected format: [0,1,0,1] = 1 + (expected_length * 2 - 1) + 1
+    # = opening bracket + "0,1,0,1" pattern + closing bracket
+    target_chars = 1 + (expected_length * 2 - 1) + 1
+    
+    if len(s) > target_chars:
+        # Truncate padded response to exact length
+        s = s[:target_chars-1] + ']'
+    elif len(s) == target_chars - 1 and not s.endswith(']'):
+        # Add missing closing bracket
+        s = s + ']'
+    
+    return s
+
+
+def _try_parse_json_array(s: str, expected_length: Optional[int] = None) -> Optional[List[int]]:
     """Extract a JSON array of integers from a model response string.
 
     Tries direct JSON parsing, then a tolerant regex extraction if wrapped in
-    extra text.
+    extra text. For open source models, applies truncation fix if expected_length provided.
 
     Args:
         s: Raw response text.
+        expected_length: Expected number of elements (for truncation fix)
 
     Returns:
         List of integers on success, otherwise ``None``.
     """
+    # Apply truncation fix for open source models that pad to max_tokens
+    if expected_length is not None:
+        s = _fix_truncated_response(s, expected_length)
+    
     try:
         data = json.loads(s)
-        if isinstance(data, list) and all(isinstance(x, int) for x in data):
-            return data
+        if isinstance(data, list):
+            # Handle simple list format: [0, 1, 1, 0] (preferred)
+            if all(isinstance(x, int) for x in data):
+                return data
+            # Handle object format: [{"0":0}, {"0":1}] (backward compatibility)
+            elif all(isinstance(x, dict) and len(x) == 1 for x in data):
+                result = []
+                for item in data:
+                    value = list(item.values())[0]
+                    if isinstance(value, int):
+                        result.append(value)
+                    else:
+                        return None
+                return result
     except Exception:
         pass
     m = re.search(r"\[(?:\s*\d\s*,?\s*)+\]", s)
@@ -234,9 +286,14 @@ class BaseLLMClient(ABC):
     
     def _parse_and_validate_response(self, content: str, chunk: List[Dict[str, Any]], ad_text: str, provider_name: str) -> List[int]:
         """Parse and validate LLM response."""
-        arr = _try_parse_json_array(content or "")
+        # Pass expected length for truncation fix on open source models
+        expected_length = len(chunk)
+        arr = _try_parse_json_array(content or "", expected_length)
         if arr is None:
             self.used_fallback = True  # Mark that fallback was used
+            # Debug: Print raw response when parsing fails
+            print(f"[DEBUG] Parse failed - Content length: {len(content) if content else 0}")
+            print(f"[DEBUG] Content preview: {repr(content if content else 'None')}")
             _print_fallback(f"{provider_name} output parse failed; using mock for this chunk.")
             arr = _mock_predict(ad_text, chunk)
         
