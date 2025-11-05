@@ -66,14 +66,14 @@ def main(args=None):
         parser.add_argument("--population-size", type=int, default=1000, help="Number of identities to sample")
         parser.add_argument("--identity-bank", default=os.path.join("SiliconSampling", "data", "identity_bank.json"), help="Path to identity bank JSON")
         parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-        parser.add_argument("--provider", choices=["openai", "deepseek", "runpod", "mock"], 
+        parser.add_argument("--provider", choices=["openai", "deepseek", "vllm", "mock"], 
                            default="openai", help="LLM provider (default: openai)")
-        parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name")
-        parser.add_argument("--runpod-model", choices=["llama-8b", "llama-70b"], 
-                           default="llama-8b", help="RunPod model selection (llama-8b, llama-70b)")
-        parser.add_argument("--runpod-endpoint", help="RunPod endpoint ID for serverless")
+        parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name (for openai, deepseek providers)")
+        parser.add_argument("--vllm-model", choices=["llama-8b", "llama-70b"], 
+                           default="llama-8b", help="vLLM model selection (llama-8b, llama-70b)")
+        parser.add_argument("--runpod-base-url", help="RunPod HTTP base URL for vLLM endpoints")
         parser.add_argument("--auto-model", action="store_true", 
-                           help="Auto-select RunPod model based on population size")
+                           help="Auto-select vLLM model based on population size")
         parser.add_argument("--batch-size", type=int, default=50, help="Batch size per LLM call")
         parser.add_argument("--use-mock", action="store_true", help="Force mock LLM (no network)")
         parser.add_argument("--use-sync", action="store_true", help="Use synchronous sequential processing instead of async parallel")
@@ -85,8 +85,8 @@ def main(args=None):
     bank = load_identity_bank(args.identity_bank)
     identities = sample_identities(args.population_size, bank, seed=args.seed)
 
-    # Handle RunPod-specific configuration
-    if args.provider == "runpod":
+    # Handle vLLM-specific configuration
+    if args.provider == "vllm":
         # Auto-select model based on population size if requested
         if args.auto_model:
             if args.population_size < 5000:
@@ -96,21 +96,21 @@ def main(args=None):
                 model = "llama-8b"       # Cost-effective for large scale
                 print(f"[Auto-selected] Llama 8B for {args.population_size:,} profiles (cost-effective)")
         else:
-            model = args.runpod_model
+            model = args.vllm_model
         
         # Use the specified batch size directly
         batch_size = args.batch_size
         
-        print(f"[RunPod] Using {model} model (batch size: {batch_size})")
+        print(f"[vLLM] Using {model} model (batch size: {batch_size})")
         
         predictor = LLMClickPredictor(
-            provider=args.provider,
+            provider="runpod",  # Still use runpod internally for the client
             model=model,
             batch_size=batch_size,
             use_mock=args.use_mock,
             use_async=True,  # Keep this True since we handle sync/async at call level
             api_key=args.api_key,
-            runpod_endpoint_id=args.runpod_endpoint
+            runpod_base_url=args.runpod_base_url
         )
     else:
         # Standard configuration for other providers
@@ -147,9 +147,9 @@ def main(args=None):
     # Get the actual model name used
     if args.use_mock or used_fallback:
         model_name = "mock model (no LLM)"
-    elif args.provider == "runpod":
-        # For RunPod, use the actual model that was configured
-        model_name = predictor._client.model if hasattr(predictor, '_client') and hasattr(predictor._client, 'model') else args.runpod_model
+    elif args.provider == "vllm":
+        # For vLLM, use the actual model that was configured
+        model_name = predictor._client.model if hasattr(predictor, '_client') and hasattr(predictor._client, 'model') else model
     else:
         model_name = args.model
     

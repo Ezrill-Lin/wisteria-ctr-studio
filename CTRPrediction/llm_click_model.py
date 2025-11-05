@@ -30,7 +30,8 @@ def _chunked(seq: List[Any], n: int) -> Iterable[List[Any]]:
 CLIENT_REGISTRY = {
     "openai": OpenAIClient,
     "deepseek": DeepSeekClient,
-    "runpod": RunPodClient,  # RunPod for distributed inference with serverless scaling
+    "runpod": RunPodClient,  # RunPod for distributed inference with HTTP pods
+    "vllm": RunPodClient,    # vLLM provider alias for RunPod HTTP client
     # "template": TemplateClient,  # TODO: Add other clients here
 }
 
@@ -44,13 +45,13 @@ class LLMClickPredictor:
     registering it in CLIENT_REGISTRY.
 
     Attributes:
-        provider: LLM provider identifier (e.g., "openai", "deepseek", "runpod").
+        provider: LLM provider identifier (e.g., "openai", "deepseek", "vllm").
         model: Model name for the provider.
         batch_size: Number of profiles per request.
         use_mock: If True, always use the mock predictor.
         use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
-        runpod_endpoint_id: RunPod endpoint ID for serverless deployments.
+        runpod_base_url: RunPod HTTP base URL for vLLM endpoints.
     """
     provider: str = "openai"
     model: str = "gpt-4o-mini"
@@ -58,7 +59,7 @@ class LLMClickPredictor:
     use_mock: bool = False
     use_async: bool = True
     api_key: Optional[str] = None
-    runpod_endpoint_id: Optional[str] = None
+    runpod_base_url: Optional[str] = None
 
     def __post_init__(self):
         """Initialize the appropriate client after dataclass creation.
@@ -70,12 +71,12 @@ class LLMClickPredictor:
 
         client_class = CLIENT_REGISTRY[self.provider]
 
-        # Handle RunPod-specific initialization
-        if self.provider == "runpod":
+        # Handle vLLM/RunPod-specific initialization
+        if self.provider in ["runpod", "vllm"]:
             self._client = RunPodClient(
                 model=self.model,
                 api_key=self.api_key,
-                endpoint_id=self.runpod_endpoint_id
+                base_url=self.runpod_base_url
             )
         else:
             # Standard initialization for other providers

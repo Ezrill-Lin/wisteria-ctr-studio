@@ -21,8 +21,6 @@ class OpenAIClient(BaseLLMClient):
         super().__init__(model, api_key)
         self.provider_name = "openai"
         self.env_key_name = "OPENAI_API_KEY"
-    
-
 
     def _get_client(self):
         """Get synchronous OpenAI client."""
@@ -39,8 +37,6 @@ class OpenAIClient(BaseLLMClient):
             return AsyncOpenAI(api_key=self.api_key or os.getenv(self.env_key_name))
         except Exception as e:
             raise ImportError(f"AsyncOpenAI import failed: {e}")
-    
-
 
     def _create_messages(self, prompt: str) -> List[Dict[str, str]]:
         """Create message format for OpenAI API."""
@@ -48,8 +44,6 @@ class OpenAIClient(BaseLLMClient):
             {"role": "system", "content": "You are a precise decision engine that outputs strict JSON."},
             {"role": "user", "content": prompt}
         ]
-    
-
 
     def predict_chunk(self, ad_text: str, chunk: List[Dict[str, Any]], ad_platform: str = "facebook") -> List[int]:
         """Synchronous prediction for a chunk of profiles."""
@@ -65,19 +59,20 @@ class OpenAIClient(BaseLLMClient):
             resp = client.chat.completions.create(
                 model=self.model,
                 messages=self._create_messages(prompt),
-                temperature=0.0,
+                # No temperature parameter - use model default
             )
             content = resp.choices[0].message.content
-        except Exception:
-            # Try responses API as fallback
+        except Exception as e:
+            # If temperature 0.0 fails, try with default temperature
             try:
-                r = client.responses.create(
+                resp = client.chat.completions.create(
                     model=self.model,
-                    input=prompt,
+                    messages=self._create_messages(prompt),
+                    # No temperature parameter - use model default
                 )
-                content = r.output_text
-            except Exception:
-                return self._fallback_to_mock(ad_text, chunk, "OpenAI API call failed")
+                content = resp.choices[0].message.content
+            except Exception as e2:
+                return self._fallback_to_mock(ad_text, chunk, f"OpenAI API call failed ({type(e).__name__}: {str(e)})")
         
         return self._parse_and_validate_response(content, chunk, ad_text, "OpenAI")
     
@@ -95,10 +90,19 @@ class OpenAIClient(BaseLLMClient):
             resp = await client.chat.completions.create(
                 model=self.model,
                 messages=self._create_messages(prompt),
-                temperature=0.0,
+                # No temperature parameter - use model default
             )
             content = resp.choices[0].message.content
-        except Exception:
-            return self._fallback_to_mock(ad_text, chunk, "AsyncOpenAI API call failed")
+        except Exception as e:
+            # If temperature 0.0 fails, try with default temperature
+            try:
+                resp = await client.chat.completions.create(
+                    model=self.model,
+                    messages=self._create_messages(prompt),
+                    # No temperature parameter - use model default
+                )
+                content = resp.choices[0].message.content
+            except Exception as e2:
+                return self._fallback_to_mock(ad_text, chunk, f"AsyncOpenAI API call failed ({type(e).__name__}: {str(e)})")
         
         return self._parse_and_validate_response(content, chunk, ad_text, "AsyncOpenAI")
