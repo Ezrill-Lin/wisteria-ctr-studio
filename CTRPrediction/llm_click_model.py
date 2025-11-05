@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import re
+import sys
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional
 
@@ -9,6 +10,7 @@ from .openai_client import OpenAIClient
 from .deepseek_client import DeepSeekClient
 from .runpod_client import RunPodClient
 from .base_client import _print_fallback, _mock_predict
+
 # from .template_client import TemplateClient  # TODO: Add other clients as needed
 
 
@@ -52,6 +54,7 @@ class LLMClickPredictor:
         use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
         runpod_base_url: RunPod HTTP base URL for vLLM endpoints.
+        auto_create_pod: If True, automatically create RunPod pod when needed.
     """
     provider: str = "openai"
     model: str = "gpt-4o-mini"
@@ -60,6 +63,7 @@ class LLMClickPredictor:
     use_async: bool = True
     api_key: Optional[str] = None
     runpod_base_url: Optional[str] = None
+    auto_create_pod: bool = False
 
     def __post_init__(self):
         """Initialize the appropriate client after dataclass creation.
@@ -76,7 +80,8 @@ class LLMClickPredictor:
             self._client = RunPodClient(
                 model=self.model,
                 api_key=self.api_key,
-                base_url=self.runpod_base_url
+                base_url=self.runpod_base_url,
+                auto_create_pod=self.auto_create_pod
             )
         else:
             # Standard initialization for other providers

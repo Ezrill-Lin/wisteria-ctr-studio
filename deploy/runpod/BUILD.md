@@ -17,7 +17,7 @@ This directory contains a Dockerfile that pre-downloads the model weights during
 docker build
   --build-arg MODEL_NAME="meta-llama/Llama-3.1-8B-Instruct"
   --build-arg HF_TOKEN=$env:HF_TOKEN `
-  -t ezrill/vllm-llama-8b:latest
+  -t ezrill/vllm-llama3.1-8b:latest
   -f Dockerfile
 ```
 
@@ -28,7 +28,7 @@ docker build
 docker build
   --build-arg MODEL_NAME="meta-llama/Llama-3.1-70B-Instruct"
   --build-arg HF_TOKEN=$env:HF_TOKEN
-  -t ezrill/vllm-llama-70b:latest
+  -t ezrill/vllm-llama3.1-70b:latest
   -f Dockerfile
 ```
 
@@ -39,8 +39,8 @@ docker build
 docker login
 
 # Push the image
-docker push your-dockerhub-username/vllm-llama-8b:latest
-docker push your-dockerhub-username/vllm-llama-70b:latest
+docker push your-dockerhub-username/vllm-llama3.1-8b:latest
+docker push your-dockerhub-username/vllm-llama3.1-70b:latest
 ```
 
 ### 4. Use in RunPod
@@ -48,7 +48,7 @@ docker push your-dockerhub-username/vllm-llama-70b:latest
 When creating a serverless endpoint in RunPod:
 
 1. Go to **Serverless** → **New Endpoint**
-2. Under **Container Image**, enter: `your-dockerhub-username/vllm-llama-8b:latest`
+2. Under **Container Image**, enter: `your-dockerhub-username/vllm-llama3.1-8b:latest`
 3. Set **Container Disk**: 20GB minimum (40GB for 70B)
 4. Select GPU: RTX 4090 for 8B, A100 for 70B
 5. Set environment variables (optional overrides):

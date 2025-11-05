@@ -69,9 +69,13 @@ def main(args=None):
         parser.add_argument("--provider", choices=["openai", "deepseek", "vllm", "mock"], 
                            default="openai", help="LLM provider (default: openai)")
         parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name (for openai, deepseek providers)")
-        parser.add_argument("--vllm-model", choices=["llama-8b", "llama-70b"], 
-                           default="llama-8b", help="vLLM model selection (llama-8b, llama-70b)")
+        parser.add_argument("--vllm-model", choices=["llama3.1-8b", "llama3.1-70b"], 
+                           default="llama3.1-8b", help="vLLM model selection (llama3.1-8b, llama3.1-70b)")
         parser.add_argument("--runpod-base-url", help="RunPod HTTP base URL for vLLM endpoints")
+        parser.add_argument("--auto-create-pod", action="store_true", 
+                           help="Automatically create RunPod pod if no base URL provided")
+        parser.add_argument("--validate-url", action="store_true",
+                           help="Validate RunPod URL before proceeding (recommended)")
         parser.add_argument("--auto-model", action="store_true", 
                            help="Auto-select vLLM model based on population size")
         parser.add_argument("--batch-size", type=int, default=50, help="Batch size per LLM call")
@@ -87,14 +91,12 @@ def main(args=None):
 
     # Handle vLLM-specific configuration
     if args.provider == "vllm":
-        # Auto-select model based on population size if requested
+                # Auto-select model based on population size for cost efficiency  
         if args.auto_model:
-            if args.population_size < 5000:
-                model = "llama-70b"      # High accuracy for small tests
-                print(f"[Auto-selected] Llama 70B for {args.population_size:,} profiles (high accuracy)")
+            if args.population_size <= 500:
+                model = "llama3.1-70b"      # High accuracy for small tests
             else:
-                model = "llama-8b"       # Cost-effective for large scale
-                print(f"[Auto-selected] Llama 8B for {args.population_size:,} profiles (cost-effective)")
+                model = "llama3.1-8b"       # Cost-effective for large scale
         else:
             model = args.vllm_model
         
@@ -110,7 +112,8 @@ def main(args=None):
             use_mock=args.use_mock,
             use_async=True,  # Keep this True since we handle sync/async at call level
             api_key=args.api_key,
-            runpod_base_url=args.runpod_base_url
+            runpod_base_url=args.runpod_base_url,
+            auto_create_pod=args.auto_create_pod
         )
     else:
         # Standard configuration for other providers

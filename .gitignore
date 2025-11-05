@@ -8,3 +8,8 @@ __pycache__/
 *$py.class
 SiliconSampling/data/data.parquet
 SiliconSampling/data/acs_pums_2023.parquet
+/CTRPrediction/__pycache__
+*.pyc
+*.pyc
+/CTRPrediction/__pycache__
+CTRPrediction/__pycache__/__init__.cpython-312.pyc

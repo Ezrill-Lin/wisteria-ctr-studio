@@ -15,7 +15,7 @@ if ([string]::IsNullOrEmpty($HfToken)) {
 }
 
 $ModelName = "meta-llama/Llama-3.1-8B-Instruct"
-$ImageTag = "$DockerUser/vllm-llama-8b:latest"
+$ImageTag = "$DockerUser/vllm-llama3.1-8b:latest"
 
 Write-Host "Building Docker image for Llama 3.1 8B..." -ForegroundColor Cyan
 Write-Host "Model: $ModelName" -ForegroundColor Gray

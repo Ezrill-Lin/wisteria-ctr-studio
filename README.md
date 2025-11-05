@@ -31,6 +31,7 @@ The following flowchart illustrates the complete working structure of the Wister
 - `base_client.py`: Abstract base class for LLM client implementations
 - `openai_client.py`: OpenAI/ChatGPT client implementation
 - `deepseek_client.py`: DeepSeek API client implementation
+- `runpod_client.py`: **Enhanced RunPod client with SDK support for automatic pod creation**
 - `template_client.py`: Template for implementing new LLM provider clients
 - `__init__.py`: Package initialization and exports
 
@@ -39,9 +40,12 @@ The following flowchart illustrates the complete working structure of the Wister
 - `api.py`: FastAPI web service for REST API access
 - `example_client.py`: Example Python client for the REST API
 - `test_gcs.py`: Test script for Google Cloud Storage integration
+- `test_runpod_sdk.py`: **Test script demonstrating RunPod SDK features**
+- `example_runpod_sdk.py`: **Example usage of RunPod SDK auto-creation**
 - `requirements.txt`: Python dependency specifications
 - `workflow.png`: System architecture flowchart
 - `README.md`: This documentation file
+- `RUNPOD_SDK.md`: **Comprehensive RunPod SDK integration guide**
 
 ### **deploy/** - Deployment Configuration
 - `Dockerfile`: Container configuration for deployment
@@ -54,6 +58,7 @@ The following flowchart illustrates the complete working structure of the Wister
 ## Supported Providers
 - **OpenAI**: GPT models (gpt-4o-mini, gpt-4, etc.)
 - **DeepSeek**: DeepSeek models (deepseek-chat, etc.)
+- **vLLM/RunPod**: 🚀 **Enhanced with SDK support** - Llama models with automatic pod creation (llama3.1-8b, llama3.1-70b)
 - **Extensible**: Use `template_client.py` to add new providers
 
 ## Quick Start
@@ -98,6 +103,35 @@ export DEEPSEEK_API_KEY="your_api_key_here"
 
 python demo.py --ad "Latest smartphone with AI features" --provider deepseek --model deepseek-chat --population-size 500 --batch-size 50 --out results.csv
 ```
+
+#### vLLM/RunPod (with SDK Auto-Creation) 🚀
+The enhanced RunPod client now supports automatic pod creation and management:
+
+```bash
+# Set RunPod API key for automatic pod creation
+# Windows
+setx RUNPOD_API_KEY "your_runpod_api_key"
+# Linux/Mac  
+export RUNPOD_API_KEY="your_runpod_api_key"
+
+# Auto-create pod when needed (requires API key)
+python demo.py --ad "Revolutionary AI-powered gadgets" --provider vllm --vllm-model llama3.1-8b --auto-create-pod --population-size 500
+
+# Use existing HTTP endpoint (no auto-creation)
+python demo.py --ad "Revolutionary AI-powered gadgets" --provider vllm --vllm-model llama3.1-8b --runpod-base-url "https://your-pod.proxy.runpod.net/v1"
+
+# Auto-select model based on population size
+python demo.py --ad "Revolutionary AI-powered gadgets" --provider vllm --auto-model --auto-create-pod --population-size 2000
+```
+
+**Key Features:**
+- ✨ **Automatic Pod Creation**: Creates RunPod pods on-demand using the SDK
+- 🔧 **Smart Model Selection**: Chooses appropriate GPU configuration per model
+- 🛡️ **Resource Management**: Automatic cleanup with context managers
+- 📊 **Cost Control**: Manual pod management for fine-grained control
+- 🔄 **HTTP Fallback**: Seamless fallback to existing HTTP endpoints
+
+See [`RUNPOD_SDK.md`](RUNPOD_SDK.md) for comprehensive documentation.
 
 ## Platform Support
 The system supports different ad platforms with platform-specific context:
