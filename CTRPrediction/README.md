@@ -23,8 +23,8 @@ Single Population (10,000 profiles)
     Split into N chunks
         ↓
 ┌─────────────────────────────────────┐
-│  Pod 1     Pod 2     Pod 3    ...  │
-│ (2000)    (2000)    (2000)         │
+│  Pod 1     Pod 2     Pod 3    ...   │
+│ (2000)    (2000)    (2000)          │ 
 │   ↓         ↓         ↓             │
 │ Predict   Predict   Predict         │
 │   ↓         ↓         ↓             │
@@ -50,13 +50,13 @@ Complete Predictions (10,000)
 │  │LLMClickPredict│◄─┼────┼─►│ Pod Management  │ │
 │  │               │  │    │  │ (Auto-scaling)  │ │
 │  └───────────────┘  │    │  └─────────────────┘ │
-│         │           │    │          │          │
+│         │           │    │          │           │
 │  ┌───────────────┐  │    │  ┌─────────────────┐ │
 │  │RunPodSDKConfig│◄─┼────┼─►│  vLLM Pod 1     │ │
 │  │               │  │    │  │  (Llama 3.1-8B) │ │
-│  │ • Pod Discovery│  │    │  └─────────────────┘ │
-│  │ • Load Balance │  │    │  ┌─────────────────┐ │
-│  │ • Async Batch  │  │    │  │  vLLM Pod 2     │ │
+│  │• Pod Discovery│  │    │  └─────────────────┘ │
+│  │• Load Balance │  │    │  ┌─────────────────┐ │
+│  │• Async Batch  │  │    │  │  vLLM Pod 2     │ │
 │  └───────────────┘  │    │  │  (Llama 3.1-8B) │ │
 │                     │    │  └─────────────────┘ │
 │                     │    │  ┌─────────────────┐ │
