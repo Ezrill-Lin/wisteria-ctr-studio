@@ -1,6 +1,6 @@
 # vLLM RunPod Distributed Inference
 
-This document describes the distributed inference architecture using RunPod's vLLM endpoints for large-scale Click-Through Rate (CTR) prediction in the Wisteria CTR Studio.
+This document describes solely the distributed inference architecture using RunPod's vLLM endpoints for large-scale Click-Through Rate (CTR) prediction in the Wisteria CTR Studio. Other client files under this folder are normal components to make commercial LLM calls, which do not need particular introduction. 
 
 ## Embarrassingly Parallel Data Pattern
 
