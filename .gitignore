@@ -7,7 +7,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 SiliconSampling/data/data.parquet
-SiliconSampling/data/acs_pums_2023.parquet
 /CTRPrediction/__pycache__
 *.pyc
 *.pyc
