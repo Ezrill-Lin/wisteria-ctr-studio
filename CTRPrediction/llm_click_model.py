@@ -8,7 +8,7 @@ from typing import Any, Dict, Iterable, List, Optional
 
 from .openai_client import OpenAIClient
 from .deepseek_client import DeepSeekClient
-from .runpod_client import RunPodClient
+from .runpod_sdk_config import RunPodSDKConfig
 from .base_client import _print_fallback, _mock_predict
 
 # from .template_client import TemplateClient  # TODO: Add other clients as needed
@@ -32,8 +32,7 @@ def _chunked(seq: List[Any], n: int) -> Iterable[List[Any]]:
 CLIENT_REGISTRY = {
     "openai": OpenAIClient,
     "deepseek": DeepSeekClient,
-    "runpod": RunPodClient,  # RunPod for distributed inference with HTTP pods
-    "vllm": RunPodClient,    # vLLM provider alias for RunPod HTTP client
+    "vllm": RunPodSDKConfig,     # vLLM distributed inference via RunPod SDK
     # "template": TemplateClient,  # TODO: Add other clients here
 }
 
@@ -53,8 +52,7 @@ class LLMClickPredictor:
         use_mock: If True, always use the mock predictor.
         use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
-        runpod_base_url: RunPod HTTP base URL for vLLM endpoints.
-        auto_create_pod: If True, automatically create RunPod pod when needed.
+        profiles_per_pod: For vllm provider, number of profiles per pod for distributed inference.
     """
     provider: str = "openai"
     model: str = "gpt-4o-mini"
@@ -62,8 +60,7 @@ class LLMClickPredictor:
     use_mock: bool = False
     use_async: bool = True
     api_key: Optional[str] = None
-    runpod_base_url: Optional[str] = None
-    auto_create_pod: bool = False
+    profiles_per_pod: int = 5000
 
     def __post_init__(self):
         """Initialize the appropriate client after dataclass creation.
@@ -75,13 +72,12 @@ class LLMClickPredictor:
 
         client_class = CLIENT_REGISTRY[self.provider]
 
-        # Handle vLLM/RunPod-specific initialization
-        if self.provider in ["runpod", "vllm"]:
-            self._client = RunPodClient(
+        # Handle vLLM distributed inference via RunPod SDK
+        if self.provider == "vllm":
+            self._client = RunPodSDKConfig(
                 model=self.model,
                 api_key=self.api_key,
-                base_url=self.runpod_base_url,
-                auto_create_pod=self.auto_create_pod
+                profiles_per_pod=self.profiles_per_pod
             )
         else:
             # Standard initialization for other providers

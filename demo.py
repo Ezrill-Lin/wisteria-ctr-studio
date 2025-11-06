@@ -67,18 +67,11 @@ def main(args=None):
         parser.add_argument("--identity-bank", default=os.path.join("SiliconSampling", "data", "identity_bank.json"), help="Path to identity bank JSON")
         parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
         parser.add_argument("--provider", choices=["openai", "deepseek", "vllm", "mock"], 
-                           default="openai", help="LLM provider (default: openai)")
+                          default="openai", help="LLM provider to use")
         parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name (for openai, deepseek providers)")
-        parser.add_argument("--vllm-model", choices=["llama3.1-8b", "llama3.1-70b"], 
-                           default="llama3.1-8b", help="vLLM model selection (llama3.1-8b, llama3.1-70b)")
-        parser.add_argument("--runpod-base-url", help="RunPod HTTP base URL for vLLM endpoints")
-        parser.add_argument("--auto-create-pod", action="store_true", 
-                           help="Automatically create RunPod pod if no base URL provided")
-        parser.add_argument("--validate-url", action="store_true",
-                           help="Validate RunPod URL before proceeding (recommended)")
-        parser.add_argument("--auto-model", action="store_true", 
-                           help="Auto-select vLLM model based on population size")
-        parser.add_argument("--batch-size", type=int, default=50, help="Batch size per LLM call")
+        parser.add_argument("--runpod-model", choices=["llama3.1-8b", "llama3.1-70b"], 
+                           default="llama3.1-8b", help="RunPod model selection (llama3.1-8b, llama3.1-70b)")
+        parser.add_argument("--batch-size", type=int, default=32, help="Batch size per LLM call")
         parser.add_argument("--use-mock", action="store_true", help="Force mock LLM (no network)")
         parser.add_argument("--use-sync", action="store_true", help="Use synchronous sequential processing instead of async parallel")
         parser.add_argument("--api-key", default=None, help="Explicit API key override for provider")
@@ -89,31 +82,18 @@ def main(args=None):
     bank = load_identity_bank(args.identity_bank)
     identities = sample_identities(args.population_size, bank, seed=args.seed)
 
-    # Handle vLLM-specific configuration
+    # Handle vLLM distributed inference via RunPod SDK
     if args.provider == "vllm":
-                # Auto-select model based on population size for cost efficiency  
-        if args.auto_model:
-            if args.population_size <= 500:
-                model = "llama3.1-70b"      # High accuracy for small tests
-            else:
-                model = "llama3.1-8b"       # Cost-effective for large scale
-        else:
-            model = args.vllm_model
-        
-        # Use the specified batch size directly
-        batch_size = args.batch_size
-        
-        print(f"[vLLM] Using {model} model (batch size: {batch_size})")
+        model = args.runpod_model
+        print(f"[vLLM Distributed] Using {model} model (auto-computed pod distribution)")
         
         predictor = LLMClickPredictor(
-            provider="runpod",  # Still use runpod internally for the client
+            provider="vllm",
             model=model,
-            batch_size=batch_size,
+            batch_size=args.batch_size,
             use_mock=args.use_mock,
-            use_async=True,  # Keep this True since we handle sync/async at call level
-            api_key=args.api_key,
-            runpod_base_url=args.runpod_base_url,
-            auto_create_pod=args.auto_create_pod
+            use_async=True,
+            api_key=args.api_key
         )
     else:
         # Standard configuration for other providers
@@ -122,7 +102,7 @@ def main(args=None):
             model=args.model,
             batch_size=args.batch_size,
             use_mock=args.use_mock,
-            use_async=True,  # Keep this True since we handle sync/async at call level
+            use_async=True,
             api_key=args.api_key,
         )
 
@@ -151,8 +131,8 @@ def main(args=None):
     if args.use_mock or used_fallback:
         model_name = "mock model (no LLM)"
     elif args.provider == "vllm":
-        # For vLLM, use the actual model that was configured
-        model_name = predictor._client.model if hasattr(predictor, '_client') and hasattr(predictor._client, 'model') else model
+        # For vLLM distributed inference, use the actual model that was configured
+        model_name = predictor._client.model if hasattr(predictor, '_client') and hasattr(predictor._client, 'model') else args.runpod_model
     else:
         model_name = args.model
     
@@ -178,16 +158,17 @@ if __name__ == "__main__":
         args = Args()
         args.ad = '''Discover the ultimate travel experience with our exclusive vacation packages! Book now and save big on your next adventure.'''
         args.ad_platform = "facebook"
-        args.population_size = 1000
-        args.batch_size = 1
-        args.provider = "deepseek"  
-        args.model = "deepseek-chat" 
-        args.use_mock = False
+        args.population_size = 12000  # Test distributed inference with 12k profiles
+        args.batch_size = 32
+        args.provider = "vllm"  # Test vLLM distributed inference via RunPod SDK
+        args.runpod_model = "llama3.1-8b" 
+        args.use_mock = True  # Use mock for testing without actual API calls
         args.use_sync = False
         args.identity_bank = os.path.join("SiliconSampling", "data", "identity_bank.json")
         args.seed = 42
         args.api_key = None  
-        args.out = None  
+        args.out = None
+        args.model = "gpt-4o-mini"  # Fallback for other providers
         main(args)
     else:
         main()
