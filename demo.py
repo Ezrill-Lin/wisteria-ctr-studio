@@ -93,8 +93,7 @@ def main(args=None):
             batch_size=args.batch_size,
             use_mock=args.use_mock,
             use_async=True,
-            api_key=args.api_key,
-            population_size=args.population_size  # Pass population size for optimal pod calculation
+            api_key=args.api_key
         )
     else:
         # Standard configuration for other providers
@@ -163,6 +162,7 @@ if __name__ == "__main__":
         args.batch_size = 32
         args.provider = "vllm"  # Test vLLM distributed inference via RunPod SDK
         args.runpod_model = "llama3.1-8b" 
+        args.profiles_per_pod = 5000  # 12k profiles will need 3 pods
         args.use_mock = True  # Use mock for testing without actual API calls
         args.use_sync = False
         args.identity_bank = os.path.join("SiliconSampling", "data", "identity_bank.json")
