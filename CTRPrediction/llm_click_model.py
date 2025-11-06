@@ -53,6 +53,7 @@ class LLMClickPredictor:
         use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
         profiles_per_pod: For vllm provider, number of profiles per pod for distributed inference.
+        population_size: Total population size for optimal pod calculation (for vllm provider).
     """
     provider: str = "openai"
     model: str = "gpt-4o-mini"
@@ -61,6 +62,7 @@ class LLMClickPredictor:
     use_async: bool = True
     api_key: Optional[str] = None
     profiles_per_pod: int = 5000
+    population_size: Optional[int] = None
 
     def __post_init__(self):
         """Initialize the appropriate client after dataclass creation.
@@ -77,7 +79,8 @@ class LLMClickPredictor:
             self._client = RunPodSDKConfig(
                 model=self.model,
                 api_key=self.api_key,
-                profiles_per_pod=self.profiles_per_pod
+                profiles_per_pod=self.profiles_per_pod,
+                population_size=self.population_size
             )
         else:
             # Standard initialization for other providers

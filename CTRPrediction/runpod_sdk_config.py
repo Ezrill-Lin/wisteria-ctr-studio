@@ -13,7 +13,7 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
 class RunPodSDKConfig(RunPodClient):
-    def __init__(self, api_key=None, model="llama3.1-70b", profiles_per_pod=5000):
+    def __init__(self, api_key=None, model="llama3.1-70b", profiles_per_pod=5000, population_size=None):
         super().__init__(model)
         
         # Set API key from parameter or environment variable
@@ -29,10 +29,17 @@ class RunPodSDKConfig(RunPodClient):
         self.profiles_per_pod = profiles_per_pod
         self.active_pod_endpoints = []
         self.created_pod_ids = []
+        self.total_population_size = population_size  # Track expected total population
         # Check if we can use the RunPod SDK
         self.mode = "sdk" if runpod.api_key else "mock"
         
         print(f"[RunPod SDK] Mode: {self.mode} | API Key: {'SET' if runpod.api_key else 'NOT SET'}")
+        if self.total_population_size:
+            print(f"[RunPod SDK] Population size: {self.total_population_size}")
+
+    def set_total_population_size(self, size):
+        """Set the expected total population size for optimal pod calculation."""
+        self.total_population_size = size
 
     def predict_chunk(self, ad_text, profiles, ad_platform="facebook"):
         """Synchronous wrapper for distributed inference."""
@@ -67,10 +74,13 @@ class RunPodSDKConfig(RunPodClient):
         
         if per_pod < 4096:
             # Not overloaded - existing pods are sufficient, just use optimal subset
-            max_possible_pods = max(1, m // 512)  # at least 1 pod needed
-            optimal_pods = min(n, max_possible_pods)  # cannot exceed current pod count
+            optimal_pods = 1
+            for i in range(n):
+                if m / (n - i) > 128:
+                    optimal_pods = n - i 
+                    break
             
-            print(f"[Pod Setup] Using {optimal_pods} of {n} existing pods (per_pod: {per_pod:.1f})")
+            print(f"[Pod Setup] Using {optimal_pods} of {n} existing pods (per_pod: {m/optimal_pods:.1f})")
             
             # Add existing running pods to active endpoints (up to optimal count)
             for pod_id, url in existing_pods[:optimal_pods]:
@@ -117,9 +127,13 @@ class RunPodSDKConfig(RunPodClient):
         if self.mode == "mock" or not runpod.api_key:
             return self._fallback_to_mock(ad_text, profiles, "SDK not available")
         
-        # Setup optimal pods (combined discovery, calculation, and provisioning)
-        if not await self._setup_optimal_pods(len(profiles)):
-            return self._fallback_to_mock(ad_text, profiles, "Failed to provision pods")
+        # Set up pods if not already done
+        if not self.active_pod_endpoints:
+            # Use the provided total population size for optimal pod calculation
+            print(f"[Pod Setup] Using population size: {self.total_population_size}")
+            if not await self._setup_optimal_pods(self.total_population_size):
+                return self._fallback_to_mock(ad_text, profiles, "Failed to provision pods")
+        
         return await self._distributed_inference(profiles, ad_text, ad_platform)
 
     async def _discover_existing_pods(self):
@@ -215,19 +229,8 @@ class RunPodSDKConfig(RunPodClient):
                         if port.get("type") == "http":
                             # For vLLM services, always use port 8000
                             url = f"https://{pod_id}-8000.proxy.runpod.net"
-                            # Found HTTP endpoint, testing health
-                            
-                            # Test health endpoint using OpenAI client
-                            try:
-                                if await self._check_pod_health(url):
-                                    # Health check passed, pod ready
-                                    return url
-                                else:
-                                    # Health check failed, continue waiting
-                                    pass
-                            except Exception as health_error:
-                                # Health check exception, continue waiting
-                                pass
+                            # Assume pod is ready if it has RUNNING status and HTTP port
+                            return url
                 
                 print(f"[Pod {pod_index+1}] Status: {pod_status.get('desiredStatus', 'unknown')}, waiting...")
                 await asyncio.sleep(check_interval)

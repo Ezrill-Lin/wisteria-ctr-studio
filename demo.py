@@ -93,7 +93,8 @@ def main(args=None):
             batch_size=args.batch_size,
             use_mock=args.use_mock,
             use_async=True,
-            api_key=args.api_key
+            api_key=args.api_key,
+            population_size=args.population_size  # Pass population size for optimal pod calculation
         )
     else:
         # Standard configuration for other providers
