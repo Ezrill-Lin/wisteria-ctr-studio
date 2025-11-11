@@ -1,0 +1,1001 @@
+age,gender,state,race,educational_attainment,occupation
+17,Female,Nebraska/NE,White alone,Bachelor's degree,MGR-Financial Managers
+20,Female,Texas/TX,White alone,Associate's degree,ENT-Producers And Directors
+20,Female,Massachusetts/MA,White alone,Doctorate degree,EDU-Postsecondary Teachers
+18,Female,Texas/TX,White alone,Master's degree,EDU-Special Education Teachers
+18,Female,California/CA,Some Other Race alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Minnesota/MN,White; Black or African American,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,Chinese alone,Bachelor's degree,"BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products"
+17,Female,Texas/TX,Some Other Race alone,"Some college, but less than 1 year",CLN-Janitors And Building Cleaners
+17,Female,Mississippi/MS,White alone,Bachelor's degree,PRT-Private Detectives And Investigators
+17,Female,New York/NY,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Massachusetts/MA,White alone,Master's degree,EDU-Secondary School Teachers
+19,Female,North Carolina/NC,Black or African American alone,Bachelor's degree,PRS-Exercise Trainers And Group Fitness Instructors
+20,Female,Texas/TX,White alone,Associate's degree,EDU-Other Teachers and Instructors
+18,Female,New Hampshire/NH,White; Some Other Race,"1 or more years of college credit, no degree",RPR-Aircraft Mechanics And Service Technicians
+20,Female,Arizona/AZ,White alone,"Some college, but less than 1 year",EDU-Teaching Assistants
+18,Female,Idaho/ID,White alone,Bachelor's degree,"MGR-Farmers, Ranchers, And Other Agricultural Managers"
+19,Female,Indiana/IN,White alone,GED or alternative credential,"RPR-Maintenance And Repair Workers, General"
+16,Female,Alabama/AL,White alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Louisiana/LA,White; Some Other Race,Regular high school diploma,ENT-Artists And Related Workers
+18,Female,Georgia/GA,White alone,"Some college, but less than 1 year",CLN-Landscaping And Groundskeeping Workers
+19,Female,California/CA,Some Other Race alone,"Some college, but less than 1 year",TRN-Supervisors Of Transportation And Material Moving Workers
+16,Female,Alabama/AL,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,North Carolina/NC,Black or African American alone,Doctorate degree,SCI-Other Psychologists
+20,Female,Minnesota/MN,White alone,Professional degree beyond a bachelor's degree,CMS-Clergy
+18,Female,Maryland/MD,Black or African American alone,Regular high school diploma,"TRN-Bus Drivers, Transit And Intercity"
+19,Female,Virginia/VA,Asian Indian alone,Regular high school diploma,OFF-Postal Service Mail Carriers
+19,Female,Oregon/OR,White alone,Bachelor's degree,BUS-Training And Development Specialists
+18,Female,Pennsylvania/PA,White alone,Bachelor's degree,"OFF-Bookkeeping, Accounting, And Auditing Clerks"
+19,Female,Indiana/IN,White alone,Bachelor's degree,"PRD-Inspectors, Testers, Sorters, Samplers, And Weighers"
+17,Female,Oklahoma/OK,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Utah/UT,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,North Carolina/NC,White alone,"1 or more years of college credit, no degree",BUS-Training And Development Specialists
+16,Female,Maryland/MD,Black or African American alone,Bachelor's degree,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+20,Female,Michigan/MI,White alone,Associate's degree,MED-Registered Nurses
+16,Female,Texas/TX,Black or African American alone,Master's degree,"CMS-Educational, Guidance, And Career Counselors And Advisors"
+20,Female,Pennsylvania/PA,White alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,California/CA,White alone,Associate's degree,SAL-Retail Salespersons
+18,Female,Washington/WA,White alone,Associate's degree,OFF-Customer Service Representatives
+17,Female,Michigan/MI,White alone,"1 or more years of college credit, no degree","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+16,Female,Utah/UT,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Missouri/MO,White alone,"1 or more years of college credit, no degree",OFF-First-Line Supervisors Of Office And Administrative Support Workers
+20,Female,Texas/TX,White; Other Asian,Master's degree,MED-Registered Nurses
+16,Female,Oregon/OR,Vietnamese alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Wisconsin/WI,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Virginia/VA,White alone,"1 or more years of college credit, no degree",EDU-Teaching Assistants
+19,Female,South Carolina/SC,White alone,"1 or more years of college credit, no degree","MIL-Military, Rank Not Specified"
+20,Female,Oregon/OR,White alone,Associate's degree,TRN-Driver/Sales Workers And Truck Drivers
+19,Female,Pennsylvania/PA,White alone,"1 or more years of college credit, no degree","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+17,Female,California/CA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,California/CA,Filipino; and/or Asian groups; and/or Native Hawaiian and Other Pacific Islander groups; and/or Some Other Race,1,HLS-Personal Care Aides
+16,Female,New York/NY,White alone,Bachelor's degree,"SAL-Securities, Commodities, And Financial Services Sales Agents"
+18,Female,Mississippi/MS,White alone,Master's degree,CMM-Software Developers
+17,Female,Arizona/AZ,Korean alone,Bachelor's degree,HLS-Medical Assistants
+17,Female,New Mexico/NM,White alone,Regular high school diploma,SAL-First-Line Supervisors Of Retail Sales Workers
+16,Female,Louisiana/LA,White; Some Other Race,Bachelor's degree,EAT-Chefs And Head Cooks
+18,Female,Arizona/AZ,White; Some Other Race,12th grade - no diploma,"RPR-Heating, Air Conditioning, And Refrigeration Mechanics And Installers"
+17,Female,Indiana/IN,White alone,Professional degree beyond a bachelor's degree,MGR-Financial Managers
+19,Female,California/CA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Indiana/IN,White alone,Regular high school diploma,OFF-Insurance Claims And Policy Processing Clerks
+21,Female,New York/NY,Black or African American; Some Other Race,Associate's degree,MGR-Chief Executives And Legislators
+19,Female,Oregon/OR,White alone,Bachelor's degree,SAL-Retail Salespersons
+16,Female,Georgia/GA,Black or African American alone,Regular high school diploma,SAL-Retail Salespersons
+21,Female,Georgia/GA,White alone,GED or alternative credential,"CON-Plumbers, Pipefitters, And Steamfitters"
+17,Female,California/CA,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Colorado/CO,White; Some Other Race,"Some college, but less than 1 year",RPR-Aircraft Mechanics And Service Technicians
+16,Female,California/CA,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Nevada/NV,White alone,"Some college, but less than 1 year",TRN-Cleaners Of Vehicles And Equipment
+17,Female,California/CA,White alone,GED or alternative credential,BUS-Project Management Specialists
+19,Female,Alabama/AL,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,White alone,Regular high school diploma,CLN-Other Grounds Maintenance Workers
+16,Female,South Carolina/SC,White alone,Master's degree,CMS-Clergy
+16,Female,West Virginia/WV,White alone,Bachelor's degree,MED-Registered Nurses
+18,Female,Louisiana/LA,Other Asian alone,Associate's degree,PRD-Food Cooking Machine Operators And Tenders
+17,Female,Virginia/VA,White alone,Professional degree beyond a bachelor's degree,"LGL-Lawyers, And Judges, Magistrates, And Other Judicial Workers"
+17,Female,Colorado/CO,Some Other Race alone,"Some college, but less than 1 year",MGR-Other Managers
+16,Female,Virginia/VA,White; Black or African American,Regular high school diploma,OFF-Couriers And Messengers
+19,Female,Florida/FL,White; Black or African American,Master's degree,ENT-Writers And Authors
+18,Female,Missouri/MO,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,California/CA,Filipino alone,Bachelor's degree,MED-Pharmacists
+16,Female,Georgia/GA,White alone,Associate's degree,OFF-Executive Secretaries And Executive Administrative Assistants
+17,Female,New York/NY,White alone,Master's degree,MGR-Financial Managers
+21,Female,District of Columbia/DC,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Arizona/AZ,White alone,"1 or more years of college credit, no degree",EDU-Other Teachers and Instructors
+19,Female,California/CA,White alone,Bachelor's degree,MED-Respiratory Therapists
+16,Female,California/CA,White; Some Other Race,"Some college, but less than 1 year",SAL-First-Line Supervisors Of Retail Sales Workers
+18,Female,Texas/TX,White alone,Master's degree,EDU-Secondary School Teachers
+20,Female,Arkansas/AR,White alone,Associate's degree,CLN-Maids And Housekeeping Cleaners
+21,Female,California/CA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Virginia/VA,Black or African American alone,"Some college, but less than 1 year",SAL-Retail Salespersons
+21,Female,Louisiana/LA,White alone,"1 or more years of college credit, no degree",RPR-Aircraft Mechanics And Service Technicians
+20,Female,Florida/FL,White alone,"Some college, but less than 1 year","TRN-Packers And Packagers, Hand"
+18,Female,Maryland/MD,White alone,"Some college, but less than 1 year",PRT-Security Guards And Gambling Surveillance Officers
+21,Female,Georgia/GA,Black or African American alone,Professional degree beyond a bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Texas/TX,White; Some Other Race,Doctorate degree,TRN-Taxi Drivers
+16,Female,California/CA,White alone,"1 or more years of college credit, no degree",OFF-Receptionists And Information Clerks
+18,Female,California/CA,Chinese alone,Master's degree,ENG-Other Engineers
+20,Female,Massachusetts/MA,White alone,Regular high school diploma,"SAL-Sales And Related Workers, All Other"
+16,Female,Michigan/MI,White alone,Bachelor's degree,OFF-Customer Service Representatives
+18,Female,California/CA,White alone,Regular high school diploma,"RPR-First-Line Supervisors Of Mechanics, Installers, And Repairers"
+16,Female,Iowa/IA,White alone,Bachelor's degree,CMM-Computer Support Specialists
+19,Female,Texas/TX,White; Some Other Race,9,"CON-Plumbers, Pipefitters, And Steamfitters"
+16,Female,Colorado/CO,White alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Texas/TX,Some Other Race alone,Professional degree beyond a bachelor's degree,MED-Veterinarians
+18,Female,Oregon/OR,White alone,"1 or more years of college credit, no degree",RPR-Aircraft Mechanics And Service Technicians
+20,Female,Mississippi/MS,White alone,Bachelor's degree,MGR-Other Managers
+19,Female,Ohio/OH,White alone,Bachelor's degree,CMM-Software Developers
+17,Female,Texas/TX,White alone,GED or alternative credential,TRN-Driver/Sales Workers And Truck Drivers
+19,Female,Florida/FL,Vietnamese alone,Grade 9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,New York/NY,Asian Indian alone,Associate's degree,MGR-Chief Executives And Legislators
+20,Female,Tennessee/TN,White alone,Regular high school diploma,CON-Electricians
+18,Female,New York/NY,White; Some Other Race,Regular high school diploma,CON-Carpenters
+16,Female,Rhode Island/RI,White alone,Doctorate degree,CMM-Software Developers
+17,Female,Ohio/OH,White alone,Bachelor's degree,MGR-Financial Managers
+18,Female,Georgia/GA,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,New Jersey/NJ,White alone,Regular high school diploma,CLN-Janitors And Building Cleaners
+16,Female,Texas/TX,White alone,Regular high school diploma,EAT-Waiters And Waitresses
+16,Female,Missouri/MO,White alone,Bachelor's degree,PRT-Firefighters
+16,Female,California/CA,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Ohio/OH,White alone,"Some college, but less than 1 year","TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+17,Female,Texas/TX,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Alabama/AL,Black or African American alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,South Carolina/SC,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Pennsylvania/PA,White alone,Associate's degree,EDU-Teaching Assistants
+16,Female,Texas/TX,White alone,Regular high school diploma,RPR-Automotive Service Technicians And Mechanics
+16,Female,Georgia/GA,Black or African American alone,"1 or more years of college credit, no degree","ENG-Other Engineering Technologists And Technicians, Except Drafters"
+19,Female,Pennsylvania/PA,Black or African American alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Connecticut/CT,White alone,Bachelor's degree,OFF-Procurement Clerks
+20,Female,Nevada/NV,White; American Indian and Alaska Native; and/or Asian groups; and/or Native Hawaiian and Other Pacific Islander groups,"Some college, but less than 1 year",SAL-Retail Salespersons
+17,Female,Washington/WA,White alone,Bachelor's degree,OFF-First-Line Supervisors Of Office And Administrative Support Workers
+18,Female,California/CA,Some Other Race alone,1,"TRN-Bus Drivers, School"
+17,Female,California/CA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,White alone,Bachelor's degree,MGR-Chief Executives And Legislators
+20,Female,New York/NY,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Pennsylvania/PA,White alone,"1 or more years of college credit, no degree",CON-Carpenters
+19,Female,New York/NY,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Massachusetts/MA,White alone,Bachelor's degree,MED-Other Healthcare Practitioners and Technical Occupations
+17,Female,Washington/WA,White alone,Bachelor's degree,FFF-Other Agricultural Workers
+17,Female,Illinois/IL,Some Other Race alone,GED or alternative credential,TRN-Driver/Sales Workers And Truck Drivers
+20,Female,Wisconsin/WI,White alone,Associate's degree,CLN-Landscaping And Groundskeeping Workers
+18,Female,Wisconsin/WI,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,White; Some Other Race,"1 or more years of college credit, no degree","PRD-Miscellaneous Production Workers, Including Equipment Operators And Tenders"
+17,Female,Pennsylvania/PA,White alone,Master's degree,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+21,Female,Missouri/MO,Black or African American alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Alabama/AL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,South Carolina/SC,White alone,Regular high school diploma,"MIL-Military, Rank Not Specified"
+16,Female,Florida/FL,White alone,"1 or more years of college credit, no degree",SAL-Retail Salespersons
+18,Female,Minnesota/MN,White alone,Regular high school diploma,"RPR-First-Line Supervisors Of Mechanics, Installers, And Repairers"
+16,Female,California/CA,American Indian and Alaska Native alone,8,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Oregon/OR,Vietnamese alone,Bachelor's degree,MGR-Social And Community Service Managers
+17,Female,Massachusetts/MA,Vietnamese alone,Bachelor's degree,MED-Pharmacy Technicians
+19,Female,New Jersey/NJ,White alone,Regular high school diploma,EAT-Food Preparation Workers
+18,Female,Ohio/OH,White alone,Bachelor's degree,ENG-Mechanical Engineers
+17,Female,Colorado/CO,White alone,"Some college, but less than 1 year",SAL-First-Line Supervisors Of Retail Sales Workers
+20,Female,West Virginia/WV,White; Some Other Race,Regular high school diploma,EAT-Cooks
+16,Female,California/CA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Colorado/CO,White alone,Regular high school diploma,PRD-Other Assemblers And Fabricators
+18,Female,Illinois/IL,White alone,Doctorate degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,New Jersey/NJ,White alone,Regular high school diploma,SAL-Retail Salespersons
+21,Female,California/CA,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Alabama/AL,Black or African American alone,Associate's degree,MED-Dental Hygienists
+17,Female,California/CA,White alone,Professional degree beyond a bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Illinois/IL,White alone,Bachelor's degree,MGR-Other Managers
+16,Female,Michigan/MI,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,West Virginia/WV,White alone,Bachelor's degree,CMS-Clergy
+17,Female,Utah/UT,White alone,Bachelor's degree,"MED-Nurse Practitioners, And Nurse Midwives"
+16,Female,California/CA,White alone,"1 or more years of college credit, no degree",ENT-Public Relations Specialists
+16,Female,Indiana/IN,Black or African American alone,1,PRD-Other Assemblers And Fabricators
+16,Female,Iowa/IA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Pennsylvania/PA,White alone,Grade 11,HLS-Nursing Assistants
+19,Female,Washington/WA,White alone,Associate's degree,EAT-Bartenders
+17,Female,California/CA,Chinese alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Colorado/CO,Black or African American alone,"1 or more years of college credit, no degree",TRN-Pumping Station Operators
+19,Female,Louisiana/LA,White alone,Regular high school diploma,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+19,Female,Louisiana/LA,White alone,Regular high school diploma,PRS-Residential Advisors
+16,Female,Tennessee/TN,White alone,"1 or more years of college credit, no degree",OFF-Postal Service Mail Carriers
+19,Female,New York/NY,White alone,Bachelor's degree,EDU-Elementary And Middle School Teachers
+16,Female,Ohio/OH,White alone,Bachelor's degree,MGR-Medical And Health Services Managers
+18,Female,Arizona/AZ,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Kentucky/KY,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Pennsylvania/PA,White alone,Bachelor's degree,MGR-Social And Community Service Managers
+19,Female,Colorado/CO,White alone,Bachelor's degree,"Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked"
+18,Female,Pennsylvania/PA,Other Asian alone,1,MED-Medical Records Specialists
+17,Female,Louisiana/LA,Black or African American alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Massachusetts/MA,White alone,Regular high school diploma,EAT-Fast Food And Counter Workers
+16,Female,Tennessee/TN,White alone,Regular high school diploma,TRN-Driver/Sales Workers And Truck Drivers
+17,Female,Ohio/OH,White alone,Master's degree,EDU-Secondary School Teachers
+16,Female,California/CA,Vietnamese alone,Regular high school diploma,RPR-Precision Instrument And Equipment Repairers
+18,Female,California/CA,White alone,Regular high school diploma,"PRS-Hairdressers, Hairstylists, And Cosmetologists"
+19,Female,Georgia/GA,White alone,"1 or more years of college credit, no degree",OFF-Postal Service Mail Carriers
+19,Female,Georgia/GA,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Georgia/GA,Black or African American alone,Master's degree,FIN-Accountants And Auditors
+19,Female,Arkansas/AR,White; Some Other Race,Regular high school diploma,MED-Licensed Practical And Licensed Vocational Nurses
+16,Female,Texas/TX,White alone,"1 or more years of college credit, no degree",FIN-Personal Financial Advisors
+16,Female,Missouri/MO,White alone,Bachelor's degree,OFF-First-Line Supervisors Of Office And Administrative Support Workers
+17,Female,New York/NY,White alone,Bachelor's degree,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+16,Female,Virginia/VA,White alone,Master's degree,"CMS-Counselors, All Other"
+21,Female,California/CA,White alone,Bachelor's degree,PRS-Childcare Workers
+16,Female,New York/NY,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Illinois/IL,White alone,Bachelor's degree,MGR-General And Operations Managers
+17,Female,Virginia/VA,White alone,Bachelor's degree,EDU-Elementary And Middle School Teachers
+19,Female,Texas/TX,Black or African American alone,GED or alternative credential,PRT-Detectives And Criminal Investigators
+19,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Wisconsin/WI,White alone,"1 or more years of college credit, no degree",CMS-Other Community and Social Service Specialists
+17,Female,Georgia/GA,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,New Hampshire/NH,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,White; Black or African American; Asian groups,"Some college, but less than 1 year",PRD-Packaging And Filling Machine Operators And Tenders
+17,Female,Michigan/MI,White alone,Grade 9,FFF-Other Agricultural Workers
+16,Female,Tennessee/TN,White alone,"Some college, but less than 1 year",ENT-Musicians and Singers
+20,Female,Texas/TX,White; Some Other Race,"1 or more years of college credit, no degree",CON-Construction Equipment Operators
+20,Female,North Carolina/NC,White; American Indian and Alaska Native,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,New York/NY,Asian Indian alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,California/CA,Some Other Race alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,New York/NY,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Tennessee/TN,White alone,"1 or more years of college credit, no degree","BUS-Business Operations Specialists, All Other"
+16,Female,California/CA,Chinese alone,Bachelor's degree,EAT-Dining Room And Cafeteria Attendants And Bartender Helpers
+18,Female,Nebraska/NE,White alone,Master's degree,EDU-Preschool And Kindergarten Teachers
+19,Female,Florida/FL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Washington/WA,White alone,"1 or more years of college credit, no degree","OFF-Switchboard Operators, Including Answering Service"
+16,Female,Pennsylvania/PA,White alone,Regular high school diploma,CON-Carpenters
+20,Female,Texas/TX,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Connecticut/CT,White alone,Doctorate degree,EDU-Postsecondary Teachers
+19,Female,North Carolina/NC,Black or African American alone,Regular high school diploma,EAT-Cooks
+16,Female,Minnesota/MN,Black or African American alone,"Some college, but less than 1 year",CON-Construction Laborers
+21,Female,Arkansas/AR,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Michigan/MI,White alone,GED or alternative credential,EAT-Food Preparation Workers
+16,Female,Georgia/GA,White alone,Regular high school diploma,MGR-Public Relations And Fundraising Managers
+16,Female,Tennessee/TN,White alone,Bachelor's degree,CON-Electricians
+17,Female,Virginia/VA,Filipino alone,"1 or more years of college credit, no degree",MGR-Medical And Health Services Managers
+21,Female,New York/NY,White; Some Other Race,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,New Mexico/NM,White; Some Other Race,12th grade - no diploma,CON-Carpenters
+20,Female,Arkansas/AR,White alone,Bachelor's degree,EDU-Postsecondary Teachers
+16,Female,Oregon/OR,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Illinois/IL,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Oklahoma/OK,White; Some Other Race,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,West Virginia/WV,White alone,Master's degree,MGR-Computer And Information Systems Managers
+18,Female,Texas/TX,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Arizona/AZ,White alone,Grade 10,CON-Carpenters
+16,Female,Arkansas/AR,White alone,Bachelor's degree,OFF-Executive Secretaries And Executive Administrative Assistants
+19,Female,Texas/TX,Some Other Race alone,GED or alternative credential,RPR-Bus And Truck Mechanics And Diesel Engine Specialists
+16,Female,California/CA,White alone,Master's degree,MGR-Education And Childcare Administrators
+19,Female,Arizona/AZ,Black or African American alone,12th grade - no diploma,"ENT-Entertainers And Performers, Sports and Related Workers, All Other"
+19,Female,Ohio/OH,White alone,GED or alternative credential,EAT-Cooks
+17,Female,North Dakota/ND,White alone,Regular high school diploma,"MGR-Farmers, Ranchers, And Other Agricultural Managers"
+18,Female,Ohio/OH,Vietnamese alone,Bachelor's degree,PRT-Private Detectives And Investigators
+18,Female,Oregon/OR,White alone,"Some college, but less than 1 year",HLS-Personal Care Aides
+19,Female,Texas/TX,White alone,"1 or more years of college credit, no degree",CLN-Maids And Housekeeping Cleaners
+16,Female,California/CA,Chinese alone,Regular high school diploma,"OFF-Bookkeeping, Accounting, And Auditing Clerks"
+16,Female,North Carolina/NC,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Texas/TX,White alone,Bachelor's degree,"PRD-Inspectors, Testers, Sorters, Samplers, And Weighers"
+16,Female,Maryland/MD,Asian Indian alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Arkansas/AR,White alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,New Hampshire/NH,White; American Indian and Alaska Native,Associate's degree,EDU-Preschool And Kindergarten Teachers
+17,Female,New Jersey/NJ,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Kansas/KS,American Indian and Alaska Native alone,Bachelor's degree,CMS-Social And Human Service Assistants
+16,Female,North Carolina/NC,White alone,Bachelor's degree,"PRS-Hairdressers, Hairstylists, And Cosmetologists"
+16,Female,Illinois/IL,White alone,Associate's degree,MED-Registered Nurses
+19,Female,Indiana/IN,White alone,Regular high school diploma,MGR-Facilities Managers
+18,Female,Texas/TX,White alone,Regular high school diploma,PRT-Fire Inspectors
+17,Female,Florida/FL,Some Other Race alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Ohio/OH,White alone,Regular high school diploma,TRN-Industrial Truck And Tractor Operators
+19,Female,New York/NY,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Pennsylvania/PA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Illinois/IL,Some Other Race alone,Regular high school diploma,"CMM-Computer Occupations, All Other"
+19,Female,Pennsylvania/PA,White alone,Bachelor's degree,CON-Sheet Metal Workers
+16,Female,North Carolina/NC,White alone,Regular high school diploma,"OFF-Office Clerks, General"
+18,Female,California/CA,White; Some Other Race,Regular high school diploma,MIL-Military Enlisted Tactical Operations And Air/Weapons Specialists And Crew Members
+16,Female,North Carolina/NC,White alone,Bachelor's degree,MGR-Marketing Managers
+16,Female,Texas/TX,White; Some Other Race,Regular high school diploma,EAT-Cooks
+17,Female,New Jersey/NJ,White alone,Master's degree,ENG-Civil Engineers
+17,Female,Ohio/OH,White alone,Bachelor's degree,BUS-Market Research Analysts And Marketing Specialists
+19,Female,Washington/WA,White alone,"Some college, but less than 1 year","PRD-Welding, Soldering, And Brazing Workers"
+19,Female,Washington/WA,White alone,Associate's degree,"CMS-Child, Family, And School Social Workers"
+19,Female,Texas/TX,White alone,Bachelor's degree,MGR-Other Managers
+16,Female,Minnesota/MN,White alone,"1 or more years of college credit, no degree",MGR-Chief Executives And Legislators
+19,Female,Ohio/OH,White alone,Regular high school diploma,CON-Carpenters
+16,Female,Wisconsin/WI,White alone,Associate's degree,EDU-Preschool And Kindergarten Teachers
+16,Female,California/CA,Korean alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Texas/TX,White; Some Other Race,Regular high school diploma,CLN-Maids And Housekeeping Cleaners
+18,Female,Pennsylvania/PA,White alone,"Some college, but less than 1 year","CON-Plumbers, Pipefitters, And Steamfitters"
+18,Female,North Carolina/NC,White alone,Master's degree,EDU-Elementary And Middle School Teachers
+16,Female,California/CA,Some Other Race alone,12th grade - no diploma,SAL-Cashiers
+16,Female,Louisiana/LA,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Pennsylvania/PA,Asian Indian alone,Bachelor's degree,"SCI-Physical Scientists, All Other"
+16,Female,Kentucky/KY,Black or African American alone,"1 or more years of college credit, no degree",OFF-Customer Service Representatives
+16,Female,Virginia/VA,Black or African American alone,"1 or more years of college credit, no degree",SAL-Cashiers
+18,Female,Alabama/AL,Black or African American alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,West Virginia/WV,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,North Carolina/NC,White alone,Master's degree,CMS-Substance Abuse And Behavioral Disorder Counselors
+16,Female,Ohio/OH,Black or African American alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,California/CA,White alone,Bachelor's degree,EDU-Secondary School Teachers
+18,Female,Illinois/IL,White; American Indian and Alaska Native,Regular high school diploma,PRD-Other Assemblers And Fabricators
+19,Female,California/CA,Some Other Race alone,Regular high school diploma,"EAT-Hosts And Hostesses, Restaurant, Lounge, And Coffee Shop"
+18,Female,Louisiana/LA,White alone,Associate's degree,"MIL-Military, Rank Not Specified"
+21,Female,Alabama/AL,Black or African American alone,Master's degree,EDU-Secondary School Teachers
+16,Female,Texas/TX,White alone,12th grade - no diploma,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+18,Female,Pennsylvania/PA,Some Other Race alone,Regular high school diploma,CLN-Janitors And Building Cleaners
+17,Female,New York/NY,White alone,"1 or more years of college credit, no degree","PRS-Hairdressers, Hairstylists, And Cosmetologists"
+18,Female,California/CA,White alone,"Some college, but less than 1 year",TRN-Other Rail Transportation Workers
+20,Female,New York/NY,White alone,Bachelor's degree,OFF-Statistical Assistants
+16,Female,Ohio/OH,White alone,Bachelor's degree,LGL-Paralegals And Legal Assistants
+21,Female,Maryland/MD,Black or African American alone,Grade 9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Virginia/VA,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Associate's degree,HLS-Nursing Assistants
+16,Female,California/CA,Other Asian alone,Bachelor's degree,MED-Miscellaneous Health Technologists and Technicians
+18,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Florida/FL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Illinois/IL,White; Some Other Race,Bachelor's degree,MGR-Industrial Production Managers
+17,Female,California/CA,Some Other Race alone,Associate's degree,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+20,Female,California/CA,White alone,Master's degree,MGR-Chief Executives And Legislators
+16,Female,Ohio/OH,White alone,Bachelor's degree,MED-Registered Nurses
+18,Female,North Carolina/NC,American Indian and Alaska Native alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,North Carolina/NC,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Texas/TX,White; Black or African American; American Indian and Alaska Native,GED or alternative credential,"OFF-Weighers, Measurers, Checkers, And Samplers, Recordkeeping"
+19,Female,California/CA,Some Other Race alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Texas/TX,White alone,Regular high school diploma,RPR-Industrial And Refractory Machinery Mechanics
+17,Female,Texas/TX,White; Some Other Race,Regular high school diploma,PRD-Bakers
+17,Female,Delaware/DE,White alone,Associate's degree,TRN-Driver/Sales Workers And Truck Drivers
+17,Female,Kentucky/KY,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,North Carolina/NC,Black or African American alone,"1 or more years of college credit, no degree","TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+21,Female,Kansas/KS,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,New York/NY,White alone,Associate's degree,MGR-Chief Executives And Legislators
+17,Female,Georgia/GA,Black or African American alone,Bachelor's degree,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+16,Female,Florida/FL,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Texas/TX,White; Some Other Race,Regular high school diploma,EAT-Waiters And Waitresses
+16,Female,Minnesota/MN,White alone,Professional degree beyond a bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,White alone,"1 or more years of college credit, no degree",MGR-Other Managers
+18,Female,Florida/FL,White alone,Associate's degree,MGR-Construction Managers
+18,Female,Pennsylvania/PA,White alone,1,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Texas/TX,White alone,"Some college, but less than 1 year","SAL-Sales And Related Workers, All Other"
+19,Female,Washington/WA,White alone,Grade 9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,California/CA,Some Other Race alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,California/CA,Some Other Race alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Louisiana/LA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Illinois/IL,White alone,Bachelor's degree,MGR-Financial Managers
+19,Female,Indiana/IN,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Arizona/AZ,Some Other Race alone,"Some college, but less than 1 year",CLN-Landscaping And Groundskeeping Workers
+18,Female,New Jersey/NJ,White; Filipino,Bachelor's degree,"BUS-Purchasing Agents, Except Wholesale, Retail, And Farm Products"
+17,Female,Mississippi/MS,White alone,1,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+18,Female,Mississippi/MS,White alone,Bachelor's degree,CMM-Software Developers
+20,Female,Pennsylvania/PA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White alone,Regular high school diploma,PRT-Security Guards And Gambling Surveillance Officers
+21,Female,Louisiana/LA,Black or African American alone,1,EDU-Preschool And Kindergarten Teachers
+20,Female,Indiana/IN,White alone,Bachelor's degree,MGR-Medical And Health Services Managers
+16,Female,California/CA,White; Black or African American; Some Other Race,Bachelor's degree,PRT-Police Officers
+16,Female,Texas/TX,White alone,Bachelor's degree,EAT-Fast Food And Counter Workers
+16,Female,Indiana/IN,White alone,Master's degree,ENT-Other Designers
+16,Female,Washington/WA,White alone,"1 or more years of college credit, no degree",OFF-Customer Service Representatives
+16,Female,Missouri/MO,White alone,Master's degree,OFF-Receptionists And Information Clerks
+19,Female,California/CA,White alone,Bachelor's degree,ENG-Mechanical Engineers
+19,Female,Pennsylvania/PA,White alone,Regular high school diploma,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+19,Female,Missouri/MO,White alone,Regular high school diploma,HLS-Nursing Assistants
+16,Female,New York/NY,White alone,Master's degree,ENT-Music Directors and Composers
+21,Female,California/CA,White alone,Regular high school diploma,HLS-Home Health Aides
+16,Female,Texas/TX,White alone,"Some college, but less than 1 year","OFF-Production, Planning, And Expediting Clerks"
+18,Female,Illinois/IL,White alone,Grade 11,CON-Electricians
+21,Female,Michigan/MI,White alone,"1 or more years of college credit, no degree",SAL-Real Estate Brokers And Sales Agents
+18,Female,Oklahoma/OK,Some Other Race alone,"1 or more years of college credit, no degree",PRD-Cutting Workers
+18,Female,Washington/WA,White alone,1,MGR-General And Operations Managers
+20,Female,Tennessee/TN,Black or African American alone,Master's degree,"TRN-Packers And Packagers, Hand"
+16,Female,Texas/TX,Other Asian alone,"1 or more years of college credit, no degree",MGR-Food Service Managers
+18,Female,Minnesota/MN,White alone,Bachelor's degree,MGR-Other Managers
+17,Female,Nebraska/NE,White; American Indian and Alaska Native,Regular high school diploma,EAT-Food Preparation Workers
+18,Female,Massachusetts/MA,White alone,Associate's degree,MED-Licensed Practical And Licensed Vocational Nurses
+16,Female,New Mexico/NM,American Indian and Alaska Native alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Connecticut/CT,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Texas/TX,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Pennsylvania/PA,White alone,Master's degree,EDU-Teaching Assistants
+18,Female,New York/NY,White alone,Regular high school diploma,MGR-Medical And Health Services Managers
+20,Female,Arkansas/AR,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,"1 or more years of college credit, no degree",CLN-Landscaping And Groundskeeping Workers
+17,Female,Virginia/VA,White alone,Bachelor's degree,MGR-Construction Managers
+17,Female,Virginia/VA,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Tennessee/TN,White alone,"1 or more years of college credit, no degree",SAL-First-Line Supervisors Of Retail Sales Workers
+16,Female,New York/NY,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,Some Other Race alone,8,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Pennsylvania/PA,Black or African American alone,Regular high school diploma,TRN-Stockers And Order Fillers
+20,Female,New York/NY,White alone,"1 or more years of college credit, no degree",OFF-Customer Service Representatives
+17,Female,Arizona/AZ,White; Some Other Race,Regular high school diploma,"RPR-Maintenance And Repair Workers, General"
+17,Female,New York/NY,Some Other Race alone,Associate's degree,HLS-Physical Therapist Assistants And Aides
+16,Female,Texas/TX,White alone,Bachelor's degree,BUS-Management Analysts
+17,Female,Maine/ME,White alone,Bachelor's degree,ENT-Coaches and Scouts
+21,Female,Maine/ME,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,South Carolina/SC,White alone,Doctorate degree,"SCI-Physical Scientists, All Other"
+16,Female,North Carolina/NC,Black or African American alone,"Some college, but less than 1 year",HLS-Nursing Assistants
+20,Female,North Carolina/NC,White alone,"1 or more years of college credit, no degree","CLN-First-Line Supervisors Of Landscaping, Lawn Service, And Groundskeeping Workers"
+16,Female,North Carolina/NC,Asian Indian alone,Bachelor's degree,"CMM-Computer Occupations, All Other"
+16,Female,Texas/TX,American Indian and Alaska Native; Asian groups; and/or Native Hawaiian and Other Pacific Islander groups; and/or Some Other Race,"1 or more years of college credit, no degree","OFF-Bookkeeping, Accounting, And Auditing Clerks"
+17,Female,New York/NY,Other Asian; Some Other Race,Regular high school diploma,"CON-Plumbers, Pipefitters, And Steamfitters"
+20,Female,Georgia/GA,White; Japanese,"1 or more years of college credit, no degree",CLN-Janitors And Building Cleaners
+21,Female,New Jersey/NJ,White alone,"Some college, but less than 1 year",SAL-Real Estate Brokers And Sales Agents
+16,Female,Wisconsin/WI,White alone,Regular high school diploma,OFF-Customer Service Representatives
+16,Female,Texas/TX,White; Some Other Race,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Mississippi/MS,Black or African American alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Kentucky/KY,White; American Indian and Alaska Native,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Texas/TX,White alone,Associate's degree,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+18,Female,California/CA,White alone,Bachelor's degree,"MGR-Property, Real Estate, And Community Association Managers"
+16,Female,California/CA,White alone,"Some college, but less than 1 year",RPR-Home Appliance Repairers
+18,Female,California/CA,Black or African American alone,"Some college, but less than 1 year",HLS-Personal Care Aides
+17,Female,Virginia/VA,American Indian and Alaska Native alone,Bachelor's degree,CMM-Computer Systems Analysts
+18,Female,Minnesota/MN,White alone,Bachelor's degree,"SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel"
+17,Female,South Carolina/SC,White alone,Grade 9,"RPR-Maintenance And Repair Workers, General"
+17,Female,South Carolina/SC,White; Some Other Race,Grade 10,CLN-Landscaping And Groundskeeping Workers
+21,Female,Idaho/ID,White alone,Master's degree,MGR-Chief Executives And Legislators
+16,Female,Idaho/ID,White alone,"1 or more years of college credit, no degree","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+16,Female,New Jersey/NJ,White; Some Other Race,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Regular high school diploma,EAT-Food Preparation Workers
+18,Female,District of Columbia/DC,Black or African American alone,Grade 11,CLN-Maids And Housekeeping Cleaners
+17,Female,Oregon/OR,White alone,"Some college, but less than 1 year",TRN-Cleaners Of Vehicles And Equipment
+16,Female,Texas/TX,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Pennsylvania/PA,White; Black or African American,Master's degree,"SCI-Physical Scientists, All Other"
+20,Female,California/CA,White alone,Regular high school diploma,PRT-Police Officers
+16,Female,North Carolina/NC,White; Some Other Race,Associate's degree,"CON-Plumbers, Pipefitters, And Steamfitters"
+17,Female,Texas/TX,White alone,"1 or more years of college credit, no degree",SAL-Cashiers
+17,Female,South Carolina/SC,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Mississippi/MS,White alone,Grade 9,TRN-Driver/Sales Workers And Truck Drivers
+17,Female,California/CA,White alone,Regular high school diploma,CON-Construction And Building Inspectors
+20,Female,Illinois/IL,White alone,"1 or more years of college credit, no degree",MGR-Medical And Health Services Managers
+17,Female,Wisconsin/WI,White alone,Regular high school diploma,RPR-Industrial And Refractory Machinery Mechanics
+16,Female,California/CA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Rhode Island/RI,White alone,Regular high school diploma,TRN-Driver/Sales Workers And Truck Drivers
+19,Female,North Carolina/NC,White alone,Associate's degree,OFF-Receptionists And Information Clerks
+19,Female,Illinois/IL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Pennsylvania/PA,White alone,Bachelor's degree,BUS-Project Management Specialists
+19,Female,Texas/TX,Other Asian alone,Bachelor's degree,MGR-Other Managers
+16,Female,Kentucky/KY,White alone,Regular high school diploma,MED-Dietetic Technicians And Ophthalmic Medical Technicians
+17,Female,California/CA,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,District of Columbia/DC,Black or African American alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,District of Columbia/DC,White alone,Doctorate degree,CMM-Software Developers
+19,Female,Delaware/DE,White alone,Associate's degree,ENG-Electrical And Electronic Engineering Technologists And Technicians
+16,Female,New York/NY,Some Other Race alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Virginia/VA,White alone,Associate's degree,MED-Registered Nurses
+21,Female,Oklahoma/OK,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,New York/NY,White alone,Bachelor's degree,OFF-Proofreaders And Copy Markers
+18,Female,Maryland/MD,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Georgia/GA,Black or African American alone,Bachelor's degree,OFF-First-Line Supervisors Of Office And Administrative Support Workers
+17,Female,Missouri/MO,White alone,Master's degree,MGR-Education And Childcare Administrators
+17,Female,Rhode Island/RI,White alone,Bachelor's degree,BUS-Management Analysts
+18,Female,New Jersey/NJ,White alone,"1 or more years of college credit, no degree",SAL-Cashiers
+16,Female,Arizona/AZ,White alone,Master's degree,MGR-General And Operations Managers
+19,Female,Indiana/IN,White alone,Bachelor's degree,MED-Registered Nurses
+16,Female,Utah/UT,White alone,Regular high school diploma,"OFF-Interviewers, Except Eligibility And Loan"
+20,Female,Texas/TX,Some Other Race alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Illinois/IL,White alone,Bachelor's degree,"SAL-Sales Representatives, Wholesale And Manufacturing"
+19,Female,Florida/FL,American Indian and Alaska Native alone,GED or alternative credential,"CON-Carpet, Floor, And Tile Installers And Finishers"
+21,Female,California/CA,White alone,Associate's degree,MED-Psychiatric Technicians
+16,Female,Colorado/CO,White alone,"1 or more years of college credit, no degree",CMM-Software Developers
+16,Female,Wisconsin/WI,White; Black or African American,Regular high school diploma,CON-Elevator And Escalator Installers And Repairers
+19,Female,Texas/TX,White alone,"Some college, but less than 1 year",EDU-Teaching Assistants
+18,Female,California/CA,White alone,Regular high school diploma,"PRS-Hairdressers, Hairstylists, And Cosmetologists"
+16,Female,Georgia/GA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Montana/MT,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Illinois/IL,White alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Arizona/AZ,White alone,Associate's degree,MED-Registered Nurses
+17,Female,Wisconsin/WI,White alone,1,TRN-Driver/Sales Workers And Truck Drivers
+16,Female,Florida/FL,Black or African American alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,White alone,GED or alternative credential,EAT-Cooks
+18,Female,Arizona/AZ,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Grade 7,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,New York/NY,Black or African American alone,Associate's degree,MGR-Construction Managers
+16,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Wisconsin/WI,White alone,"1 or more years of college credit, no degree",FIN-Personal Financial Advisors
+17,Female,Iowa/IA,White alone,Bachelor's degree,MGR-Medical And Health Services Managers
+21,Female,New York/NY,White; Some Other Race,12th grade - no diploma,"BUS-Wholesale And Retail Buyers, Except Farm Products"
+17,Female,Florida/FL,White alone,Professional degree beyond a bachelor's degree,MED-Registered Nurses
+19,Female,New York/NY,White alone,Associate's degree,MED-Dental Hygienists
+19,Female,Ohio/OH,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Massachusetts/MA,White; Some Other Race,Associate's degree,OFF-Customer Service Representatives
+20,Female,California/CA,White; Some Other Race,Regular high school diploma,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+19,Female,California/CA,American Indian and Alaska Native alone,Regular high school diploma,MIL-Military Enlisted Tactical Operations And Air/Weapons Specialists And Crew Members
+21,Female,Florida/FL,White; Chinese; Native Hawaiian,Master's degree,EDU-Other Educational Instruction and Library Workers
+16,Female,Nevada/NV,White alone,Doctorate degree,EDU-Postsecondary Teachers
+19,Female,Pennsylvania/PA,White alone,Regular high school diploma,HLS-Orderlies and Psychiatric Aides
+17,Female,Arizona/AZ,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Pennsylvania/PA,White alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Kentucky/KY,Some Other Race alone,"1 or more years of college credit, no degree","TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+18,Female,Oregon/OR,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Pennsylvania/PA,White alone,"Some college, but less than 1 year","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+19,Female,Illinois/IL,White; Some Other Race,"Some college, but less than 1 year",OFF-Other Financial Clerks
+18,Female,Mississippi/MS,White alone,Regular high school diploma,"SAL-Sales Representatives, Wholesale And Manufacturing"
+17,Female,Georgia/GA,White alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Maryland/MD,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Florida/FL,White; Some Other Race,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Texas/TX,White alone,Bachelor's degree,MED-Registered Nurses
+18,Female,Nebraska/NE,White alone,"Some college, but less than 1 year",MGR-Facilities Managers
+19,Female,Alabama/AL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Arizona/AZ,White alone,Bachelor's degree,BUS-Management Analysts
+20,Female,Florida/FL,White alone,Regular high school diploma,ENG-Aerospace Engineers
+16,Female,Louisiana/LA,White; Some Other Race,Regular high school diploma,EAT-Cooks
+18,Female,Oklahoma/OK,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Idaho/ID,White alone,Associate's degree,SAL-Parts Salespersons
+16,Female,Oregon/OR,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,New Jersey/NJ,White alone,Regular high school diploma,OFF-Receptionists And Information Clerks
+16,Female,Ohio/OH,White; Some Other Race,Regular high school diploma,PRD-Other Assemblers And Fabricators
+16,Female,Illinois/IL,White alone,GED or alternative credential,HLS-Personal Care Aides
+18,Female,Florida/FL,White alone,Associate's degree,"SAL-Door-To-Door Sales Workers, News And Street Vendors, And Related Workers"
+18,Female,Florida/FL,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Tennessee/TN,White; Black or African American,"Some college, but less than 1 year",OFF-Customer Service Representatives
+17,Female,Montana/MT,White alone,"Some college, but less than 1 year",EAT-Waiters And Waitresses
+18,Female,Pennsylvania/PA,White alone,Regular high school diploma,BUS-Market Research Analysts And Marketing Specialists
+16,Female,Massachusetts/MA,White alone,Grade 11,PRS-Childcare Workers
+16,Female,Minnesota/MN,White alone,Bachelor's degree,EDU-Elementary And Middle School Teachers
+16,Female,Maryland/MD,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Ohio/OH,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Texas/TX,White alone,Grade 10,PRT-Security Guards And Gambling Surveillance Officers
+18,Female,Georgia/GA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Colorado/CO,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Texas/TX,White alone,Master's degree,EDU-Elementary And Middle School Teachers
+19,Female,Texas/TX,Black or African American alone,Master's degree,MED-Registered Nurses
+16,Female,Pennsylvania/PA,White alone,"1 or more years of college credit, no degree",OFF-Bill And Account Collectors
+18,Female,New Jersey/NJ,White alone,Regular high school diploma,"RPR-Maintenance And Repair Workers, General"
+17,Female,Georgia/GA,White alone,Regular high school diploma,FFF-Other Agricultural Workers
+18,Female,Florida/FL,Filipino alone,Bachelor's degree,CMM-Web Developers
+17,Female,Texas/TX,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Arkansas/AR,White; Some Other Race,"1 or more years of college credit, no degree",CON-Carpenters
+16,Female,Georgia/GA,White alone,Regular high school diploma,OFF-Other Office And Administrative Support Workers
+16,Female,Maryland/MD,White alone,Bachelor's degree,MGR-Other Managers
+21,Female,Utah/UT,White alone,Bachelor's degree,EDU-Elementary And Middle School Teachers
+17,Female,New Mexico/NM,White alone,"1 or more years of college credit, no degree",TRN-Stockers And Order Fillers
+16,Female,Indiana/IN,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Virginia/VA,Some Other Race alone,9,CON-Construction Laborers
+16,Female,Ohio/OH,White alone,Doctorate degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,New York/NY,White; American Indian and Alaska Native; Some Other Race,12th grade - no diploma,HLS-Personal Care Aides
+20,Female,California/CA,White alone,Regular high school diploma,PRS-Childcare Workers
+19,Female,Texas/TX,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Texas/TX,White; Some Other Race,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,Some Other Race alone,1,TRN-Industrial Truck And Tractor Operators
+16,Female,Nebraska/NE,Some Other Race alone,Master's degree,RPR-Industrial And Refractory Machinery Mechanics
+17,Female,Washington/WA,Korean alone,Regular high school diploma,MGR-Other Managers
+16,Female,West Virginia/WV,White alone,Regular high school diploma,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+17,Female,Ohio/OH,Some Other Race alone,Grade 10,EAT-Dining Room And Cafeteria Attendants And Bartender Helpers
+16,Female,North Carolina/NC,Black or African American alone,Regular high school diploma,"PRD-Inspectors, Testers, Sorters, Samplers, And Weighers"
+18,Female,California/CA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Washington/WA,White; Some Other Race,"1 or more years of college credit, no degree",SAL-First-Line Supervisors Of Non-Retail Sales Workers
+18,Female,Georgia/GA,White alone,Bachelor's degree,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+17,Female,North Carolina/NC,White alone,Bachelor's degree,"SAL-Sales Representatives, Wholesale And Manufacturing"
+16,Female,Pennsylvania/PA,White alone,Regular high school diploma,PRD-First-Line Supervisors Of Production And Operating Workers
+17,Female,Arizona/AZ,White alone,Regular high school diploma,CLN-Landscaping And Groundskeeping Workers
+19,Female,New Jersey/NJ,Asian Indian alone,Bachelor's degree,EDU-Preschool And Kindergarten Teachers
+16,Female,Texas/TX,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Missouri/MO,Black or African American alone,Grade 7,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Illinois/IL,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Arizona/AZ,Chinese alone,Doctorate degree,ENG-Chemical Engineers
+18,Female,Texas/TX,White; Some Other Race,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Colorado/CO,White alone,Master's degree,BUS-Management Analysts
+17,Female,South Carolina/SC,White alone,Regular high school diploma,MGR-Emergency Management Directors
+19,Female,California/CA,Some Other Race alone,Bachelor's degree,CMM-Computer Systems Analysts
+17,Female,Colorado/CO,White alone,Doctorate degree,ENT-Graphic Designers
+18,Female,Indiana/IN,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Utah/UT,White alone,Bachelor's degree,"SAL-Sales Representatives, Wholesale And Manufacturing"
+18,Female,North Dakota/ND,White alone,Bachelor's degree,"MGR-Farmers, Ranchers, And Other Agricultural Managers"
+19,Female,Pennsylvania/PA,Some Other Race alone,Regular high school diploma,"FFF-Graders And Sorters, Agricultural Products"
+20,Female,Mississippi/MS,Black or African American alone,Associate's degree,EDU-Tutors
+19,Female,Mississippi/MS,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Vermont/VT,White alone,Regular high school diploma,OFF-Receptionists And Information Clerks
+17,Female,Arizona/AZ,White alone,Doctorate degree,EDU-Postsecondary Teachers
+17,Female,Ohio/OH,White alone,Associate's degree,CON-Construction And Building Inspectors
+17,Female,Tennessee/TN,White alone,Regular high school diploma,SAL-Cashiers
+20,Female,Michigan/MI,White alone,Associate's degree,SAL-Advertising Sales Agents
+18,Female,Missouri/MO,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Wisconsin/WI,White alone,12th grade - no diploma,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+16,Female,California/CA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,North Carolina/NC,White alone,Regular high school diploma,"PRD-Inspectors, Testers, Sorters, Samplers, And Weighers"
+17,Female,Texas/TX,White; Some Other Race,Regular high school diploma,TRN-Industrial Truck And Tractor Operators
+20,Female,Florida/FL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Arizona/AZ,White alone,Bachelor's degree,EDU-Postsecondary Teachers
+18,Female,North Carolina/NC,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Iowa/IA,White alone,Regular high school diploma,"BUS-Claims Adjusters, Appraisers, Examiners, And Investigators"
+16,Female,New York/NY,White alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,Some Other Race alone,Master's degree,TRN-Taxi Drivers
+21,Female,Utah/UT,Some Other Race alone,Bachelor's degree,MGR-Medical And Health Services Managers
+17,Female,California/CA,White alone,"1 or more years of college credit, no degree","TRN-Bus Drivers, Transit And Intercity"
+18,Female,Michigan/MI,White alone,"1 or more years of college credit, no degree",EAT-Fast Food And Counter Workers
+17,Female,Michigan/MI,White alone,Master's degree,OFF-Customer Service Representatives
+17,Female,Michigan/MI,White alone,Bachelor's degree,FIN-Accountants And Auditors
+20,Female,Minnesota/MN,White; Vietnamese,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Minnesota/MN,White alone,Doctorate degree,EDU-Postsecondary Teachers
+16,Female,Missouri/MO,White alone,GED or alternative credential,HLS-Personal Care Aides
+19,Female,Florida/FL,Black or African American alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Wisconsin/WI,White alone,"1 or more years of college credit, no degree",EDU-Tutors
+16,Female,Pennsylvania/PA,White alone,"Some college, but less than 1 year",SAL-Cashiers
+20,Female,California/CA,White alone,Regular high school diploma,MGR-Human Resources Managers
+18,Female,North Carolina/NC,White alone,Associate's degree,EDU-Preschool And Kindergarten Teachers
+19,Female,California/CA,Some Other Race alone,1,PRD-Painting Workers
+18,Female,Iowa/IA,White alone,Bachelor's degree,RPR-Telecommunications Line Installers And Repairers
+16,Female,California/CA,Some Other Race alone,"1 or more years of college credit, no degree",RPR-Industrial And Refractory Machinery Mechanics
+18,Female,Georgia/GA,White alone,Regular high school diploma,MED-Miscellaneous Health Technologists and Technicians
+17,Female,New Jersey/NJ,Filipino alone,Bachelor's degree,OFF-First-Line Supervisors Of Office And Administrative Support Workers
+19,Female,Colorado/CO,White; Some Other Race,Regular high school diploma,EAT-Cooks
+16,Female,Missouri/MO,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Texas/TX,White alone,"Some college, but less than 1 year",CLN-Janitors And Building Cleaners
+18,Female,Georgia/GA,White alone,"1 or more years of college credit, no degree",MGR-Other Managers
+20,Female,Tennessee/TN,Asian Indian alone,Master's degree,BUS-Management Analysts
+20,Female,Wyoming/WY,White alone,Master's degree,CMM-Software Developers
+18,Female,Texas/TX,White alone,Associate's degree,MIL-Military Enlisted Tactical Operations And Air/Weapons Specialists And Crew Members
+20,Female,Nebraska/NE,White alone,"1 or more years of college credit, no degree",PRS-Recreation Workers
+16,Female,Kentucky/KY,White alone,Regular high school diploma,"TRN-Bus Drivers, School"
+18,Female,California/CA,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Georgia/GA,White alone,Bachelor's degree,SAL-First-Line Supervisors Of Retail Sales Workers
+18,Female,New Jersey/NJ,White alone,"1 or more years of college credit, no degree",RPR-Radio And Telecommunications Equipment Installers And Repairers
+19,Female,Florida/FL,Some Other Race alone,1,TRN-Supervisors Of Transportation And Material Moving Workers
+20,Female,Alabama/AL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Ohio/OH,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,New York/NY,Asian Indian; Other Asian,Bachelor's degree,EDU-Teaching Assistants
+17,Female,California/CA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Georgia/GA,White; American Indian and Alaska Native,Bachelor's degree,CLN-Landscaping And Groundskeeping Workers
+17,Female,Florida/FL,White; Some Other Race,7,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,California/CA,White alone,"1 or more years of college credit, no degree",SAL-Travel Agents
+18,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Georgia/GA,White alone,Regular high school diploma,"MGR-Property, Real Estate, And Community Association Managers"
+18,Female,Kansas/KS,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,White alone,Bachelor's degree,"SAL-Sales Representatives, Wholesale And Manufacturing"
+16,Female,Florida/FL,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,California/CA,Chinese; Vietnamese,GED or alternative credential,EAT-Cooks
+19,Female,Kansas/KS,Black or African American alone,"1 or more years of college credit, no degree",MGR-General And Operations Managers
+17,Female,New York/NY,White alone,Master's degree,MGR-Other Managers
+18,Female,Pennsylvania/PA,White alone,"Some college, but less than 1 year","BUS-Business Operations Specialists, All Other"
+19,Female,California/CA,Chinese alone,Bachelor's degree,CMM-Network And Computer Systems Administrators
+16,Female,Michigan/MI,White alone,Regular high school diploma,SAL-Retail Salespersons
+17,Female,Pennsylvania/PA,White alone,Grade 10,CLN-Landscaping And Groundskeeping Workers
+17,Female,New Jersey/NJ,Chinese alone,Regular high school diploma,HLS-Massage Therapists
+16,Female,California/CA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Indiana/IN,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Louisiana/LA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Texas/TX,White alone,Associate's degree,"OFF-Production, Planning, And Expediting Clerks"
+19,Female,Georgia/GA,Black or African American alone,Regular high school diploma,CON-Construction Laborers
+18,Female,New Jersey/NJ,Some Other Race alone,GED or alternative credential,HLS-Nursing Assistants
+16,Female,Texas/TX,Some Other Race alone,Associate's degree,SAL-Insurance Sales Agents
+19,Female,New Jersey/NJ,Black or African American alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,Some Other Race alone,5,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,Vietnamese alone,1,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Missouri/MO,White alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Texas/TX,White alone,Bachelor's degree,MGR-Other Managers
+18,Female,Illinois/IL,White alone,"Some college, but less than 1 year","TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+20,Female,Colorado/CO,Some Other Race alone,Bachelor's degree,EDU-Preschool And Kindergarten Teachers
+20,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Massachusetts/MA,White alone,Bachelor's degree,MGR-Medical And Health Services Managers
+20,Female,Georgia/GA,White alone,Bachelor's degree,"SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel"
+17,Female,New York/NY,White; American Indian and Alaska Native; Some Other Race,Grade 11,FFF-Other Agricultural Workers
+18,Female,Pennsylvania/PA,White alone,1,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+18,Female,Colorado/CO,White alone,"1 or more years of college credit, no degree",CLN-Janitors And Building Cleaners
+18,Female,Virginia/VA,White alone,Bachelor's degree,PRD-Food Batchmakers
+20,Female,Illinois/IL,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Virginia/VA,White alone,Bachelor's degree,"BUS-Compensation, Benefits, And Job Analysis Specialists"
+20,Female,California/CA,Chinese alone,Bachelor's degree,BUS-Project Management Specialists
+17,Female,Florida/FL,Asian Indian alone,1,PRS-Skincare Specialists
+19,Female,Washington/WA,Other Asian alone,Bachelor's degree,"EAT-Food Preparation and Serving Related Workers, All Other"
+16,Female,Wisconsin/WI,White alone,Regular high school diploma,OFF-Postal Service Mail Carriers
+17,Female,Alabama/AL,White alone,"Some college, but less than 1 year",CMM-Computer Support Specialists
+19,Female,Colorado/CO,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Colorado/CO,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Professional degree beyond a bachelor's degree,MED-Physicians
+18,Female,Maryland/MD,Black or African American; Other Asian,Bachelor's degree,"OFF-Office Clerks, General"
+17,Female,Kansas/KS,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Georgia/GA,Black or African American alone,Regular high school diploma,HLS-Nursing Assistants
+17,Female,Ohio/OH,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Texas/TX,White alone,"Some college, but less than 1 year",SAL-Insurance Sales Agents
+18,Female,Indiana/IN,White alone,Regular high school diploma,PRD-Other Assemblers And Fabricators
+19,Female,Colorado/CO,White alone,Master's degree,ENG-Aerospace Engineers
+18,Female,West Virginia/WV,White alone,Regular high school diploma,"RPR-Computer, Automated Teller, And Office Machine Repairers"
+21,Female,California/CA,White alone,"Some college, but less than 1 year","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+21,Female,California/CA,Some Other Race alone,Regular high school diploma,ENT-Interpreters and Translators
+16,Female,New York/NY,Black or African American alone,Bachelor's degree,ENT-Musicians and Singers
+21,Female,Arkansas/AR,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Minnesota/MN,White alone,Associate's degree,MED-Registered Nurses
+17,Female,Utah/UT,White alone,"1 or more years of college credit, no degree","TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+17,Female,Illinois/IL,White alone,Regular high school diploma,TRN-Industrial Truck And Tractor Operators
+20,Female,Florida/FL,White alone,Regular high school diploma,MGR-Chief Executives And Legislators
+19,Female,California/CA,White; American Indian and Alaska Native; Some Other Race,Associate's degree,BUS-Compliance Officers
+17,Female,Kentucky/KY,White alone,"Some college, but less than 1 year","MGR-Farmers, Ranchers, And Other Agricultural Managers"
+16,Female,California/CA,American Indian and Alaska Native alone,Bachelor's degree,EDU-Preschool And Kindergarten Teachers
+19,Female,North Carolina/NC,White alone,Master's degree,CMS-Social And Human Service Assistants
+19,Female,Kansas/KS,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Maryland/MD,Black or African American alone,Bachelor's degree,"CMS-Social Workers, All Other"
+16,Female,Pennsylvania/PA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Massachusetts/MA,White alone,Doctorate degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Tennessee/TN,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Georgia/GA,White; American Indian and Alaska Native,Master's degree,"CMS-Educational, Guidance, And Career Counselors And Advisors"
+20,Female,California/CA,White alone,Bachelor's degree,CMM-Software Developers
+18,Female,Indiana/IN,White alone,Professional degree beyond a bachelor's degree,MED-Veterinarians
+16,Female,California/CA,White; Some Other Race,1,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Vermont/VT,White alone,Bachelor's degree,HLS-Personal Care Aides
+18,Female,California/CA,Japanese alone,Master's degree,EDU-Tutors
+18,Female,Texas/TX,White alone,"Some college, but less than 1 year",EAT-Food Preparation Workers
+19,Female,Mississippi/MS,Black or African American alone,"1 or more years of college credit, no degree","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers"
+19,Female,Virginia/VA,Filipino alone,"1 or more years of college credit, no degree",OFF-Customer Service Representatives
+19,Female,California/CA,White alone,"1 or more years of college credit, no degree",CON-Sheet Metal Workers
+17,Female,Wisconsin/WI,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Massachusetts/MA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Texas/TX,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Washington/WA,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Georgia/GA,White alone,Grade 9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Virginia/VA,White alone,Master's degree,CMM-Computer Systems Analysts
+16,Female,Arizona/AZ,Chinese alone,Master's degree,BUS-Management Analysts
+20,Female,Arkansas/AR,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,White; Some Other Race,Regular high school diploma,TRN-Stockers And Order Fillers
+16,Female,California/CA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,White alone,Bachelor's degree,CMM-Software Developers
+16,Female,Tennessee/TN,White alone,"Some college, but less than 1 year",MGR-Other Managers
+17,Female,California/CA,Black or African American alone,"Some college, but less than 1 year",HLS-Dental Assistants
+18,Female,Kansas/KS,Chinese alone,Doctorate degree,EDU-Postsecondary Teachers
+16,Female,Illinois/IL,Black or African American alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,California/CA,White; Some Other Race,Grade 8,CLN-Janitors And Building Cleaners
+18,Female,Georgia/GA,White alone,Bachelor's degree,MGR-Other Managers
+18,Female,Washington/WA,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Pennsylvania/PA,Black or African American alone,Bachelor's degree,OFF-Other Office And Administrative Support Workers
+17,Female,Texas/TX,White alone,"Some college, but less than 1 year","SCI-Other Life, Physical, And Social Science Technicians"
+18,Female,Arizona/AZ,White alone,"Some college, but less than 1 year","OFF-Bookkeeping, Accounting, And Auditing Clerks"
+20,Female,Pennsylvania/PA,White alone,Regular high school diploma,PRD-Other Metal Workers And Plastic Workers
+18,Female,Arizona/AZ,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Texas/TX,White alone,Bachelor's degree,MED-Registered Nurses
+16,Female,New Jersey/NJ,Korean alone,Bachelor's degree,"SCI-Physical Scientists, All Other"
+19,Female,Kentucky/KY,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Arizona/AZ,White alone,Associate's degree,OFF-First-Line Supervisors Of Office And Administrative Support Workers
+20,Female,New York/NY,Black or African American alone,Master's degree,EDU-Elementary And Middle School Teachers
+19,Female,Colorado/CO,White; American Indian and Alaska Native,Master's degree,MED-Occupational Therapists
+17,Female,Arizona/AZ,Some Other Race alone,Grade 9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Indiana/IN,White alone,"Some college, but less than 1 year",SAL-Retail Salespersons
+16,Female,Iowa/IA,White alone,"Some college, but less than 1 year","PRD-Miscellaneous Production Workers, Including Equipment Operators And Tenders"
+17,Female,New York/NY,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Texas/TX,White alone,Regular high school diploma,RPR-Industrial And Refractory Machinery Mechanics
+16,Female,Texas/TX,White alone,Master's degree,EDU-Postsecondary Teachers
+19,Female,Kentucky/KY,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Illinois/IL,White alone,Bachelor's degree,MGR-Industrial Production Managers
+19,Female,Indiana/IN,White alone,"1 or more years of college credit, no degree","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+19,Female,Alabama/AL,White alone,GED or alternative credential,"RPR-First-Line Supervisors Of Mechanics, Installers, And Repairers"
+18,Female,Illinois/IL,White alone,Bachelor's degree,EDU-Elementary And Middle School Teachers
+17,Female,Kansas/KS,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Oklahoma/OK,White alone,Grade 8,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Wisconsin/WI,White alone,Master's degree,EDU-Elementary And Middle School Teachers
+16,Female,Virginia/VA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Indiana/IN,White; American Indian and Alaska Native,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Louisiana/LA,White alone,Bachelor's degree,SAL-First-Line Supervisors Of Non-Retail Sales Workers
+18,Female,Texas/TX,White alone,Regular high school diploma,EAT-Waiters And Waitresses
+17,Female,Arizona/AZ,White alone,GED or alternative credential,OFF-First-Line Supervisors Of Office And Administrative Support Workers
+19,Female,Louisiana/LA,White alone,Bachelor's degree,MED-Registered Nurses
+16,Female,Texas/TX,White; Black or African American; Some Other Race,GED or alternative credential,TRN-Driver/Sales Workers And Truck Drivers
+20,Female,California/CA,White alone,Bachelor's degree,SAL-Sales Engineers
+18,Female,Florida/FL,Some Other Race alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Missouri/MO,White; American Indian and Alaska Native,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Nevada/NV,White alone,Master's degree,EDU-Elementary And Middle School Teachers
+18,Female,Florida/FL,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Connecticut/CT,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Washington/WA,Filipino alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,Black or African American alone,"Some college, but less than 1 year",OFF-Customer Service Representatives
+16,Female,Connecticut/CT,White alone,Master's degree,EDU-Special Education Teachers
+21,Female,Ohio/OH,White alone,Bachelor's degree,BUS-Market Research Analysts And Marketing Specialists
+18,Female,Mississippi/MS,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,White; Some Other Race,Bachelor's degree,LGL-Paralegals And Legal Assistants
+19,Female,California/CA,White alone,"1 or more years of college credit, no degree",PRS-Childcare Workers
+18,Female,Wisconsin/WI,White alone,"1 or more years of college credit, no degree",PRT-Police Officers
+16,Female,Massachusetts/MA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Louisiana/LA,White alone,Associate's degree,MED-Licensed Practical And Licensed Vocational Nurses
+17,Female,Texas/TX,Black or African American alone,"1 or more years of college credit, no degree",OFF-File Clerks
+16,Female,Arizona/AZ,Black or African American alone,Associate's degree,"SAL-Sales Representatives Of Services, Except Advertising, Insurance, Financial Services, And Travel"
+19,Female,Ohio/OH,White alone,Master's degree,EDU-Special Education Teachers
+21,Female,California/CA,Some Other Race alone,Regular high school diploma,"PRD-Miscellaneous Production Workers, Including Equipment Operators And Tenders"
+16,Female,Pennsylvania/PA,White alone,Regular high school diploma,PRD-Food Batchmakers
+17,Female,Arizona/AZ,White alone,Bachelor's degree,TRN-Flight Attendants
+19,Female,Florida/FL,White; American Indian and Alaska Native; Some Other Race,Master's degree,"OFF-Production, Planning, And Expediting Clerks"
+18,Female,New York/NY,Asian Indian alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Kentucky/KY,White alone,"1 or more years of college credit, no degree",BUS-Project Management Specialists
+17,Female,Colorado/CO,White alone,Bachelor's degree,SAL-Retail Salespersons
+19,Female,North Carolina/NC,Black or African American alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,District of Columbia/DC,Other Asian alone,Doctorate degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Missouri/MO,White alone,Grade 8,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White alone,Grade 11,"Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked"
+21,Female,Indiana/IN,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Connecticut/CT,White alone,Bachelor's degree,ENG-Mechanical Engineers
+16,Female,Tennessee/TN,White alone,Associate's degree,MED-Radiologic Technologists And Technicians
+16,Female,New Jersey/NJ,White alone,Bachelor's degree,ENT-Producers And Directors
+17,Female,Virginia/VA,White alone,Master's degree,ENT-Musicians and Singers
+18,Female,North Carolina/NC,White alone,Bachelor's degree,ENG-Mechanical Engineers
+20,Female,Kentucky/KY,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,Some Other Race alone,"1 or more years of college credit, no degree","ENG-Architects, Except Landscape And Naval"
+16,Female,Oklahoma/OK,White alone,"Some college, but less than 1 year",EDU-Other Teachers and Instructors
+16,Female,Maryland/MD,Asian Indian alone,Bachelor's degree,CMM-Software Developers
+19,Female,New York/NY,White alone,Regular high school diploma,RPR-Heavy Vehicle And Mobile Equipment Service Technicians And Mechanics
+17,Female,Arizona/AZ,Chinese; Vietnamese,Bachelor's degree,PRD-Helpers--Production Workers
+16,Female,Washington/WA,White alone,Master's degree,EDU-Secondary School Teachers
+17,Female,Oklahoma/OK,White alone,"Some college, but less than 1 year",CON-First-Line Supervisors Of Construction Trades And Extraction Workers
+19,Female,New Jersey/NJ,Some Other Race alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Oklahoma/OK,White alone,Regular high school diploma,ENT-Other Designers
+16,Female,Virginia/VA,White; Black or African American; Some Other Race,Grade 9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Oklahoma/OK,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,Black or African American; Some Other Race,Regular high school diploma,CON-Painters and Paperhangers
+21,Female,Illinois/IL,White alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Georgia/GA,White alone,Bachelor's degree,"SAL-Sales Representatives, Wholesale And Manufacturing"
+17,Female,Connecticut/CT,White alone,Regular high school diploma,TRN-Cleaners Of Vehicles And Equipment
+20,Female,North Carolina/NC,White alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Connecticut/CT,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White alone,Regular high school diploma,EDU-Other Teachers and Instructors
+19,Female,New York/NY,White alone,Bachelor's degree,MGR-Chief Executives And Legislators
+16,Female,New Jersey/NJ,White alone,GED or alternative credential,"TRN-Bus Drivers, School"
+17,Female,Maryland/MD,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,New York/NY,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,California/CA,White; Other Pacific Islander,Master's degree,EDU-Elementary And Middle School Teachers
+17,Female,California/CA,Some Other Race alone,"1 or more years of college credit, no degree",HLS-Personal Care Aides
+17,Female,Indiana/IN,White alone,Grade 11,OFF-Data Entry Keyers
+18,Female,Georgia/GA,White alone,Regular high school diploma,"SAL-Sales Representatives, Wholesale And Manufacturing"
+16,Female,Virginia/VA,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Texas/TX,White alone,"Some college, but less than 1 year","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+20,Female,Louisiana/LA,White alone,Grade 10,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Washington/WA,White alone,Bachelor's degree,SAL-First-Line Supervisors Of Non-Retail Sales Workers
+18,Female,Texas/TX,White; Some Other Race,Bachelor's degree,"OFF-Dispatchers, Except Police, Fire, And Ambulance"
+20,Female,Tennessee/TN,White alone,Bachelor's degree,TRN-Aircraft Pilots And Flight Engineers
+17,Female,Texas/TX,White alone,"Some college, but less than 1 year",HLS-Dental Assistants
+19,Female,California/CA,White alone,Regular high school diploma,TRN-Taxi Drivers
+20,Female,Georgia/GA,Black or African American; Some Other Race,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Utah/UT,White alone,Bachelor's degree,OFF-Receptionists And Information Clerks
+16,Female,Maryland/MD,Other Asian alone,Master's degree,MGR-Computer And Information Systems Managers
+20,Female,New York/NY,White alone,"Some college, but less than 1 year",MGR-Social And Community Service Managers
+21,Female,New York/NY,White alone,"1 or more years of college credit, no degree",MGR-Other Managers
+16,Female,Colorado/CO,White; Some Other Race,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,North Carolina/NC,White alone,Associate's degree,BUS-Project Management Specialists
+16,Female,North Carolina/NC,White alone,"1 or more years of college credit, no degree",SAL-Cashiers
+18,Female,New Jersey/NJ,Black or African American alone,Regular high school diploma,"TRN-Bus Drivers, School"
+17,Female,New Jersey/NJ,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,American Indian and Alaska Native alone,Grade 9,CON-Carpenters
+19,Female,Connecticut/CT,Some Other Race alone,Associate's degree,OFF-Receptionists And Information Clerks
+20,Female,Hawaii/HI,White alone,"Some college, but less than 1 year",EAT-Waiters And Waitresses
+19,Female,Minnesota/MN,American Indian and Alaska Native alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Kentucky/KY,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Georgia/GA,White alone,GED or alternative credential,"PRS-Hairdressers, Hairstylists, And Cosmetologists"
+16,Female,North Dakota/ND,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,Asian Indian alone,12th grade - no diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Virginia/VA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,California/CA,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,New Jersey/NJ,White alone,Bachelor's degree,MGR-Marketing Managers
+16,Female,New York/NY,White alone,"1 or more years of college credit, no degree",OFF-Postal Service Mail Carriers
+16,Female,Tennessee/TN,White; American Indian and Alaska Native,Bachelor's degree,ENG-Other Engineers
+19,Female,Texas/TX,White; Some Other Race,Bachelor's degree,EDU-Secondary School Teachers
+18,Female,Michigan/MI,White; American Indian and Alaska Native,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,North Carolina/NC,White alone,"1 or more years of college credit, no degree",TRN-Driver/Sales Workers And Truck Drivers
+21,Female,Ohio/OH,White alone,Bachelor's degree,EDU-Preschool And Kindergarten Teachers
+16,Female,Michigan/MI,White alone,"Some college, but less than 1 year","PRD-Miscellaneous Production Workers, Including Equipment Operators And Tenders"
+16,Female,Massachusetts/MA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Mississippi/MS,Black or African American alone,GED or alternative credential,"PRD-Welding, Soldering, And Brazing Workers"
+16,Female,Missouri/MO,White alone,Master's degree,MGR-Industrial Production Managers
+17,Female,Missouri/MO,Black or African American alone,Grade 10,CLN-Janitors And Building Cleaners
+19,Female,Wisconsin/WI,White alone,Grade 11,CON-Construction Equipment Operators
+18,Female,New Jersey/NJ,White alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,California/CA,White alone,Bachelor's degree,HLS-Personal Care Aides
+19,Female,New York/NY,White alone,Master's degree,"CMS-Educational, Guidance, And Career Counselors And Advisors"
+21,Female,Michigan/MI,Black or African American alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Bachelor's degree,MGR-General And Operations Managers
+17,Female,Florida/FL,Some Other Race alone,12th grade - no diploma,TRN-Stockers And Order Fillers
+18,Female,Michigan/MI,White alone,"1 or more years of college credit, no degree",TRN-Crane And Tower Operators
+17,Female,Connecticut/CT,White alone,9,CLN-Landscaping And Groundskeeping Workers
+17,Female,Texas/TX,White; Some Other Race,"1 or more years of college credit, no degree",ENG-Other Drafters
+17,Female,Delaware/DE,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Pennsylvania/PA,White alone,Regular high school diploma,EAT-First-Line Supervisors Of Food Preparation And Serving Workers
+18,Female,California/CA,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Illinois/IL,White alone,Associate's degree,EXT-Underground Mining Machine Operators
+16,Female,Texas/TX,Other Asian alone,Bachelor's degree,SAL-Cashiers
+19,Female,Massachusetts/MA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Iowa/IA,White alone,"Some college, but less than 1 year",TRN-Driver/Sales Workers And Truck Drivers
+19,Female,Connecticut/CT,Some Other Race alone,Grade 8,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Georgia/GA,Black or African American alone,Regular high school diploma,EAT-Cooks
+20,Female,New York/NY,White alone,"1 or more years of college credit, no degree","CMM-Computer Occupations, All Other"
+18,Female,Illinois/IL,White alone,Bachelor's degree,RPR-Industrial And Refractory Machinery Mechanics
+17,Female,Florida/FL,White; Some Other Race,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Illinois/IL,Black or African American alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Nevada/NV,White; Japanese,Bachelor's degree,EDU-Elementary And Middle School Teachers
+16,Female,North Carolina/NC,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Georgia/GA,White alone,Bachelor's degree,EAT-First-Line Supervisors Of Food Preparation And Serving Workers
+18,Female,Virginia/VA,Some Other Race alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,New York/NY,White alone,Associate's degree,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+17,Female,California/CA,Asian Indian alone,Master's degree,CMM-Software Developers
+18,Female,Georgia/GA,White; American Indian and Alaska Native,Bachelor's degree,EDU-Secondary School Teachers
+19,Female,North Carolina/NC,Black or African American alone,Regular high school diploma,"TRN-Laborers And Freight, Stock, And Material Movers, Hand"
+19,Female,Texas/TX,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Connecticut/CT,White alone,Bachelor's degree,EAT-Waiters And Waitresses
+19,Female,New York/NY,White alone,Bachelor's degree,MED-Registered Nurses
+16,Female,Indiana/IN,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Michigan/MI,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Pennsylvania/PA,White; Some Other Race,Master's degree,EDU-Elementary And Middle School Teachers
+20,Female,Mississippi/MS,White alone,"1 or more years of college credit, no degree",ENG-Civil Engineers
+16,Female,Florida/FL,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,New Jersey/NJ,White alone,GED or alternative credential,CLN-Landscaping And Groundskeeping Workers
+17,Female,Michigan/MI,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Arkansas/AR,White alone,"Some college, but less than 1 year",CON-Highway Maintenance Workers
+16,Female,Massachusetts/MA,White alone,Bachelor's degree,MED-Occupational Therapists
+20,Female,Kansas/KS,White alone,Master's degree,MGR-Other Managers
+16,Female,Iowa/IA,White alone,Regular high school diploma,RPR-Bus And Truck Mechanics And Diesel Engine Specialists
+18,Female,Kentucky/KY,White alone,Regular high school diploma,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+19,Female,Illinois/IL,Black or African American alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,New York/NY,Black or African American alone,Professional degree beyond a bachelor's degree,SCI-Other Life Scientists
+19,Female,Texas/TX,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Ohio/OH,White alone,"Some college, but less than 1 year","OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+17,Female,Ohio/OH,White alone,"1 or more years of college credit, no degree","PRD-Inspectors, Testers, Sorters, Samplers, And Weighers"
+20,Female,Virginia/VA,White alone,Regular high school diploma,OFF-Couriers And Messengers
+16,Female,Texas/TX,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White; Some Other Race,Bachelor's degree,ENG-Architectural And Civil Drafters
+18,Female,North Carolina/NC,Some Other Race alone,1,PRD-Other Assemblers And Fabricators
+19,Female,Florida/FL,White; Some Other Race,9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Illinois/IL,White alone,Associate's degree,MED-Registered Nurses
+19,Female,California/CA,Black or African American alone,Associate's degree,MED-Radiologic Technologists And Technicians
+17,Female,Indiana/IN,Korean alone,Regular high school diploma,MGR-Other Managers
+16,Female,Louisiana/LA,White alone,Bachelor's degree,"RPR-Other Installation, Maintenance, And Repair Workers"
+18,Female,West Virginia/WV,White alone,Regular high school diploma,CON-Electricians
+16,Female,New York/NY,White alone,Regular high school diploma,PRS-Other Entertainment Attendants And Related Workers
+17,Female,North Carolina/NC,White alone,Associate's degree,"RPR-Maintenance And Repair Workers, General"
+17,Female,Florida/FL,White; Some Other Race,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,White alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Texas/TX,White alone,Bachelor's degree,"MED-Nurse Practitioners, And Nurse Midwives"
+18,Female,Tennessee/TN,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Georgia/GA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Illinois/IL,Some Other Race alone,Associate's degree,"OFF-Dispatchers, Except Police, Fire, And Ambulance"
+17,Female,New Jersey/NJ,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New Jersey/NJ,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Pennsylvania/PA,White alone,Regular high school diploma,EDU-Teaching Assistants
+21,Female,Tennessee/TN,White; Black or African American,Regular high school diploma,PRD-Other Assemblers And Fabricators
+16,Female,Florida/FL,White alone,"1 or more years of college credit, no degree",MGR-Construction Managers
+19,Female,Georgia/GA,White; Some Other Race,Regular high school diploma,"PRS-Hairdressers, Hairstylists, And Cosmetologists"
+16,Female,Maryland/MD,Black or African American alone,"1 or more years of college credit, no degree",SAL-First-Line Supervisors Of Retail Sales Workers
+16,Female,Louisiana/LA,White alone,Bachelor's degree,EDU-Elementary And Middle School Teachers
+20,Female,New York/NY,White alone,Bachelor's degree,HLS-Home Health Aides
+19,Female,Pennsylvania/PA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Wisconsin/WI,White alone,Regular high school diploma,"PRD-Cutting, Punching, And Press Machine Setters, Operators, And Tenders, Metal And Plastic"
+19,Female,California/CA,White alone,Master's degree,CMM-Computer Programmers
+16,Female,Texas/TX,White; Some Other Race,Master's degree,EDU-Secondary School Teachers
+19,Female,New Jersey/NJ,White alone,Regular high school diploma,RPR-Industrial And Refractory Machinery Mechanics
+19,Female,Oklahoma/OK,Other Asian alone,Regular high school diploma,"PRD-Welding, Soldering, And Brazing Workers"
+17,Female,Virginia/VA,White alone,GED or alternative credential,RPR-Radio And Telecommunications Equipment Installers And Repairers
+17,Female,Arkansas/AR,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Iowa/IA,White alone,Bachelor's degree,MGR-Other Managers
+18,Female,Utah/UT,White alone,Regular high school diploma,EDU-Other Teachers and Instructors
+16,Female,Texas/TX,White alone,9,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Florida/FL,Black or African American; Some Other Race,GED or alternative credential,CLN-Janitors And Building Cleaners
+18,Female,Michigan/MI,White alone,"Some college, but less than 1 year",OFF-First-Line Supervisors Of Office And Administrative Support Workers
+19,Female,Wisconsin/WI,White alone,Regular high school diploma,"BUS-Wholesale And Retail Buyers, Except Farm Products"
+17,Female,Arizona/AZ,White alone,Regular high school diploma,PRT-Firefighters
+17,Female,Ohio/OH,White alone,Regular high school diploma,"BUS-Business Operations Specialists, All Other"
+21,Female,Tennessee/TN,White alone,Regular high school diploma,SAL-Cashiers
+19,Female,California/CA,White alone,GED or alternative credential,TRN-Stockers And Order Fillers
+17,Female,Oklahoma/OK,American Indian and Alaska Native alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Virginia/VA,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Texas/TX,White alone,Regular high school diploma,"OFF-Secretaries And Administrative Assistants, Except Legal, Medical, And Executive"
+16,Female,New York/NY,White alone,Master's degree,"SAL-Securities, Commodities, And Financial Services Sales Agents"
+20,Female,Wisconsin/WI,White alone,Regular high school diploma,TRN-Driver/Sales Workers And Truck Drivers
+17,Female,Virginia/VA,Black or African American alone,"1 or more years of college credit, no degree",TRN-Stockers And Order Fillers
+16,Female,Florida/FL,American Indian and Alaska Native; Some Other Race,"Some college, but less than 1 year","CMM-Computer Occupations, All Other"
+17,Female,Michigan/MI,White alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Kansas/KS,White alone,Associate's degree,"Unemployed, With No Work Experience In The Last 5 Years Or Earlier Or Never Worked"
+18,Female,Maryland/MD,White alone,Regular high school diploma,MGR-Other Managers
+17,Female,Pennsylvania/PA,White alone,"1 or more years of college credit, no degree",HLS-Physical Therapist Assistants And Aides
+19,Female,Indiana/IN,Black or African American alone,"1 or more years of college credit, no degree",PRT-Security Guards And Gambling Surveillance Officers
+19,Female,South Carolina/SC,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,Minnesota/MN,White alone,Grade 10,CLN-Landscaping And Groundskeeping Workers
+20,Female,Massachusetts/MA,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,New York/NY,White alone,Associate's degree,MGR-Social And Community Service Managers
+16,Female,Maine/ME,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Florida/FL,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Michigan/MI,Black or African American alone,Regular high school diploma,OFF-Customer Service Representatives
+16,Female,Alabama/AL,American Indian and Alaska Native alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+21,Female,Florida/FL,Asian Indian alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,California/CA,Black or African American alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Ohio/OH,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+18,Female,California/CA,White alone,Doctorate degree,MGR-Financial Managers
+18,Female,Missouri/MO,Other Asian alone,Master's degree,MGR-Financial Managers
+16,Female,California/CA,White alone,Regular high school diploma,CON-Highway Maintenance Workers
+16,Female,Washington/WA,White alone,Bachelor's degree,MGR-Other Managers
+17,Female,Missouri/MO,Black or African American alone,"1 or more years of college credit, no degree",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New Hampshire/NH,White; Some Other Race,Regular high school diploma,"PRD-Miscellaneous Production Workers, Including Equipment Operators And Tenders"
+18,Female,Utah/UT,White alone,Master's degree,MGR-Education And Childcare Administrators
+16,Female,Hawaii/HI,Native Hawaiian alone,GED or alternative credential,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+17,Female,Florida/FL,White alone,Master's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,North Carolina/NC,Black or African American alone,"1 or more years of college credit, no degree",PRD-Other Assemblers And Fabricators
+16,Female,Florida/FL,White alone,GED or alternative credential,MED-Registered Nurses
+16,Female,California/CA,Some Other Race alone,Grade 11,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,New York/NY,White alone,Regular high school diploma,"EDU-Archivists, Curators, And Museum Technicians"
+16,Female,Ohio/OH,Black or African American alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Nebraska/NE,White alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Mississippi/MS,White alone,Regular high school diploma,HLS-Phlebotomists
+19,Female,Florida/FL,White alone,Associate's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+16,Female,Georgia/GA,White alone,Bachelor's degree,PRS-Childcare Workers
+18,Female,New Mexico/NM,White alone,Bachelor's degree,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+20,Female,Virginia/VA,American Indian and Alaska Native alone,Associate's degree,BUS-Human Resources Workers
+16,Female,Florida/FL,White; Some Other Race,Regular high school diploma,"CON-Plumbers, Pipefitters, And Steamfitters"
+17,Female,Texas/TX,White alone,Regular high school diploma,CON-Construction Laborers
+20,Female,Texas/TX,White alone,Associate's degree,LGL-Paralegals And Legal Assistants
+18,Female,Kansas/KS,White alone,Associate's degree,"ENG-Other Engineering Technologists And Technicians, Except Drafters"
+19,Female,Florida/FL,White; Some Other Race,Master's degree,EDU-Elementary And Middle School Teachers
+16,Female,Tennessee/TN,White alone,Bachelor's degree,CMS-Clergy
+18,Female,Georgia/GA,White alone,Regular high school diploma,"MGR-Farmers, Ranchers, And Other Agricultural Managers"
+19,Female,California/CA,Some Other Race alone,"Some college, but less than 1 year",N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,Illinois/IL,White alone,Regular high school diploma,N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)
+19,Female,New York/NY,Other Asian alone,Regular high school diploma,"OFF-Shipping, Receiving, And Inventory Clerks"
+17,Female,New York/NY,White; Some Other Race,Professional degree beyond a bachelor's degree,MED-Physicians
+20,Female,California/CA,Some Other Race alone,Regular high school diploma,PRD-Other Assemblers And Fabricators
+16,Female,Florida/FL,White alone,GED or alternative credential,OFF-Customer Service Representatives

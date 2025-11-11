@@ -52,7 +52,7 @@
     },
     "OCCP": {
         "name": "OCCP",
-        "label": "Occupation recode for 2018 and later based on 2018 OCC codes",
+        "label": "Occupation",
         "predicateType": "string",
         "group": "N/A",
         "limit": 0,
@@ -595,7 +595,7 @@
     },
     "INDP": {
         "name": "INDP",
-        "label": "Industry recode for 2023 and later based on 2022 IND codes",
+        "label": "Industry",
         "predicateType": "string",
         "group": "N/A",
         "limit": 0,
@@ -873,7 +873,7 @@
     },
     "RAC3P": {
         "name": "RAC3P",
-        "label": "Recoded detailed race code",
+        "label": "Race",
         "predicateType": "string",
         "group": "N/A",
         "limit": 0,
@@ -1004,7 +1004,7 @@
     },
     "STATE": {
         "name": "STATE",
-        "label": "State Code based on 2020 Census definitions",
+        "label": "State",
         "group": "N/A",
         "limit": 0,
         "values": {
