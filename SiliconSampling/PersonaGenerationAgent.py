@@ -112,11 +112,11 @@ class PersonaGenerationAgent:
             scores = personality['scores']
             personality_parts = [
                 "Big Five Personality Traits:",
-                f"- Openness: {scores.get('openness', 'N/A')}/100",
-                f"- Conscientiousness: {scores.get('conscientiousness', 'N/A')}/100",
-                f"- Extraversion: {scores.get('extraversion', 'N/A')}/100",
-                f"- Agreeableness: {scores.get('agreeableness', 'N/A')}/100",
-                f"- Neuroticism: {scores.get('neuroticism', 'N/A')}/100"
+                f"- Openness: {scores.get('openness', 'N/A')}/10",
+                f"- Conscientiousness: {scores.get('conscientiousness', 'N/A')}/10",
+                f"- Extraversion: {scores.get('extraversion', 'N/A')}/10",
+                f"- Agreeableness: {scores.get('agreeableness', 'N/A')}/10",
+                f"- Neuroticism: {scores.get('neuroticism', 'N/A')}/10"
             ]
         else:
             personality_parts = []

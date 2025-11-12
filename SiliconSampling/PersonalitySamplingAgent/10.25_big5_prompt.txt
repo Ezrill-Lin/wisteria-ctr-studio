@@ -71,26 +71,13 @@ People low in neuroticism (Scoring 0):
 
 
 ### Output format (JSON)
-For n = 2
 {
-    profile_1:{
-        'Scores':{
-            'Openness': {<0-10>: <your description>},
-            'Conscientiousness': {<0-10>: <your description>},
-            'Extraversion': {<0-10>: <your description>},
-            'Agreeableness': {<0-10>: <your description>},
-            'Neuroticism': {<0-10>: <your description>}
-        }
-        'Summary': "<one detailed paragraph matching the scores and descriptions>"
+    "scores": {
+        "openness": <0-10 integer>,
+        "conscientiousness": <0-10 integer>,
+        "extraversion": <0-10 integer>,
+        "agreeableness": <0-10 integer>,
+        "neuroticism": <0-10 integer>
     },
-    profile_2:{
-        'Scores':{
-            'Openness': {<0-10>: <your description>},
-            'Conscientiousness': {<0-10>: <your description>},
-            'Extraversion': {<0-10>: <your description>},
-            'Agreeableness': {<0-10>: <your description>},
-            'Neuroticism': {<0-10>: <your description>}
-        }
-        'Summary': "<one detailed paragraph matching the scores and descriptions>"
-    }
+    "description": "<one detailed paragraph matching the scores, describing how this person tends to think, feel, decide, and interact>"
 }

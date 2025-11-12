@@ -4,11 +4,11 @@ This module provides functionality for generating and testing personality profil
 using the Big Five personality traits (OCEAN) through LLM interactions.
 """
 
-from openai import OpenAI 
+from openai import AsyncOpenAI 
 from tqdm import tqdm
 import os
 import json
-import argparse
+import asyncio
 from typing import Dict, List, Optional
 
 
@@ -22,64 +22,118 @@ class PersonalityGenerator:
             api_key: OpenAI API key (defaults to OPENAI_API_KEY environment variable)
             base_url: Custom API base URL (optional)
         """
-        self.client = OpenAI(
+        self.client = AsyncOpenAI(
             api_key=api_key or os.environ.get("OPENAI_API_KEY"),
-            base_url=base_url or "https://api.chatanywhere.tech/v1"
+            base_url=base_url  # Don't set default base_url, use OpenAI's default
         )
+        self._prompt_cache = {}  # Cache for loaded prompts
     
-    def generate_profiles(self, num_profiles: int, prompt_file: str, output_dir: str = "Personality_profiles") -> Dict:
-        """Generate personality profiles using LLM.
+    async def generate_single_profile(self, profile_id: int, prompt_file: str) -> Dict:
+        """Generate a single personality profile using LLM.
+        
+        Args:
+            profile_id: ID number for this profile
+            prompt_file: Path to the personality generation prompt file
+            
+        Returns:
+            Dictionary containing a single personality profile
+        """
+        # Cache the prompt to avoid reading file multiple times
+        if prompt_file not in self._prompt_cache:
+            with open(prompt_file, "r", encoding="utf-8") as file:
+                self._prompt_cache[prompt_file] = file.read()
+        
+        base_prompt = self._prompt_cache[prompt_file]
+
+        # Simplified prompt - just the essentials
+        prompt = f"""Generate a realistic Big Five (OCEAN) personality profile with random scores (0-10 integers) and a coherent description.
+
+Output JSON format:
+{{
+    "scores": {{
+        "openness": <0-10 integer>,
+        "conscientiousness": <0-10 integer>,
+        "extraversion": <0-10 integer>,
+        "agreeableness": <0-10 integer>,
+        "neuroticism": <0-10 integer>
+    }},
+    "description": "<one detailed paragraph describing how these scores manifest in behavior>"
+}}
+
+Make the profile diverse and realistic. Vary the scores significantly across profiles."""
+
+        response = await self.client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": prompt}
+            ],
+            temperature=0.9,  # Higher temperature for more diversity
+            response_format={"type": "json_object"}
+        )
+        
+        json_result = response.choices[0].message.content
+        profile = json.loads(json_result)
+        
+        # Add the ID manually to ensure correct format
+        profile["id"] = profile_id
+        
+        return profile
+    
+    async def generate_profiles(self, num_profiles: int, prompt_file: str, output_dir: str = "Personality_profiles", max_concurrent: int = 30) -> List[Dict]:
+        """Generate personality profiles using LLM with concurrent API calls.
         
         Args:
             num_profiles: Number of personality profiles to generate
             prompt_file: Path to the personality generation prompt file
             output_dir: Directory to save generated profiles
+            max_concurrent: Maximum number of concurrent API calls
             
         Returns:
-            Dictionary containing generated personality profiles
+            List of generated personality profile dictionaries
         """
         os.makedirs(output_dir, exist_ok=True)
+
+        print(f"Generating {num_profiles} personality profiles asynchronously (max {max_concurrent} concurrent)...")
         
-        prefix = f"""
-        You are a personality profiler. You are doing a personality generation job for simulating humans.
-
-        ### Tasks
-        Your task is to use the Big Five personality traits (OCEAN) defined below, and produce {num_profiles} different detailed personality description plus scores for each dimension.
-        You should pay attention to the diversity among different profiles. Also make sure each profile is realistic and coherent.
-        """
-
-        with open(prompt_file, "r", encoding="utf-8") as file:
-            prompt = file.read()
-
-        prompt = prefix + prompt
-
-        print(f"Generating {num_profiles} personality profiles...")
-        response = self.client.chat.completions.create(
-            model="gpt-4o-mini",  # Fixed model name
-            messages=[
-                {"role": "system", "content": prompt}
-            ],
-            temperature=0.1,
-            response_format={"type": "json_object"}
-        )
+        # Create tasks for all profiles
+        tasks = []
+        for i in range(num_profiles):
+            tasks.append(self.generate_single_profile(i + 1, prompt_file))
         
-        json_result = response.choices[0].message.content
-        profiles = json.loads(json_result)
+        # Process tasks with concurrency limit using semaphore
+        semaphore = asyncio.Semaphore(max_concurrent)
+        
+        async def bounded_generate(task):
+            async with semaphore:
+                return await task
+        
+        # Execute all tasks with progress bar
+        profiles = []
+        completed_tasks = asyncio.as_completed([bounded_generate(task) for task in tasks])
+        
+        with tqdm(total=num_profiles, desc="Generating profiles") as pbar:
+            for coro in completed_tasks:
+                profile = await coro
+                profiles.append(profile)
+                pbar.update(1)
+        
+        # Sort profiles by ID
+        profiles.sort(key=lambda x: x.get('id', 0))
         
         # Save profiles to file
         with open(os.path.join(output_dir, "profiles.json"), "w", encoding="utf-8") as f:
             json.dump(profiles, f, indent=2, ensure_ascii=False)
         
-        with open(os.path.join(output_dir, "profiles.txt"), "w", encoding="utf-8") as f:
-            f.write(json_result)
+        print(f"\n✓ Generated {len(profiles)} profiles")
+        print(f"✓ Saved to: {os.path.join(output_dir, 'profiles.json')}")
         
         return profiles
 
-    def test_profiles(self, profiles: Dict, questions_file: str, output_dir: str = "Personality_profiles") -> None:
+    async def test_profiles(self, profiles: List[Dict], questions_file: str, output_dir: str = "Personality_profiles") -> None:
         """Test personality profiles with questionnaire.
         
         Args:
-            profiles: Dictionary of personality profiles to test
+            profiles: List of personality profiles to test
             questions_file: Path to file containing personality questions
             output_dir: Directory to save test results
         """
@@ -89,33 +143,30 @@ class PersonalityGenerator:
             questions = f.readlines()
             questions = [q.strip() for q in questions if q.strip()]
         
-        num_profiles = len([k for k in profiles.keys() if k.startswith('profile_')])
-        
-        for j in range(num_profiles):
-            profile_key = f'profile_{j+1}'
-            if profile_key not in profiles:
-                continue
-                
-            profile = profiles[profile_key]
-            print(f"Testing profile {j+1} with {len(questions)} questions...")
+        for profile in profiles:
+            profile_id = profile.get('id', 'unknown')
+            scores = profile.get('scores', {})
+            description = profile.get('description', '')
             
-            test_file = os.path.join(output_dir, f"profile_{j+1}_test.txt")
+            print(f"Testing {profile_id} with {len(questions)} questions...")
             
-            for i, question in tqdm(enumerate(questions), desc=f"Profile {j+1}"):
+            test_file = os.path.join(output_dir, f"{profile_id}_test.txt")
+            
+            for i, question in tqdm(enumerate(questions), desc=f"{profile_id}"):
                 test_prompt = f"""
                 You are given the simulated personality profile of a person based on the Big Five Personality traits (OCEAN).
                 Your task is to answer the following QUESTION according to the personality profile provided.
                 You should STAY CONSISTENT with the scores and trait descriptions.
                 Do not invent biographical facts (no names, places, jobs, ages) unless explicitly provided.
 
-                Big Five Personality traits scores with descriptions:
-                    - Openness: {profile['Scores']['Openness']}
-                    - Conscientiousness: {profile['Scores']['Conscientiousness']}
-                    - Extraversion: {profile['Scores']['Extraversion']}
-                    - Agreeableness: {profile['Scores']['Agreeableness']}
-                    - Neuroticism: {profile['Scores']['Neuroticism']}
+                Big Five Personality traits scores (0-10 scale):
+                    - Openness: {scores.get('openness', 'N/A')}/10
+                    - Conscientiousness: {scores.get('conscientiousness', 'N/A')}/10
+                    - Extraversion: {scores.get('extraversion', 'N/A')}/10
+                    - Agreeableness: {scores.get('agreeableness', 'N/A')}/10
+                    - Neuroticism: {scores.get('neuroticism', 'N/A')}/10
                 Personality Description:
-                    - {profile['Summary']}
+                    - {description}
 
                 QUESTION:
                 {question}
@@ -124,7 +175,7 @@ class PersonalityGenerator:
                 Keep answers concise but natural in 3-4 sentences. Do not use bullet points.
                 """
 
-                response = self.client.chat.completions.create(
+                response = await self.client.chat.completions.create(
                     model="gpt-4o-mini",  # Fixed model name
                     messages=[
                         {"role": "system", "content": test_prompt},
@@ -141,10 +192,11 @@ class PersonalityGenerator:
                     f.write("A: " + text + "\n")
 
 
-def generate_personality_profiles(num_profiles: int, prompt_file: str, 
+async def generate_personality_profiles(num_profiles: int, prompt_file: str, 
                                 output_dir: str = "Personality_profiles",
                                 api_key: Optional[str] = None,
-                                base_url: Optional[str] = None) -> Dict:
+                                base_url: Optional[str] = None,
+                                max_concurrent: int = 30) -> List[Dict]:
     """Generate personality profiles (standalone function).
     
     Args:
@@ -153,74 +205,27 @@ def generate_personality_profiles(num_profiles: int, prompt_file: str,
         output_dir: Directory to save generated profiles
         api_key: OpenAI API key (optional, uses environment variable if not provided)
         base_url: Custom API base URL (optional)
+        max_concurrent: Maximum number of concurrent API calls
         
     Returns:
-        Dictionary containing generated personality profiles
+        List of generated personality profile dictionaries
     """
     generator = PersonalityGenerator(api_key=api_key, base_url=base_url)
-    return generator.generate_profiles(num_profiles, prompt_file, output_dir)
+    return await generator.generate_profiles(num_profiles, prompt_file, output_dir, max_concurrent)
 
 
-def test_personality_profiles(profiles: Dict, questions_file: str,
+async def test_personality_profiles(profiles: List[Dict], questions_file: str,
                             output_dir: str = "Personality_profiles",
                             api_key: Optional[str] = None,
                             base_url: Optional[str] = None) -> None:
     """Test personality profiles with questionnaire (standalone function).
     
     Args:
-        profiles: Dictionary of personality profiles to test
+        profiles: List of personality profiles to test
         questions_file: Path to file containing personality questions
         output_dir: Directory to save test results
         api_key: OpenAI API key (optional, uses environment variable if not provided)
         base_url: Custom API base URL (optional)
     """
     generator = PersonalityGenerator(api_key=api_key, base_url=base_url)
-    generator.test_profiles(profiles, questions_file, output_dir)
-
-
-def parse_args():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description="Personality Sampling Agent")
-    parser.add_argument("--num_profiles", type=int, default=2,
-                       help="Number of personality profiles to generate and test")
-    parser.add_argument("--questions_file", type=str, default="personality_questions.txt",
-                       help="Path to the file containing personality questions")
-    parser.add_argument("--prompt_file", type=str, default="10.25_big5_prompt.txt",
-                       help="Path to the personality generation prompt file")
-    parser.add_argument("--test", action="store_true", default=False,
-                       help="Whether to run in test mode with personality questionnaire")
-    parser.add_argument("--output_dir", type=str, default="Personality_profiles",
-                       help="Directory to save generated profiles and test results")
-    parser.add_argument("--api_key", type=str, default=None,
-                       help="OpenAI API key (optional, uses OPENAI_API_KEY env var if not provided)")
-    parser.add_argument("--base_url", type=str, default=None,
-                       help="Custom API base URL (optional)")
-    return parser.parse_args()
-
-
-def main():
-    """Main function for command line usage."""
-    args = parse_args()
-    
-    # Initialize the personality generator
-    generator = PersonalityGenerator(api_key=args.api_key, base_url=args.base_url)
-    
-    # Generate profiles
-    profiles = generator.generate_profiles(
-        num_profiles=args.num_profiles,
-        prompt_file=args.prompt_file,
-        output_dir=args.output_dir
-    )
-    
-    # Test profiles if requested
-    if args.test:
-        print('Testing personality profiles...')
-        generator.test_profiles(
-            profiles=profiles,
-            questions_file=args.questions_file,
-            output_dir=args.output_dir
-        )
-
-
-if __name__ == "__main__":
-    main()
+    await generator.test_profiles(profiles, questions_file, output_dir)
