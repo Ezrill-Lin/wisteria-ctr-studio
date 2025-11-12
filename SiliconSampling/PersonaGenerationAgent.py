@@ -186,7 +186,8 @@ Now generate the persona description:"""
         num_personas: int = 100,
         output_path: str = "generated_personas.json",
         random_seed: int = 42,
-        max_concurrent: int = 10
+        max_concurrent: int = 10,
+        save_interval: int = 100
     ) -> List[Dict]:
         """Generate complete personas asynchronously with concurrent API calls.
         
@@ -197,11 +198,14 @@ Now generate the persona description:"""
             output_path: Path to save generated personas
             random_seed: Random seed for reproducibility
             max_concurrent: Maximum number of concurrent API calls
+            save_interval: Save progress every N personas (default: 100)
             
         Returns:
             List of generated persona dictionaries
         """
         random.seed(random_seed)
+        
+        print(f"Saving progress every {save_interval} personas")
         
         # Sample demographics and personalities
         sampled_demographics = demographic_data.sample(n=num_personas, random_state=random_seed)
@@ -245,25 +249,44 @@ Now generate the persona description:"""
         
         print(f"\nGenerating {num_personas} personas asynchronously (max {max_concurrent} concurrent)...")
         
-        # Execute all tasks with progress bar
+        # Execute all tasks with progress bar and incremental saving
         personas = []
         completed_tasks = asyncio.as_completed([bounded_generate(task) for task in tasks])
         
         with tqdm(total=num_personas, desc="Generating personas") as pbar:
             for coro in completed_tasks:
-                persona = await coro
-                personas.append(persona)
-                pbar.update(1)
+                try:
+                    persona = await coro
+                    personas.append(persona)
+                    pbar.update(1)
+                    
+                    # Save incrementally every save_interval personas
+                    if len(personas) % save_interval == 0:
+                        self._save_personas_incremental(personas, output_path)
+                        print(f"\n✓ Progress saved: {len(personas)} personas generated")
+                except Exception as e:
+                    print(f"\n✗ Error generating persona: {e}")
+                    continue
         
-        # Sort personas by ID to maintain order
-        personas.sort(key=lambda x: x['id'])
-        
-        # Save to JSON file
-        with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(personas, f, indent=2, ensure_ascii=False)
+        # Final save of all personas
+        self._save_personas_incremental(personas, output_path)
         
         print(f"\n✓ Generated {len(personas)} personas")
         print(f"✓ Saved to: {output_path}")
         
         return personas
+    
+    def _save_personas_incremental(self, personas: List[Dict], output_path: str):
+        """Save personas incrementally to avoid data loss.
+        
+        Args:
+            personas: List of persona dictionaries
+            output_path: Path to output file
+        """
+        # Sort personas by ID to maintain order
+        personas_sorted = sorted(personas, key=lambda x: x['id'])
+        
+        # Save to JSON file
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(personas_sorted, f, indent=2, ensure_ascii=False)
 

@@ -54,6 +54,12 @@ async def main():
         default=30,
         help='Maximum number of concurrent API requests (default: 30, recommended: 10-50 based on API tier and network capacity)'
     )
+    parser.add_argument(
+        '--save-interval',
+        type=int,
+        default=100,
+        help='Save progress every N personas (default: 100)'
+    )
     
     args = parser.parse_args()
     
@@ -74,7 +80,8 @@ async def main():
         num_personas=args.num_personas,
         output_path=args.output,
         random_seed=args.seed,
-        max_concurrent=args.max_concurrent
+        max_concurrent=args.max_concurrent,
+        save_interval=args.save_interval
     )
     
     # Display sample personas
