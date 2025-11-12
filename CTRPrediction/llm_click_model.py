@@ -5,6 +5,7 @@ import re
 import sys
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional
+from tqdm import tqdm
 
 from .openai_client import OpenAIClient
 from .deepseek_client import DeepSeekClient
@@ -50,7 +51,6 @@ class LLMClickPredictor:
         model: Model name for the provider.
         batch_size: Number of profiles per request.
         use_mock: If True, always use the mock predictor.
-        use_async: If True, use async parallel processing; if False, use sequential processing.
         api_key: Optional API key override (else read from env).
         profiles_per_pod: For vllm provider, number of profiles per pod for distributed inference.
         population_size: Total population size for optimal pod calculation (for vllm provider).
@@ -59,7 +59,6 @@ class LLMClickPredictor:
     model: str = "gpt-4o-mini"
     batch_size: int = 50
     use_mock: bool = False
-    use_async: bool = True
     api_key: Optional[str] = None
     profiles_per_pod: int = 5000
     population_size: Optional[int] = None
@@ -123,47 +122,22 @@ class LLMClickPredictor:
                 clicks.extend(_mock_predict(ad_text, chunk))
             return clicks
 
-        # Real calls in parallel batches
+        # Real calls in parallel batches with progress tracking
         chunks = list(_chunked(profiles, self.batch_size))
-        tasks = [
-            self._client.predict_chunk_async(ad_text, chunk, ad_platform)
-            for chunk in chunks
-        ]
-        results = await asyncio.gather(*tasks)
+        
+        # Create async wrapper to track progress
+        async def predict_with_progress(chunk, pbar):
+            result = await self._client.predict_chunk_async(ad_text, chunk, ad_platform)
+            pbar.update(1)
+            return result
+        
+        # Initialize progress bar
+        with tqdm(total=len(chunks), desc=f"Processing batches ({self.provider})", unit="batch") as pbar:
+            tasks = [predict_with_progress(chunk, pbar) for chunk in chunks]
+            results = await asyncio.gather(*tasks)
+        
         for result in results:
             clicks.extend(result)
-        return clicks
-
-    def predict_clicks(self, ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str = "facebook") -> List[int]:
-        """Predict binary clicks for all profiles.
-
-        Handles batching and chooses between real API calls and the mock
-        implementation based on configuration.
-
-        Args:
-            ad_text: Advertisement copy to evaluate.
-            profiles: Profiles to score.
-            ad_platform: Platform where the ad is shown (facebook, tiktok, amazon).
-
-        Returns:
-            List of 0/1 integers aligned with ``profiles`` order.
-        """
-        clicks: List[int] = []
-        if not profiles:
-            return clicks
-            
-        if not self._use_real():
-            # Print a reasoned fallback only if not explicitly in mock mode
-            if not self.use_mock:
-                _print_fallback(f"{self.provider} API not configured; using mock for all chunks.")
-            for chunk in _chunked(profiles, self.batch_size):
-                clicks.extend(_mock_predict(ad_text, chunk))
-            return clicks
-
-        # Real calls in batches
-        # Use synchronous sequential processing only
-        for chunk in _chunked(profiles, self.batch_size):
-            clicks.extend(self._client.predict_chunk(ad_text, chunk, ad_platform))
         return clicks
 
 

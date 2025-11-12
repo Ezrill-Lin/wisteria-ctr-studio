@@ -81,7 +81,6 @@ def main(args=None):
                            default="llama3.1-8b", help="RunPod model selection (llama3.1-8b, llama3.1-70b)")
         parser.add_argument("--batch-size", type=int, default=32, help="Batch size per LLM call")
         parser.add_argument("--use-mock", action="store_true", help="Force mock LLM (no network)")
-        parser.add_argument("--use-sync", action="store_true", help="Use synchronous sequential processing instead of async parallel")
         parser.add_argument("--api-key", default=None, help="Explicit API key override for provider")
         parser.add_argument("--out", default=None, help="Optional CSV output of personas and clicks")
 
@@ -104,7 +103,6 @@ def main(args=None):
             model=model,
             batch_size=args.batch_size,
             use_mock=args.use_mock,
-            use_async=True,
             api_key=args.api_key
         )
     else:
@@ -114,20 +112,14 @@ def main(args=None):
             model=args.model,
             batch_size=args.batch_size,
             use_mock=args.use_mock,
-            use_async=True,
             api_key=args.api_key,
         )
 
     # Start timing the prediction process
     start_time = time.time()
     
-    # Choose between async and sync processing
-    if args.use_sync:
-        # Use synchronous sequential processing
-        clicks = predictor.predict_clicks(args.ad, sampled_personas, args.ad_platform)
-    else:
-        # Use asynchronous parallel processing
-        clicks = asyncio.run(predictor.predict_clicks_async(args.ad, sampled_personas, args.ad_platform))
+    # Use asynchronous parallel processing
+    clicks = asyncio.run(predictor.predict_clicks_async(args.ad, sampled_personas, args.ad_platform))
     
     end_time = time.time()
     runtime = end_time - start_time
@@ -152,7 +144,6 @@ def main(args=None):
     print(f"Ad platform: {args.ad_platform}")
     print(f"Batch size: {args.batch_size}")
     print(f"Model Provider: {model_provider} | Model: {model_name}")
-    print(f"Processing mode: {'synchronous' if args.use_sync else 'asynchronous parallel'}")
     print(f"Clicks: {sum(clicks)} | Non-clicks: {len(clicks) - sum(clicks)}")
     print(f"CTR: {ctr:.4f}")
     print(f"Runtime: {runtime:.2f} seconds")
@@ -176,7 +167,6 @@ if __name__ == "__main__":
         args.runpod_model = "llama3.1-8b" 
         args.profiles_per_pod = 5000
         args.use_mock = True  # Force mock mode for testing without API calls
-        args.use_sync = False
         args.personas_file = os.path.join("SiliconSampling", "generated_personas.json")
         args.seed = 42
         args.api_key = None  
