@@ -30,6 +30,8 @@ def parse_args():
                        help="Maximum number of concurrent API requests (default: 30)")
     parser.add_argument("--seed", type=int, default=None,
                        help="Random seed for reproducibility (omit for random generation)")
+    parser.add_argument("--save_interval", type=int, default=100,
+                       help="Save progress every N profiles (default: 100)")
     return parser.parse_args()
 
 
@@ -46,7 +48,8 @@ async def main():
         prompt_file=args.prompt_file,
         output_dir=args.output_dir,
         max_concurrent=args.max_concurrent,
-        seed=args.seed
+        seed=args.seed,
+        save_interval=args.save_interval
     )
     
     # Test profiles if requested

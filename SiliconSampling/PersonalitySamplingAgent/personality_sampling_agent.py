@@ -81,7 +81,7 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
         
         return profile
     
-    async def generate_profiles(self, num_profiles: int, prompt_file: str, output_dir: str = "Personality_profiles", max_concurrent: int = 30, seed: Optional[int] = None) -> List[Dict]:
+    async def generate_profiles(self, num_profiles: int, prompt_file: str, output_dir: str = "Personality_profiles", max_concurrent: int = 30, seed: Optional[int] = None, save_interval: int = 100) -> List[Dict]:
         """Generate personality profiles using LLM with concurrent API calls.
         
         Args:
@@ -90,6 +90,7 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
             output_dir: Directory to save generated profiles
             max_concurrent: Maximum number of concurrent API calls
             seed: Random seed for reproducibility (None = random generation)
+            save_interval: Save progress every N profiles (default: 100)
             
         Returns:
             List of generated personality profile dictionaries
@@ -99,6 +100,19 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
         print(f"Generating {num_profiles} personality profiles asynchronously (max {max_concurrent} concurrent)...")
         if seed is not None:
             print(f"Using seed: {seed} for reproducibility")
+        print(f"Saving progress every {save_interval} profiles")
+        
+        # Load existing profiles to determine starting ID
+        profiles_file = os.path.join(output_dir, "profiles.json")
+        existing_profiles = []
+        start_id = 1
+        
+        if os.path.exists(profiles_file):
+            with open(profiles_file, 'r', encoding='utf-8') as f:
+                existing_profiles = json.load(f)
+            if existing_profiles:
+                start_id = max(p.get('id', 0) for p in existing_profiles) + 1
+            print(f"Found {len(existing_profiles)} existing profiles, starting from ID {start_id}")
         
         # Create tasks for all profiles
         tasks = []
@@ -112,47 +126,53 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
             async with semaphore:
                 return await task
         
-        # Execute all tasks with progress bar
+        # Execute all tasks with progress bar and incremental saving
         profiles = []
         completed_tasks = asyncio.as_completed([bounded_generate(task) for task in tasks])
         
         with tqdm(total=num_profiles, desc="Generating profiles") as pbar:
             for coro in completed_tasks:
-                profile = await coro
-                profiles.append(profile)
-                pbar.update(1)
+                try:
+                    profile = await coro
+                    # Renumber profile to continue from existing max ID
+                    profile['id'] = start_id + profile['id'] - 1
+                    profiles.append(profile)
+                    pbar.update(1)
+                    
+                    # Save incrementally every save_interval profiles
+                    if len(profiles) % save_interval == 0:
+                        self._save_profiles_incremental(profiles, existing_profiles, profiles_file)
+                        print(f"\n✓ Progress saved: {len(profiles)} profiles generated")
+                except Exception as e:
+                    print(f"\n✗ Error generating profile: {e}")
+                    continue
         
-        # Sort profiles by ID
-        profiles.sort(key=lambda x: x.get('id', 0))
-        
-        # Load existing profiles if file exists and append new ones
-        profiles_file = os.path.join(output_dir, "profiles.json")
-        existing_profiles = []
-        if os.path.exists(profiles_file):
-            with open(profiles_file, 'r', encoding='utf-8') as f:
-                existing_profiles = json.load(f)
-            print(f"Found {len(existing_profiles)} existing profiles")
-            
-            # Renumber new profiles to continue from existing max ID
-            if existing_profiles:
-                max_existing_id = max(p.get('id', 0) for p in existing_profiles)
-                for profile in profiles:
-                    profile['id'] = max_existing_id + profile['id']
-            
-            # Append new profiles to existing ones
-            all_profiles = existing_profiles + profiles
-        else:
-            all_profiles = profiles
-        
-        # Save all profiles to file
-        with open(profiles_file, "w", encoding="utf-8") as f:
-            json.dump(all_profiles, f, indent=2, ensure_ascii=False)
+        # Final save of all profiles
+        self._save_profiles_incremental(profiles, existing_profiles, profiles_file)
         
         print(f"\n✓ Generated {len(profiles)} new profiles")
-        print(f"✓ Total profiles in file: {len(all_profiles)}")
+        print(f"✓ Total profiles in file: {len(existing_profiles) + len(profiles)}")
         print(f"✓ Saved to: {profiles_file}")
         
         return profiles
+    
+    def _save_profiles_incremental(self, new_profiles: List[Dict], existing_profiles: List[Dict], output_file: str):
+        """Save profiles incrementally to avoid data loss.
+        
+        Args:
+            new_profiles: Newly generated profiles
+            existing_profiles: Previously existing profiles
+            output_file: Path to output file
+        """
+        # Sort new profiles by ID
+        new_profiles_sorted = sorted(new_profiles, key=lambda x: x.get('id', 0))
+        
+        # Combine with existing profiles
+        all_profiles = existing_profiles + new_profiles_sorted
+        
+        # Save to file
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(all_profiles, f, indent=2, ensure_ascii=False)
 
     async def test_profiles(self, profiles: List[Dict], questions_file: str, output_dir: str = "Personality_profiles") -> None:
         """Test personality profiles with questionnaire.
@@ -222,7 +242,8 @@ async def generate_personality_profiles(num_profiles: int, prompt_file: str,
                                 api_key: Optional[str] = None,
                                 base_url: Optional[str] = None,
                                 max_concurrent: int = 30,
-                                seed: Optional[int] = None) -> List[Dict]:
+                                seed: Optional[int] = None,
+                                save_interval: int = 100) -> List[Dict]:
     """Generate personality profiles (standalone function).
     
     Args:
@@ -233,12 +254,13 @@ async def generate_personality_profiles(num_profiles: int, prompt_file: str,
         base_url: Custom API base URL (optional)
         max_concurrent: Maximum number of concurrent API calls
         seed: Random seed for reproducibility (None = random generation)
+        save_interval: Save progress every N profiles (default: 100)
         
     Returns:
         List of generated personality profile dictionaries
     """
     generator = PersonalityGenerator(api_key=api_key, base_url=base_url)
-    return await generator.generate_profiles(num_profiles, prompt_file, output_dir, max_concurrent, seed)
+    return await generator.generate_profiles(num_profiles, prompt_file, output_dir, max_concurrent, seed, save_interval)
 
 
 async def test_personality_profiles(profiles: List[Dict], questions_file: str,
