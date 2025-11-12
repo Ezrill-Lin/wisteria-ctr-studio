@@ -8,36 +8,56 @@ from typing import Any, Dict, List, Optional
 
 
 def _compact_profile_str(idx: int, p: Dict[str, Any]) -> str:
-    """Serialize a profile into a compact pipe-delimited line.
+    """Serialize a persona into a compact representation.
 
-    The columns are: index|gender|age|region|occupation|salary|liability|married|health|illness.
+    The format includes: index, demographics, personality scores, and persona description.
 
     Args:
-        idx: Row index of the profile.
-        p: Profile dictionary with identity attributes.
+        idx: Row index of the persona.
+        p: Persona dictionary with demographics, personality, and description.
 
     Returns:
-        Pipe-delimited string representation of the profile.
+        String representation of the persona.
     """
-    illness = p.get("illness", "-") if p.get("health_status") else "-"
-    married = 1 if p.get("is_married") else 0
-    health = 1 if p.get("health_status") else 0
+    # Extract demographics
+    demographics = p.get("demographics", {})
+    age = demographics.get("age", "N/A")
+    gender = demographics.get("gender", "N/A")
+    state = demographics.get("state", "N/A")
+    race = demographics.get("race", "N/A")
+    education = demographics.get("educational_attainment", "N/A")
+    occupation = demographics.get("occupation", "N/A")
+    
+    # Extract personality scores
+    personality = p.get("personality", {})
+    scores = personality.get("scores", {})
+    openness = scores.get("openness", "N/A")
+    conscientiousness = scores.get("conscientiousness", "N/A")
+    extraversion = scores.get("extraversion", "N/A")
+    agreeableness = scores.get("agreeableness", "N/A")
+    neuroticism = scores.get("neuroticism", "N/A")
+    
+    # Get persona description
+    description = p.get("description", "N/A")
+    
     return (
-        f"{idx}|{p.get('gender')}|{p.get('age')}|{p.get('region')}|"
-        f"{p.get('occupation')}|{p.get('annual_salary')}|{p.get('liability_status')}|"
-        f"{married}|{health}|{illness}"
+        f"[Persona {idx}]\n"
+        f"Demographics: Age={age}, Gender={gender}, State={state}, Race={race}, Education={education}, Occupation={occupation}\n"
+        f"Personality (Big Five): Openness={openness}, Conscientiousness={conscientiousness}, Extraversion={extraversion}, Agreeableness={agreeableness}, Neuroticism={neuroticism}\n"
+        f"Description: {description}\n"
     )
 
 
 def _build_prompt(ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str = "facebook") -> str:
-    """Compose the LLM prompt for batched binary click decisions.
+    """Compose the LLM prompt for batched binary click decisions using persona profiles.
 
-    The prompt includes the ad text, platform context, concise profile rows, and strict
+    The prompt includes the ad text, platform context, detailed persona profiles with
+    demographics, Big Five personality traits, and persona descriptions, along with strict
     instructions to return a JSON array of 0/1 integers only.
 
     Args:
         ad_text: The advertisement copy to evaluate.
-        profiles: List of identity profiles.
+        profiles: List of persona profiles with demographics, personality, and descriptions.
         ad_platform: Platform where the ad is shown (facebook, tiktok, amazon).
 
     Returns:
@@ -53,28 +73,31 @@ def _build_prompt(ad_text: str, profiles: List[Dict[str, Any]], ad_platform: str
     platform_context = platform_contexts.get(ad_platform.lower(), platform_contexts["facebook"])
     
     header = (
-        "Task: For each profile below, decide if that person would click the ad.\n"
-        f"Platform Context: {platform_context}\n"
-        "Ad: "
+        "Task: You are evaluating whether people would click on an advertisement based on their detailed personas.\n"
+        f"Platform Context: {platform_context}\n\n"
+        "Advertisement:\n"
     )
+    
     rules = (
-        "\n\nRules:\n"
-        "- Output ONLY a simple JSON list of 0/1 integers, no commentary.\n"
+        "\n\nInstructions:\n"
+        "- For each persona below, decide if that person would click the ad based on their demographics, personality traits (Big Five), and persona description.\n"
+        "- Consider how the ad content aligns with their interests, values, needs, and behavioral tendencies.\n"
+        "- Output ONLY a simple JSON list of 0/1 integers, no commentary or explanation.\n"
         "- Format: [0,1,0,1] (compact, NO SPACES between elements)\n"
         "- NOT this: [0, 1, 0, 1] (no spaces after commas)\n"
         "- NOT objects: [{'0':0}] or nested structures\n"
-        "- The array length must equal the number of profiles.\n"
+        "- The array length must equal the number of personas.\n"
         "- 1 means 'would click', 0 means 'would not click'.\n"
-        "- Consider the platform context when making decisions.\n"
         "- Stop after closing bracket ']'\n"
     )
-    cols = (
-        "\n\nProfiles (index|gender|age|region|occupation|salary|liability|married|health|illness):\n"
-    )
+    
+    personas_header = "\n\nPersonas to evaluate:\n" + "="*80 + "\n\n"
+    
     lines = [
         _compact_profile_str(i, p) for i, p in enumerate(profiles)
     ]
-    return header + ad_text + rules + cols + "\n".join(lines)
+    
+    return header + ad_text + rules + personas_header + "\n".join(lines)
 
 
 def _fix_truncated_response(s: str, expected_length: int) -> str:
@@ -183,51 +206,103 @@ def _sigmoid(x: float) -> float:
 
 
 def _mock_click_prob(ad_text: str, p: Dict[str, Any]) -> float:
-    """Heuristic click propensity for use in mock predictions.
+    """Heuristic click propensity for use in mock predictions with persona profiles.
 
-    Combines ad keyword matches with profile attributes to compute a
-    probability in [0, 1], passed through a sigmoid.
+    Combines ad keyword matches with persona demographics, personality traits,
+    and description to compute a probability in [0, 1], passed through a sigmoid.
 
     Args:
         ad_text: Advertisement text.
-        p: Profile dictionary.
+        p: Persona dictionary with demographics, personality, and description.
 
     Returns:
         A probability between 0 and 1.
     """
     text = (ad_text or "").lower()
-    age = int(p.get("age", 40))
-    salary = float(p.get("annual_salary", 50000.0))
-    liab = float(p.get("liability_status", 10000.0))
-    married = 1 if p.get("is_married") else 0
-    health = 1 if p.get("health_status") else 0
-    occ = (p.get("occupation") or "").lower()
-    gender = (p.get("gender") or "").lower()
+    
+    # Extract demographics
+    demographics = p.get("demographics", {})
+    age = int(demographics.get("age", 40))
+    gender = (demographics.get("gender") or "").lower()
+    occupation = (demographics.get("occupation") or "").lower()
+    education = (demographics.get("educational_attainment") or "").lower()
+    
+    # Extract personality scores (Big Five: 1-10 scale typically)
+    personality = p.get("personality", {})
+    scores = personality.get("scores", {})
+    openness = int(scores.get("openness", 5))
+    conscientiousness = int(scores.get("conscientiousness", 5))
+    extraversion = int(scores.get("extraversion", 5))
+    agreeableness = int(scores.get("agreeableness", 5))
+    neuroticism = int(scores.get("neuroticism", 5))
+    
+    # Get persona description for additional context
+    description = (p.get("description") or "").lower()
 
     z = -0.5
 
-    if any(k in text for k in ["credit", "loan", "debt", "card"]):
-        z += min(liab / 100000.0, 2.0)
-    if any(k in text for k in ["health", "medical", "insurance", "clinic"]):
-        z += 0.8 * health
-    if any(k in text for k in ["travel", "flight", "hotel", "vacation"]):
-        z += min((salary - 40000.0) / 60000.0, 1.0)
-    if any(k in text for k in ["education", "course", "degree", "learn"]):
-        z += 0.6 if ("student" in occ or "teacher" in occ or age < 30) else 0.1
-    if any(k in text for k in ["retire", "pension"]):
+    # Keyword-based scoring with personality modifiers
+    if any(k in text for k in ["credit", "loan", "debt", "card", "financial"]):
+        # Higher conscientiousness and lower neuroticism = more interested in financial products
+        z += 0.3 + (conscientiousness - 5) * 0.1 - (neuroticism - 5) * 0.05
+    
+    if any(k in text for k in ["health", "medical", "insurance", "clinic", "wellness"]):
+        # Higher conscientiousness and neuroticism = more health-conscious
+        z += 0.4 + (conscientiousness - 5) * 0.1 + (neuroticism - 5) * 0.08
+    
+    if any(k in text for k in ["travel", "flight", "hotel", "vacation", "adventure"]):
+        # Higher openness and extraversion = love for travel
+        z += 0.5 + (openness - 5) * 0.15 + (extraversion - 5) * 0.1
+    
+    if any(k in text for k in ["education", "course", "degree", "learn", "study"]):
+        # Higher openness = interest in learning
+        z += 0.5 + (openness - 5) * 0.15
+        if "student" in occupation or "teacher" in occupation or age < 30:
+            z += 0.4
+    
+    if any(k in text for k in ["retire", "pension", "senior"]):
         z += 0.7 if age >= 60 else -0.3
+    
     if any(k in text for k in ["tech", "gadget", "software", "app", "gaming", "ai"]):
-        z += 0.4 if (age < 40 or "engineer" in occ) else 0.1
-    if any(k in text for k in ["home", "mortgage", "furniture", "kitchen"]):
-        z += 0.3 * married
-    if any(k in text for k in ["fashion", "beauty", "clothing"]):
-        z += 0.2 if gender == "female" else 0.05
-    if any(k in text for k in ["sports", "fitness", "gym"]):
-        z += 0.2 if age < 45 else 0.05
-
-    z += (salary - 60000.0) / 120000.0
-    z -= liab / 300000.0
-    z += (0.15 if married else 0.0)
+        # Higher openness and younger age = interest in tech
+        z += 0.4 + (openness - 5) * 0.1
+        if age < 40 or "engineer" in occupation or "tech" in occupation:
+            z += 0.3
+    
+    if any(k in text for k in ["home", "furniture", "kitchen", "decor"]):
+        # Higher conscientiousness = interest in home improvement
+        z += 0.3 + (conscientiousness - 5) * 0.08
+    
+    if any(k in text for k in ["fashion", "beauty", "clothing", "style"]):
+        # Higher openness and extraversion = fashion interest
+        z += 0.2 + (openness - 5) * 0.08 + (extraversion - 5) * 0.08
+        if gender == "female":
+            z += 0.2
+    
+    if any(k in text for k in ["sports", "fitness", "gym", "exercise"]):
+        # Higher extraversion and conscientiousness = fitness interest
+        z += 0.2 + (extraversion - 5) * 0.08 + (conscientiousness - 5) * 0.06
+        if age < 45:
+            z += 0.2
+    
+    if any(k in text for k in ["social", "community", "event", "party"]):
+        # Higher extraversion and agreeableness = social events
+        z += 0.3 + (extraversion - 5) * 0.15 + (agreeableness - 5) * 0.08
+    
+    if any(k in text for k in ["art", "music", "creative", "design"]):
+        # Higher openness = interest in arts
+        z += 0.4 + (openness - 5) * 0.15
+    
+    # Age-based adjustments
+    if age < 25:
+        z += 0.1  # Younger people more likely to click in general
+    elif age > 65:
+        z -= 0.15  # Older people more cautious
+    
+    # Education level boost for complex/professional products
+    if any(k in text for k in ["professional", "premium", "executive", "luxury"]):
+        if "bachelor" in education or "master" in education or "professional degree" in education:
+            z += 0.3
 
     return max(0.0, min(1.0, _sigmoid(z)))
 
