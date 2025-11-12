@@ -28,6 +28,8 @@ def parse_args():
                        help="Custom API base URL (optional)")
     parser.add_argument("--max_concurrent", type=int, default=30,
                        help="Maximum number of concurrent API requests (default: 30)")
+    parser.add_argument("--seed", type=int, default=None,
+                       help="Random seed for reproducibility (omit for random generation)")
     return parser.parse_args()
 
 
@@ -43,7 +45,8 @@ async def main():
         num_profiles=args.num_profiles,
         prompt_file=args.prompt_file,
         output_dir=args.output_dir,
-        max_concurrent=args.max_concurrent
+        max_concurrent=args.max_concurrent,
+        seed=args.seed
     )
     
     # Test profiles if requested

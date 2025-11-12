@@ -2,13 +2,35 @@
   {
     "scores": {
       "openness": 7,
-      "conscientiousness": 8,
-      "extraversion": 4,
-      "agreeableness": 6,
-      "neuroticism": 5
+      "conscientiousness": 6,
+      "extraversion": 8,
+      "agreeableness": 5,
+      "neuroticism": 4
     },
-    "description": "This individual exhibits high levels of openness, suggesting that they are imaginative and open to new experiences, often seeking out creative pursuits or unconventional ideas. Their conscientiousness score indicates a strong sense of duty and a preference for organization, which typically leads to them being reliable and responsible in both personal and professional settings. However, their lower extraversion score suggests that they may not be particularly outgoing; they might prefer solitary activities or engaging in deeper conversations with a few close friends rather than large social gatherings. With an agreeable nature, they are generally friendly and supportive, but might not always express their feelings unless prompted. Their average neuroticism indicates that they experience a moderate level of emotional instability, which means they may occasionally feel anxious or stressed but are usually able to manage these feelings effectively.",
+    "description": "With a high score in openness at 7, this individual is quite imaginative and open to new experiences, often seeking out creative outlets and engaging in diverse interests, from art to travel. Their extraversion score of 8 indicates a sociable and outgoing nature, thriving in social situations and enjoying the company of others. They often take on leadership roles in group settings and are comfortable expressing their thoughts and ideas. Despite their sociable demeanor, their agreeableness score of 5 suggests that they possess a balanced approach in their interactions; while generally friendly, they can also be assertive and stand their ground when needed. A conscientiousness score of 6 indicates that they are reasonably organized and responsible; they are able to meet deadlines and prioritize tasks, though they may allow some flexibility when spontaneity calls. Lastly, their neuroticism score of 4 suggests that they are relatively stable emotionally, with a tendency to handle stress without becoming overly anxious or overwhelmed, which allows them to enjoy their vibrant social life without significant personal turmoil.",
     "id": 1
+  },
+  {
+    "scores": {
+      "openness": 7,
+      "conscientiousness": 9,
+      "extraversion": 5,
+      "agreeableness": 8,
+      "neuroticism": 3
+    },
+    "description": "This individual has a high level of openness, indicating a strong curiosity and appreciation for new experiences, which often leads them to explore creative outlets and engage in intellectually stimulating conversations. Their conscientiousness score is notably high, suggesting they are organized, responsible, and detail-oriented, making them reliable in both personal and professional commitments. With a moderate extraversion score, they enjoy social interactions but also value their alone time, often participating in group activities while also seeking solitary reflection. The high level of agreeableness indicates they are compassionate, cooperative, and empathetic towards others, making them well-liked in their social circles. Their low neuroticism score reflects their emotional stability; they handle stress well and maintain a calm demeanor, rarely exhibiting anxiety or mood swings, which further enhances their ability to connect with people on a deeper level.",
+    "id": 2
+  },
+  {
+    "scores": {
+      "openness": 7,
+      "conscientiousness": 6,
+      "extraversion": 4,
+      "agreeableness": 8,
+      "neuroticism": 3
+    },
+    "description": "This individual exhibits a high level of openness, demonstrating a strong appreciation for creativity and new experiences. They enjoy exploring diverse cultures and often seek out novel ideas, which may manifest in their varied hobbies and interests. Their conscientiousness score is moderate, indicating that while they are generally organized and responsible, they sometimes prioritize spontaneity over strict planning. With a lower extraversion score, they tend to prefer smaller gatherings and one-on-one interactions over large social events, reflecting a more introspective nature. High agreeableness suggests they are compassionate, empathetic, and considerate, often going out of their way to help others, which contributes to being well-liked among peers. On the neuroticism scale, their low score indicates emotional stability, allowing them to handle stress effectively and maintain a positive outlook, which enhances their interactions and relationships.",
+    "id": 3
   },
   {
     "scores": {
@@ -16,10 +38,21 @@
       "conscientiousness": 5,
       "extraversion": 8,
       "agreeableness": 6,
-      "neuroticism": 3
+      "neuroticism": 4
     },
-    "description": "With a high score in openness, this individual is curious and appreciates a wide range of experiences, often seeking out new ideas and cultural activities. Their score of 8 in extraversion indicates they are sociable and energized by interactions with others, thriving in group settings and often taking on leadership roles in social contexts. A moderate level of conscientiousness suggests they can be organized and reliable but may occasionally struggle with strict planning and deadlines. A score of 6 in agreeableness reflects that while they are generally friendly and cooperative, they do not shy away from expressing dissenting opinions when necessary. Their low score in neuroticism indicates a stable emotional state, making them resilient in the face of stress and challenges, which allows them to navigate social environments with ease and confidence.",
-    "id": 2
+    "description": "This individual exhibits a high level of openness, showing an eagerness to explore new ideas, cultures, and experiences. They enjoy engaging in creative activities and are often seen as innovative in both their personal and professional life. Their extraversion score is also high, indicating that they are sociable, outgoing, and energized by interactions with others. They tend to take the lead in social situations, making them a popular figure among friends and colleagues. With a moderate level of conscientiousness, they can be organized and responsible when it matters, but they might also allow flexibility in their plans, preferring spontaneity over rigid schedules. Their agreeableness reflects a tendency towards being cooperative and friendly, but they can also assert themselves when they feel strongly about an issue. Finally, their lower neuroticism suggests that they generally maintain a calm demeanor, rarely getting anxious or stressed, and they approach challenges with a level-headed attitude.",
+    "id": 4
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 6,
+      "extraversion": 7,
+      "agreeableness": 5,
+      "neuroticism": 4
+    },
+    "description": "This individual exhibits a high level of openness, suggesting they are imaginative, curious, and willing to explore new ideas and experiences. They often seek out novel activities, such as traveling to different cultures or experimenting with creative projects. With a conscientiousness score of 6, they demonstrate a good balance of organization and spontaneity; while they can be reliable and goal-oriented, they also enjoy some flexibility in their plans. Their extraversion score of 7 indicates that they are generally sociable and energized by interactions with others, often thriving in group settings and enjoying the company of friends. However, their agreeableness score of 5 reflects a more balanced approach to interpersonal relationships, showing a tendency to prioritize their own opinions and needs at times, which may lead to occasional conflicts. Finally, a lower neuroticism score of 4 indicates that they are fairly resilient and able to cope with stress, maintaining a level-headed approach to challenges and setbacks.",
+    "id": 5
   },
   {
     "scores": {
@@ -29,8 +62,52 @@
       "agreeableness": 7,
       "neuroticism": 3
     },
-    "description": "With a high score in openness, this individual is adventurous and enjoys exploring new ideas and experiences, often seeking out diverse cultural activities such as art exhibits or international cuisines. Their conscientiousness score of 6 indicates that they are fairly organized and reliable, but they occasionally struggle with staying on top of every detail, especially when pursuing creative passions. A lower extraversion score of 4 suggests that they prefer intimate gatherings over large social events, finding comfort in deep conversations with close friends rather than seeking attention in a crowd. With an agreeableness score of 7, they tend to be empathetic and cooperative, valuing harmony in relationships and often smoothing over conflicts with understanding. Finally, their low neuroticism score of 3 implies a calm and resilient demeanor, allowing them to handle stress and setbacks without becoming overly anxious or overwhelmed.",
-    "id": 3
+    "description": "With a high score of 8 in openness, this individual is exceptionally imaginative and curious, often exploring new ideas and experiences with enthusiasm. They are drawn to creative pursuits and enjoy engaging in discussions about abstract concepts. Their conscientiousness score of 6 indicates a moderate level of organization and dependability; they are capable of meeting deadlines but may occasionally be sidetracked by their creative impulses. Scoring 4 in extraversion suggests that they prefer smaller, more intimate social gatherings rather than large parties, often feeling more comfortable in one-on-one conversations. Their agreeableness score of 7 reflects a compassionate and cooperative nature, making them a supportive friend and colleague, likely to go out of their way to help others. Lastly, with a low neuroticism score of 3, they typically maintain a positive outlook and can handle stress well, contributing to their overall calm demeanor in challenging situations.",
+    "id": 6
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 6,
+      "extraversion": 3,
+      "agreeableness": 7,
+      "neuroticism": 4
+    },
+    "description": "With a high score of 8 in openness, this individual is particularly imaginative and appreciates new experiences, often seeking out diverse cultural activities such as art exhibits, music festivals, and travel to uncharted destinations. Their conscientiousness score of 6 indicates a balanced approach to their responsibilities; they can be reliable but may sometimes prioritize creative pursuits over tasks that require precision. With a lower extraversion score of 3, they tend to be more reserved and prefer intimate gatherings with close friends over large social events, often finding solace in solitary activities like reading or writing. Their agreeableness score of 7 suggests they are generally warm and empathetic, often mediating conflicts and showing a genuine concern for others’ feelings. Finally, with a neuroticism score of 4, they experience occasional stress but usually manage it well, maintaining a level-headed demeanor even during challenging situations.",
+    "id": 7
+  },
+  {
+    "scores": {
+      "openness": 7,
+      "conscientiousness": 8,
+      "extraversion": 5,
+      "agreeableness": 6,
+      "neuroticism": 4
+    },
+    "description": "This individual demonstrates a high level of openness, as evidenced by their curiosity and appreciation for art, culture, and novel ideas. They enjoy exploring new experiences and are often found attending unique events or trying out diverse cuisines. Their conscientiousness score is notably high, reflecting their organized approach to tasks and a strong sense of responsibility in both personal and professional domains. They are methodical in their work, often setting goals and diligently pursuing them. While they are moderately extraverted, they value their alone time and can be reserved in large social gatherings, preferring deeper conversations with a few close friends over superficial mingling. Their agreeableness indicates a willingness to cooperate with others and a tendency to be empathetic, though they maintain a level of assertiveness when necessary. With a lower score in neuroticism, they remain relatively calm under stress, handling challenges with a rational perspective rather than succumbing to anxiety or worry.",
+    "id": 8
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 6,
+      "extraversion": 4,
+      "agreeableness": 7,
+      "neuroticism": 5
+    },
+    "description": "This individual is characterized by high openness, demonstrating a strong appreciation for art, culture, and new experiences. They are likely to frequently seek out new ideas and engage in creative pursuits, often finding inspiration in unconventional sources. With a conscientiousness score of 6, they are generally organized and responsible but may occasionally indulge in spontaneity, allowing for a balance between structure and freedom. Their lower extraversion score of 4 indicates that they prefer smaller, intimate gatherings rather than large, social events, often enjoying deep conversations over casual small talk. A score of 7 in agreeableness suggests they are often empathetic and cooperative, valuing harmony in their relationships and being supportive of friends and family. With a neuroticism score of 5, they may experience some emotional fluctuations, but generally manage stress well, allowing them to maintain a level-headed approach in challenging situations.",
+    "id": 9
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 5,
+      "extraversion": 6,
+      "agreeableness": 7,
+      "neuroticism": 4
+    },
+    "description": "This individual exhibits high openness, demonstrating a strong appreciation for creativity, variety, and new experiences. They are likely to seek out novel activities and enjoy exploring different cultures and ideas, often engaging in artistic pursuits or traveling to diverse places. Their conscientiousness score is moderate, suggesting a balanced approach to organization and responsibility; they can be reliable and diligent when required but may also display a spontaneous side that sometimes leads to flexibility in planning. With a score of 6 in extraversion, they thrive in social settings and enjoy engaging with others, though they also appreciate solitary moments for reflection. Their agreeableness of 7 indicates a compassionate and cooperative nature; they tend to prioritize harmony in relationships and are empathetic towards others' feelings. Finally, their low neuroticism score suggests they remain relatively calm and collected, often managing stress well and maintaining a positive outlook even in challenging situations.",
+    "id": 10
   },
   {
     "scores": {
@@ -40,8 +117,8 @@
       "agreeableness": 6,
       "neuroticism": 3
     },
-    "description": "This individual exhibits a high level of openness, demonstrating a strong curiosity and appreciation for new experiences, which makes them receptive to diverse perspectives and creative ideas. They frequently seek out novel activities and are often the go-to person for brainstorming sessions. With a score of 5 in conscientiousness, they show a balanced approach to organization and responsibility; they can manage tasks effectively but may sometimes struggle with perfectionism or procrastination. Their high extraversion indicates that they thrive in social settings, enjoy meeting new people, and often take on leadership roles in group activities. With an agreeableness score of 6, they are generally friendly and cooperative but can assert themselves when necessary. The lower score in neuroticism suggests that they are relatively stable emotionally, handling stress with resilience and maintaining a positive outlook even in challenging situations.",
-    "id": 4
+    "description": "This individual exhibits a high level of openness, showing a strong appreciation for art and a tendency to engage in imaginative ideas and experiences. They are likely to seek novelty and thrive in diverse environments, often exploring new cultures and creative outlets. With an extraversion score of 8, they are outgoing and energized by social interactions, frequently participating in group activities and enjoying the spotlight in social settings. Their agreeableness score of 6 indicates that they are generally cooperative and compassionate, valuing harmony in relationships while maintaining their own opinions. A moderate conscientiousness score of 5 suggests they are organized but also flexible, sometimes prioritizing spontaneity over strict schedules. Finally, a low neuroticism score of 3 indicates they tend to be emotionally stable and resilient, handling stress well and maintaining a positive outlook even in challenging situations.",
+    "id": 11
   },
   {
     "scores": {
@@ -51,30 +128,74 @@
       "agreeableness": 6,
       "neuroticism": 3
     },
-    "description": "This individual is characterized by a high level of openness, suggesting a strong appreciation for art, new experiences, and novel ideas. They thrive in creative environments and are always eager to explore different cultures and philosophies. With a score of 4 in conscientiousness, they may struggle with organization and time management, often preferring spontaneity over strict planning. Their high extraversion level indicates that they are very sociable and energetic, frequently seeking out social gatherings and enjoying the company of others. They are generally agreeable, showing empathy and a willingness to cooperate with peers, but their tendency to prioritize fun can sometimes lead to conflicts when responsibilities are overlooked. With low neuroticism, they tend to remain calm under pressure and are resilient in the face of stress, allowing them to navigate social situations with ease and confidence.",
-    "id": 5
+    "description": "This individual shows a high degree of openness, marked by a strong curiosity and enthusiasm for new experiences, often seeking out diverse cultures and ideas. Their extraversion level indicates they thrive in social settings; they are often the life of the party, engaging easily with others and enjoying lively conversations. However, their conscientiousness is lower, suggesting they may sometimes struggle with organization and follow-through on tasks, preferring spontaneity over meticulous planning. While they generally display warmth and friendliness, indicated by a moderately high agreeableness score, they can still be assertive when needed. Their low neuroticism reflects a calm demeanor, allowing them to handle stress well and maintain a positive outlook, even in challenging situations.",
+    "id": 12
   },
   {
     "scores": {
-      "openness": 7,
+      "openness": 8,
       "conscientiousness": 6,
       "extraversion": 4,
-      "agreeableness": 8,
+      "agreeableness": 7,
       "neuroticism": 3
     },
-    "description": "This individual exhibits a strong sense of openness, demonstrating a keen interest in exploring new ideas, experiences, and cultures, often seeking out opportunities for learning and growth. With a score of 6 in conscientiousness, they are generally organized and reliable, though they occasionally allow spontaneity to guide their decisions. Their lower score of 4 in extraversion suggests they prefer quieter settings and may feel drained after extended social interactions, yet this doesn't hamper their ability to engage meaningfully with others when they choose to. An agreeable disposition, reflected in their score of 8, makes them empathetic and cooperative, as they are often attuned to the emotions of others and seek harmonious relationships. Finally, a low score of 3 in neuroticism indicates they are generally calm and collected, effectively managing stress and anxiety, which helps them maintain a positive outlook on life even in challenging situations.",
-    "id": 6
+    "description": "This individual exhibits high levels of openness, indicating a strong appreciation for creativity and new experiences; they are likely to engage in diverse cultural activities and pursue innovative ideas. Their conscientiousness score suggests a balanced approach to responsibility; they tend to meet deadlines but may sometimes prioritize flexibility over strict organization. With a moderate level of extraversion, they enjoy social interactions but also value their alone time, often thriving in smaller, more intimate gatherings rather than large parties. Their higher agreeableness reveals a compassionate and cooperative nature, making them a supportive friend and a good listener, often putting others' needs before their own. Lastly, their low neuroticism indicates a calm disposition, allowing them to handle stress effectively and maintain a positive outlook even in challenging situations.",
+    "id": 13
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 6,
+      "extraversion": 5,
+      "agreeableness": 7,
+      "neuroticism": 3
+    },
+    "description": "With a high score of 8 in openness, this individual exhibits a strong appreciation for art, culture, and adventure, often seeking out new experiences and ideas, which leads them to explore a variety of creative hobbies and interests. Their conscientiousness score of 6 indicates that while they are generally reliable and organized, they may occasionally struggle with consistency due to their spontaneous nature. Scoring a 5 in extraversion, they enjoy social interactions but also value their alone time, displaying a balanced approach to their social life. A score of 7 in agreeableness reflects their cooperative and compassionate personality; they tend to be empathetic towards others, fostering strong relationships and often being seen as a supportive friend. Lastly, their low neuroticism score of 3 suggests that they are resilient and calm in stressful situations, allowing them to navigate life's challenges with a level head.",
+    "id": 14
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 6,
+      "extraversion": 5,
+      "agreeableness": 7,
+      "neuroticism": 3
+    },
+    "description": "This individual scores high on openness, indicating a strong appreciation for new experiences and creative pursuits. They are often drawn to exploring different cultures, ideas, and artistic expressions, which can lead them to pursue a variety of hobbies and interests. With a moderate level of conscientiousness, they tend to be organized and responsible, but may not always follow through to the fullest extent, especially if something piques their curiosity. Their extraversion score suggests a balanced social life; they enjoy engaging with others but also value their alone time to recharge. High agreeableness indicates they are empathetic and cooperative, often prioritizing harmony in their relationships. With a low score in neuroticism, they tend to remain calm and composed in stressful situations, which allows them to navigate their diverse pursuits without becoming easily overwhelmed.",
+    "id": 15
   },
   {
     "scores": {
       "openness": 7,
-      "conscientiousness": 6,
+      "conscientiousness": 5,
       "extraversion": 4,
-      "agreeableness": 8,
-      "neuroticism": 5
+      "agreeableness": 6,
+      "neuroticism": 3
     },
-    "description": "This individual exemplifies a high level of openness, demonstrating a keen interest in new experiences and creative pursuits, which manifests in their love for travel and exploring different cultures. They are moderately conscientious, often setting goals and being organized, though they occasionally struggle with follow-through on less interesting tasks. Their score in extraversion is relatively low, indicating they are more reserved in social situations, preferring intimate gatherings with close friends over large parties. This person is very agreeable, known for their empathy and willingness to help others, often placing the needs of friends and family above their own. Lastly, with a moderate level of neuroticism, they may experience occasional anxiety or self-doubt, particularly in stressful situations, but they generally manage their emotions well and seek support from their close-knit circle.",
-    "id": 7
+    "description": "This individual exhibits a high level of openness, demonstrating a strong appreciation for art, new experiences, and intellectual curiosity. They are eager to explore diverse ideas and enjoy engaging with artistic and cultural activities. Their average conscientiousness suggests that while they can be organized and reliable, they may also be flexible and spontaneous at times, which allows them to embrace new opportunities without being overly rigid. A score of 4 in extraversion indicates they are more reserved and prefer meaningful interactions over large social gatherings; they tend to recharge in solitude rather than in bustling environments. With a score of 6 in agreeableness, they are generally compassionate and cooperative, making them approachable and friendly, but they also have moments where they assert their own needs clearly. Finally, their low neuroticism reflects stability and a calm demeanor, meaning they handle stress with resilience and tend to stay composed even in challenging situations.",
+    "id": 16
+  },
+  {
+    "scores": {
+      "openness": 7,
+      "conscientiousness": 5,
+      "extraversion": 8,
+      "agreeableness": 6,
+      "neuroticism": 4
+    },
+    "description": "With a score of 7 in openness, this individual is imaginative and curious, often seeking out new experiences and ideas, whether through travel, art, or engaging in diverse cultural activities. Their extraversion score of 8 indicates a sociable and energetic demeanor, thriving in social situations and often taking the lead in group gatherings, which makes them a popular figure among peers. A conscientiousness score of 5 demonstrates a balanced approach to planning and organization; they can be reliable but may also enjoy spontaneity and flexibility in their routine. Agreeableness at 6 reflects a generally cooperative and friendly nature, as they are often willing to support others and maintain harmony in relationships, but they can assert themselves when necessary. Lastly, a neuroticism score of 4 suggests they are relatively stable emotionally, handling stress and setbacks with a degree of resilience, though they might occasionally experience anxieties in unfamiliar situations.",
+    "id": 17
+  },
+  {
+    "scores": {
+      "openness": 8,
+      "conscientiousness": 5,
+      "extraversion": 6,
+      "agreeableness": 7,
+      "neuroticism": 3
+    },
+    "description": "With a high score of 8 in openness, this individual is highly imaginative and enjoys exploring new ideas and experiences. They are likely to embrace change and are enthusiastic about pursuing creative endeavors, whether it be through travel, art, or learning new concepts. Their moderate conscientiousness score of 5 indicates that while they are capable of setting goals and maintaining some level of organization, they also appreciate flexibility and spontaneity, which may sometimes lead to a less structured approach to tasks. Scoring a 6 in extraversion, they are sociable and enjoy engaging with others, often finding joy in group activities and discussions. Their agreeableness score of 7 suggests that they are empathetic and considerate, which helps them build strong relationships and navigate social environments with ease. Finally, with a low neuroticism score of 3, they tend to remain calm and composed even in stressful situations, allowing them to approach challenges with a level-headed attitude and a focus on positive outcomes.",
+    "id": 18
   },
   {
     "scores": {
@@ -84,29 +205,18 @@
       "agreeableness": 6,
       "neuroticism": 3
     },
-    "description": "This individual exhibits a high degree of openness, suggesting a strong appreciation for art, beauty, and new experiences, which translates into an adventurous lifestyle filled with travel and exploration of different cultures. Their moderate conscientiousness indicates that while they strive to achieve their goals, they may sometimes lack the organization and discipline needed for meticulous planning, leading to a somewhat spontaneous approach to tasks. With a high extraversion score, they are socially active and thrive in group settings, often taking the lead in social gatherings and enjoying engaging conversations with diverse groups of people. Their agreeableness reflects a cooperative and friendly nature, making them approachable and easy to work with, although they may assert their opinions when necessary. Lastly, a low neuroticism score indicates they are generally calm and stable, rarely feeling anxious or stressed, which allows them to manage challenges with a level-headed perspective.",
-    "id": 8
+    "description": "With a high score of 7 in openness, this individual is characterized by a strong curiosity and a willingness to embrace new experiences and ideas. They often seek out creative outlets and enjoy exploring different cultures and perspectives. Their extraversion score of 8 indicates a very sociable and outgoing nature; they thrive in social settings and draw energy from interactions with others, frequently being the life of the party. The moderate score of 5 in conscientiousness suggests they are fairly organized but may sometimes struggle with consistency and follow-through on tasks, preferring to dive into spontaneous adventures rather than sticking strictly to routines. An agreeableness score of 6 reflects a warm and cooperative personality; they are typically empathetic and willing to compromise, although they can occasionally assert their opinions strongly. Lastly, with a low neuroticism score of 3, they generally maintain a calm demeanor, rarely experiencing intense stress or anxiety, which allows them to tackle challenges with a positive outlook.",
+    "id": 19
   },
   {
     "scores": {
       "openness": 7,
-      "conscientiousness": 6,
-      "extraversion": 8,
-      "agreeableness": 5,
+      "conscientiousness": 4,
+      "extraversion": 6,
+      "agreeableness": 8,
       "neuroticism": 3
     },
-    "description": "This individual exhibits a high level of openness, often displaying a strong curiosity about new experiences, ideas, and cultures, which drives them to travel frequently and try diverse types of cuisine. With a score of 6 in conscientiousness, they tend to be organized and reliable, though they may occasionally procrastinate or overlook details when overly focused on their next big adventure. Their score of 8 in extraversion means they thrive in social settings, easily making new friends and enjoying vibrant discussions, while their moderate agreeableness of 5 suggests they can be assertive and occasionally confrontational, valuing honest debate over harmony. Lastly, their low neuroticism score of 3 indicates a generally calm and resilient demeanor, which helps them navigate stress without becoming overly anxious or reactive.",
-    "id": 9
-  },
-  {
-    "scores": {
-      "openness": 7,
-      "conscientiousness": 5,
-      "extraversion": 8,
-      "agreeableness": 6,
-      "neuroticism": 3
-    },
-    "description": "This individual is characterized by a high level of openness, suggesting they are imaginative and open to new experiences. They enjoy exploring diverse ideas and often seek out creative endeavors, whether it's in art, travel, or embracing new cultures. Their extraversion score of 8 indicates they are highly sociable and thrive in group settings, enjoying conversations and making connections with others. Although moderately conscientious (score of 5), they can be organized and reliable when needed, but may sometimes struggle with time management, preferring spontaneity over strict planning. Their agreeableness score of 6 shows they are generally friendly and cooperative, often seeking to maintain harmony in their relationships, yet they can assert themselves when necessary. Lastly, with a lower score of 3 in neuroticism, they display emotional stability and resilience, rarely feeling overwhelmed by stress or anxiety, which allows them to approach challenges with a positive and calm demeanor.",
-    "id": 10
+    "description": "This individual exhibits a high level of openness, reflecting a strong appreciation for creativity, curiosity, and new experiences. They are likely to actively seek out novel ideas and enjoy engaging in diverse cultural and artistic pursuits. Though they score lower on conscientiousness, indicating a tendency to be somewhat disorganized and less reliable in following through on tasks, their sociable nature, as suggested by their moderate extraversion, allows them to easily connect with others and thrive in social settings. With an agreeable disposition, they are friendly, empathetic, and often prioritize harmonious relationships, making them well-liked among peers. Additionally, their low neuroticism suggests they handle stress well and maintain a generally positive outlook on life, resulting in a confident, easygoing personality that attracts others.",
+    "id": 20
   }
 ]

@@ -28,12 +28,13 @@ class PersonalityGenerator:
         )
         self._prompt_cache = {}  # Cache for loaded prompts
     
-    async def generate_single_profile(self, profile_id: int, prompt_file: str) -> Dict:
+    async def generate_single_profile(self, profile_id: int, prompt_file: str, seed: Optional[int] = None) -> Dict:
         """Generate a single personality profile using LLM.
         
         Args:
             profile_id: ID number for this profile
             prompt_file: Path to the personality generation prompt file
+            seed: Random seed for reproducibility (None = random generation)
             
         Returns:
             Dictionary containing a single personality profile
@@ -68,7 +69,8 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
                 {"role": "system", "content": prompt}
             ],
             temperature=0.9,  # Higher temperature for more diversity
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
+            seed=seed  # Use seed if provided for reproducibility
         )
         
         json_result = response.choices[0].message.content
@@ -79,7 +81,7 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
         
         return profile
     
-    async def generate_profiles(self, num_profiles: int, prompt_file: str, output_dir: str = "Personality_profiles", max_concurrent: int = 30) -> List[Dict]:
+    async def generate_profiles(self, num_profiles: int, prompt_file: str, output_dir: str = "Personality_profiles", max_concurrent: int = 30, seed: Optional[int] = None) -> List[Dict]:
         """Generate personality profiles using LLM with concurrent API calls.
         
         Args:
@@ -87,6 +89,7 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
             prompt_file: Path to the personality generation prompt file
             output_dir: Directory to save generated profiles
             max_concurrent: Maximum number of concurrent API calls
+            seed: Random seed for reproducibility (None = random generation)
             
         Returns:
             List of generated personality profile dictionaries
@@ -94,11 +97,13 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
         os.makedirs(output_dir, exist_ok=True)
 
         print(f"Generating {num_profiles} personality profiles asynchronously (max {max_concurrent} concurrent)...")
+        if seed is not None:
+            print(f"Using seed: {seed} for reproducibility")
         
         # Create tasks for all profiles
         tasks = []
         for i in range(num_profiles):
-            tasks.append(self.generate_single_profile(i + 1, prompt_file))
+            tasks.append(self.generate_single_profile(i + 1, prompt_file, seed))
         
         # Process tasks with concurrency limit using semaphore
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -120,12 +125,32 @@ Make the profile diverse and realistic. Vary the scores significantly across pro
         # Sort profiles by ID
         profiles.sort(key=lambda x: x.get('id', 0))
         
-        # Save profiles to file
-        with open(os.path.join(output_dir, "profiles.json"), "w", encoding="utf-8") as f:
-            json.dump(profiles, f, indent=2, ensure_ascii=False)
+        # Load existing profiles if file exists and append new ones
+        profiles_file = os.path.join(output_dir, "profiles.json")
+        existing_profiles = []
+        if os.path.exists(profiles_file):
+            with open(profiles_file, 'r', encoding='utf-8') as f:
+                existing_profiles = json.load(f)
+            print(f"Found {len(existing_profiles)} existing profiles")
+            
+            # Renumber new profiles to continue from existing max ID
+            if existing_profiles:
+                max_existing_id = max(p.get('id', 0) for p in existing_profiles)
+                for profile in profiles:
+                    profile['id'] = max_existing_id + profile['id']
+            
+            # Append new profiles to existing ones
+            all_profiles = existing_profiles + profiles
+        else:
+            all_profiles = profiles
         
-        print(f"\n✓ Generated {len(profiles)} profiles")
-        print(f"✓ Saved to: {os.path.join(output_dir, 'profiles.json')}")
+        # Save all profiles to file
+        with open(profiles_file, "w", encoding="utf-8") as f:
+            json.dump(all_profiles, f, indent=2, ensure_ascii=False)
+        
+        print(f"\n✓ Generated {len(profiles)} new profiles")
+        print(f"✓ Total profiles in file: {len(all_profiles)}")
+        print(f"✓ Saved to: {profiles_file}")
         
         return profiles
 
@@ -196,7 +221,8 @@ async def generate_personality_profiles(num_profiles: int, prompt_file: str,
                                 output_dir: str = "Personality_profiles",
                                 api_key: Optional[str] = None,
                                 base_url: Optional[str] = None,
-                                max_concurrent: int = 30) -> List[Dict]:
+                                max_concurrent: int = 30,
+                                seed: Optional[int] = None) -> List[Dict]:
     """Generate personality profiles (standalone function).
     
     Args:
@@ -206,12 +232,13 @@ async def generate_personality_profiles(num_profiles: int, prompt_file: str,
         api_key: OpenAI API key (optional, uses environment variable if not provided)
         base_url: Custom API base URL (optional)
         max_concurrent: Maximum number of concurrent API calls
+        seed: Random seed for reproducibility (None = random generation)
         
     Returns:
         List of generated personality profile dictionaries
     """
     generator = PersonalityGenerator(api_key=api_key, base_url=base_url)
-    return await generator.generate_profiles(num_profiles, prompt_file, output_dir, max_concurrent)
+    return await generator.generate_profiles(num_profiles, prompt_file, output_dir, max_concurrent, seed)
 
 
 async def test_personality_profiles(profiles: List[Dict], questions_file: str,
