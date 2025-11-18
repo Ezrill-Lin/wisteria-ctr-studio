@@ -7,7 +7,7 @@ import time
 from typing import Any, Dict, List
 
 from SiliconSampling.sampler import load_identity_bank, sample_identities
-from CTRPrediction.llm_click_model import LLMClickPredictor
+from CTRPrediction.llm_click_model import LLMClickPredictor, DistributedLLMPredictor
 
 
 def compute_ctr(clicks: List[int]) -> float:
@@ -74,9 +74,10 @@ def main(args=None):
         parser.add_argument("--population-size", type=int, default=1000, help="Number of personas to sample")
         parser.add_argument("--personas-file", default=os.path.join("SiliconSampling", "generated_personas.json"), help="Path to generated personas JSON")
         parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-        parser.add_argument("--provider", choices=["openai", "deepseek", "vllm"], 
-                          default="openai", help="LLM provider to use")
-        parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name (for openai, deepseek providers)")
+        parser.add_argument("--use-distributed", action="store_true", help="Use distributed load balancing across multiple providers (recommended)")
+        parser.add_argument("--provider", choices=["openai", "deepseek", "gemini", "vllm"], 
+                          default="openai", help="LLM provider to use (ignored if --use-distributed is set)")
+        parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name (for openai, deepseek, gemini providers)")
         parser.add_argument("--runpod-model", choices=["llama3.1-8b", "llama3.1-70b"], 
                            default="llama3.1-8b", help="RunPod model selection (llama3.1-8b, llama3.1-70b)")
         parser.add_argument("--batch-size", type=int, default=32, help="Batch size per LLM call")
@@ -93,8 +94,19 @@ def main(args=None):
     # Sample personas from the loaded list
     sampled_personas = sample_identities(args.population_size, personas, seed=args.seed)
 
-    # Handle vLLM distributed inference via RunPod SDK
-    if args.provider == "vllm":
+    # Determine which predictor to use
+    if args.use_distributed:
+        # Use distributed load balancing across multiple providers
+        print("[Mode] Distributed load balancing enabled")
+        predictor = DistributedLLMPredictor(
+            batch_size=args.batch_size,
+            use_mock=args.use_mock,
+            providers=["openai", "deepseek", "gemini"],  # All available providers
+        )
+        model_provider = "distributed"
+        model_name = "openai+deepseek+gemini"
+    elif args.provider == "vllm":
+        # Handle vLLM distributed inference via RunPod SDK
         model = args.runpod_model
         print(f"[vLLM Distributed] Using {model} model (auto-computed pod distribution)")
         
@@ -105,8 +117,10 @@ def main(args=None):
             use_mock=args.use_mock,
             api_key=args.api_key
         )
+        model_provider = args.provider
+        model_name = model
     else:
-        # Standard configuration for other providers
+        # Standard single-provider configuration
         predictor = LLMClickPredictor(
             provider=args.provider,
             model=args.model,
@@ -114,6 +128,8 @@ def main(args=None):
             use_mock=args.use_mock,
             api_key=args.api_key,
         )
+        model_provider = args.provider
+        model_name = args.model
 
     # Start timing the prediction process
     start_time = time.time()
@@ -127,18 +143,16 @@ def main(args=None):
     ctr = compute_ctr(clicks)
     
     # Check if fallback to mock was used during prediction
-    used_fallback = hasattr(predictor, '_client') and hasattr(predictor._client, 'used_fallback') and predictor._client.used_fallback
-    
-    model_provider = args.provider if not args.use_mock and not used_fallback else "mock"
-    
-    # Get the actual model name used
-    if args.use_mock or used_fallback:
-        model_name = "mock model (no LLM)"
-    elif args.provider == "vllm":
-        # For vLLM distributed inference, use the actual model that was configured
-        model_name = predictor._client.model if hasattr(predictor, '_client') and hasattr(predictor._client, 'model') else args.runpod_model
+    if hasattr(predictor, '_client'):
+        used_fallback = hasattr(predictor._client, 'used_fallback') and predictor._client.used_fallback
+    elif hasattr(predictor, '_clients'):
+        used_fallback = len(predictor._clients) == 0
     else:
-        model_name = args.model
+        used_fallback = False
+    
+    if args.use_mock or used_fallback:
+        model_provider = "mock"
+        model_name = "mock model (no LLM)"
     
     print(f"Sampled personas: {len(sampled_personas)}")
     print(f"Ad platform: {args.ad_platform}")

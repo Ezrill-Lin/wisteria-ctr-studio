@@ -24,7 +24,7 @@ except ImportError:
     GCS_AVAILABLE = False
 
 from SiliconSampling.sampler import load_identity_bank, sample_identities
-from CTRPrediction.llm_click_model import LLMClickPredictor
+from CTRPrediction.llm_click_model import LLMClickPredictor, DistributedLLMPredictor
 
 
 # Pydantic models for request/response validation
@@ -34,8 +34,9 @@ class CTRRequest(BaseModel):
     ad_platform: str = Field(default="facebook", description="Platform where ad is shown")
     population_size: int = Field(default=1000, description="Number of identities to sample", ge=1, le=1e8)
     seed: Optional[int] = Field(default=42, description="Random seed for reproducibility")
-    provider: str = Field(default="openai", description="LLM provider to use")
-    model: Optional[str] = Field(default="gpt-5-mini", description="Model name (uses provider default if not specified)")
+    use_distributed: bool = Field(default=True, description="Use distributed load balancing (recommended)")
+    provider: str = Field(default="openai", description="LLM provider to use (ignored if use_distributed=True)")
+    model: Optional[str] = Field(default="gpt-4o-mini", description="Model name (uses provider default if not specified)")
     batch_size: int = Field(default=50, description="Batch size per LLM call", ge=1, le=200)
     use_mock: bool = Field(default=False, description="Force mock predictions")
     use_sync: bool = Field(default=False, description="Use synchronous processing")
@@ -382,35 +383,38 @@ async def predict_ctr(request: CTRRequest, include_details: bool = False):
             seed=request.seed
         )
         
-        # Get model name
-        model = request.model or get_default_model(request.provider)
-        
-        # Initialize predictor
-        predictor = LLMClickPredictor(
-            provider=request.provider,
-            model=model,
-            batch_size=request.batch_size,
-            use_mock=request.use_mock,
-            use_async=not request.use_sync,
-            api_key=request.api_key,
-        )
-        
-        # Predict clicks
-        start_time = time.time()
-        if not request.use_sync and not request.use_mock:
-            # Use async processing - await the async method directly
-            clicks = await predictor.predict_clicks_async(
-                request.ad_text, 
-                identities, 
-                request.ad_platform
+        # Determine which predictor to use
+        if request.use_distributed:
+            # Use distributed load balancing
+            predictor = DistributedLLMPredictor(
+                batch_size=request.batch_size,
+                use_mock=request.use_mock,
+                providers=["openai", "deepseek", "gemini"],
             )
+            provider_used = "distributed"
+            model_used = "openai+deepseek+gemini"
         else:
-            # Use sync processing or mock
-            clicks = predictor.predict_clicks(
-                request.ad_text, 
-                identities, 
-                request.ad_platform
+            # Get model name for single provider
+            model = request.model or get_default_model(request.provider)
+            
+            # Initialize single-provider predictor
+            predictor = LLMClickPredictor(
+                provider=request.provider,
+                model=model,
+                batch_size=request.batch_size,
+                use_mock=request.use_mock,
+                api_key=request.api_key,
             )
+            provider_used = request.provider
+            model_used = model
+        
+        # Predict clicks (always use async)
+        start_time = time.time()
+        clicks = await predictor.predict_clicks_async(
+            request.ad_text, 
+            identities, 
+            request.ad_platform
+        )
         end_time = time.time()
         runtime = end_time - start_time
         
@@ -418,9 +422,7 @@ async def predict_ctr(request: CTRRequest, include_details: bool = False):
         ctr = compute_ctr(clicks)
         
         # Prepare response
-        provider_used = request.provider if not request.use_mock else "mock"
-        model_used = model if not request.use_mock else "mock model (no LLM)"
-        processing_mode = "synchronous sequential" if request.use_sync else "asynchronous parallel"
+        processing_mode = "distributed async" if request.use_distributed else "async parallel"
         
         response = CTRResponse(
             success=True,
