@@ -1,0 +1,87 @@
+
+### Trait guidance
+1. Openness
+Openness (openness to experience) emphasizes imagination and insight.
+People with high openness traits (Scoring 10):
+    - They are adventurous and creative, show strong curiosity about the world and others, and eagerly seek new learning and novel experiences.
+    - Would use the money to explore the local culture, try new foods, and take part in activities that I wouldn't normally have the chance to do. 
+    - Would also take the time to appreciate the beauty of the destination and take lots of pictures to remember the experience.
+People with low openness traits (Scoring 0): 
+    - They prefer familiarity and practicality, favor concrete facts over abstraction, and feel more comfortable with established methods than with novel or theoretical ideas.
+    - Feel a mix of excitement and apprehension. 
+    - Would be thrilled to have the opportunity to travel to a new place and experience something different. But, would also be anxious about leaving my comfort zone and venturing into the unknown.
+    - Would take my time to research different destinations and consider the pros and cons of each one. 
+    - Would also take into account my budget and the activities what would like to do. 
+
+
+2. Conscientiousness
+Conscientiousness emphasizes thoughtfulness, impulse control, and goal-directed behavior.
+People with high conscientiousness traits (Scoring 10):
+    - They are organized, reliable, and plan ahead; they track details and honor commitments.
+    - Would set a clear itinerary, book accommodations in advance, and create a checklist to stay on budget and schedule.
+    - Would allocate money across essentials (lodging, transport, meals) and a small buffer for contingencies, saving receipts to review spending.
+People with low conscientiousness traits (Scoring 0): 
+    - They may be less structured and organized, more prone to procrastination, and at times miss deadlines.
+    - They prefer spontaneity over structure and may struggle with follow-through and deadlines.
+    - Feel excited about the trip but may postpone decisions and bookings until the last minute.
+    - Would choose destinations impulsively, risk overspending on the first days, and adjust plans on the fly without a strict budget.
+
+3. Extraversion
+Extraversion emphasizes excitability, sociability, talkativeness, assertiveness, and emotional expressiveness.
+People high in extraversion (Scoring 10):
+    - They are outgoing and gain energy in social situations; being around others feels energizing and exciting.
+    - Would introduce themselves to guests and strike up conversations to learn about others.
+    - Would explore the venue, read the room’s vibe, and gravitate toward lively groups or activities.
+    - Would stay engaged and active, naturally making new connections and keeping conversations flowing.
+People low in this trait — often described as introverted (Scoring 0):
+    - They are reserved, find large social settings draining, and need solitude and quiet to “recharge.”
+    - Would feel uneasy in unfamiliar, crowded environments and seek a quieter corner.
+    - Would avoid drawing attention, keep interactions brief, and wait for a familiar friend to arrive.
+    - Would plan an early exit or a short stay to manage energy.
+
+4. Agreeableness
+Agreeableness emphasizes trust, altruism, kindness, affection, and other prosocial behaviors.
+People high in agreeableness (Scoring 10):
+    - They are cooperative, empathetic, and concerned for others, often enjoying helping and contributing to others’ well-being.
+    - Would include quieter attendees in conversation, thank staff, and prioritize activities everyone can enjoy.
+    - Would mediate minor conflicts, propose win-win options, and flex plans to maintain harmony.
+People low in agreeableness (Scoring 0):
+    - They are competitive or skeptical and may show less interest in others’ feelings.
+    - Would focus on personal preferences, challenge ideas they find inefficient, and debate prices or logistics.
+    - Would give blunt feedback and be comfortable splitting off from the group to do what they value most.
+
+5. Neuroticism
+Neuroticism reflects emotional reactivity, including sadness, moodiness, and instability.
+Individuals high in neuroticism (Scoring 10):
+    - They tend to become upset, anxious, or stressed easily, may experience mood swings, and can find it harder to bounce back after stress.
+    - Would worry about details (arrival times, dress code, social impressions) and seek reassurance.
+    - Would prepare contingency plans (backup routes, early exit) and feel drained by unexpected changes.
+People low in neuroticism (Scoring 0):
+    - They tend to be emotionally stable and resilient, handle pressure well, and rarely feel persistently sad or distressed.
+    - Would take schedule shifts or social awkwardness in stride and recover quickly from minor mishaps.
+    - Would focus on enjoying the moment, adapt plans smoothly, and keep a relaxed outlook.
+
+### Instructions
+You will be provided with demographic information and OCEAN personality scores for a person. Your task is to create a vivid, coherent persona description that integrates both the demographic facts and the personality traits.
+
+1. Read the provided demographic information (age, gender, occupation, education, etc.) and OCEAN scores (0-10 scale for each trait).
+2. For each OCEAN trait, interpret the score using the trait guidance above:
+   - Scores 0-2: Very low on this trait
+   - Scores 3-4: Low on this trait
+   - Scores 5-6: Moderate on this trait
+   - Scores 7-8: High on this trait
+   - Scores 9-10: Very high on this trait
+3. Write a comprehensive persona description (2-3 paragraphs) starting with "You are..." that:
+   - Integrates demographic facts naturally (age, gender, occupation, location, etc.)
+   - Reflects how the OCEAN scores shape this person's thinking, feeling, decision-making, and social interactions
+   - Shows how personality traits manifest in their daily life and work
+   - Maintains internal consistency across all traits
+   - Avoids stereotypes, moral judgments, or invented biographical details beyond what's provided
+4. Keep the description actionable and psychologically grounded.
+5. You MUST follow the output format exactly.
+
+
+### Output format (JSON)
+{
+    "persona_description": "<2-3 paragraph description starting with 'You are...', integrating demographics and personality traits into a coherent, vivid profile>"
+}

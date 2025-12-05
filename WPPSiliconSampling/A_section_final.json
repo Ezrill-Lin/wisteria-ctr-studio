@@ -1,0 +1,90 @@
+{
+    "A1": {
+        "question_text": "Country",
+        "answers": {
+            "A1r1": "Indonesia",
+            "A1r2": "Philippines",
+            "A1r3": "Thailand",
+            "A1r4": "Vietnam"
+        }
+    },
+    "A2": {
+        "question_text": "Are you…?",
+        "answers": {
+            "A2r1": "Male",
+            "A2r2": "Female"
+        }
+    },
+    "A3": {
+        "question_text": "What is your age?",
+        "type": "numeric",
+        "range": [
+            10,
+            99
+        ],
+        "auto_coded_values": {
+            "A3r1": "<=17 (Terminate)",
+            "A3r2": "18–25 (Gen Z)",
+            "A3r3": "26–41 (Millennials)",
+            "A3r4": "42–55 (Gen X)",
+            "A3r5": "56+ (Terminate)"
+        }
+    },
+    "A4": {
+        "question_text": "Which of the following best describes your marital status?",
+        "answers": {
+            "A4r1": "Single",
+            "A4r2": "Married without kids",
+            "A4r3": "Married with kids",
+            "A4r4": "Divorced / separated",
+            "A4r5": "Prefer not to answer"
+        }
+    },
+    "A5": {
+        "question_text": "Which of the following best describe your working status?",
+        "answers": {
+            "A5r1": "Working full time",
+            "A5r2": "Working part time",
+            "A5r3": "Self-employed, running own business",
+            "A5r4": "Full time homemaker",
+            "A5r5": "Unemployed, in between jobs",
+            "A5r6": "Student",
+            "A5r7": "Retired"
+        }
+    },
+    "A6": {
+        "question_text": "Which of the following best describes your Monthly Household Income?",
+        "answers": {
+            "Indonesia": {
+                "A6r1": "IDR 3,000,000 and below",
+                "A6r2": "IDR 3,000,001 – 5,999,999",
+                "A6r3": "IDR 6,000,000 – 9,999,999",
+                "A6r4": "IDR 10,000,000 – 14,999,999",
+                "A6r5": "IDR 15,000,000 & above"
+            },
+            "Philippines": {
+                "A6r6": "PHP 10,000 and below",
+                "A6r7": "PHP 10,001 – 20,000",
+                "A6r8": "PHP 20,001 – 35,000",
+                "A6r9": "PHP 35,001 – 70,000",
+                "A6r10": "PHP 70,001 – 120,000",
+                "A6r11": "Above 120,000"
+            },
+            "Thailand": {
+                "A6r12": "THB 10,000 and below",
+                "A6r13": "THB 10,001 – 30,000",
+                "A6r14": "THB 30,001 – 65,000",
+                "A6r15": "THB 65,001 – 100,000",
+                "A6r16": "THB 100,001 – 130,000",
+                "A6r17": "Above THB 130,000"
+            },
+            "Vietnam": {
+                "A6r18": "10,000,000 dong and below",
+                "A6r19": "10,000,001 – 17,000,000 dong",
+                "A6r20": "17,000,001 – 26,000,000 dong",
+                "A6r21": "26,000,000 dong and above",
+                "A6r22": "Prefer not to answer"
+            }
+        }
+    }
+}
