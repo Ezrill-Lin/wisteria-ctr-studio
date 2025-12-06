@@ -1,0 +1,48 @@
+================================================================================
+VALIDATION RESULTS - WPP (GEMINI-2.5-FLASH) STRATEGY
+================================================================================
+
+PERSONA CONSISTENCY METRICS
+--------------------------------------------------------------------------------
+Reverse-Item Coherence:          100.0% (5/5 traits)
+Spearman Correlation (avg):      0.0292
+Kendall Correlation (avg):       0.0300
+Response Variance:               2.6066
+Response Entropy:                1.5309
+
+REVERSE-ITEM COHERENCE BY TRAIT
+--------------------------------------------------------------------------------
+E (Extraversion     ): r= -0.978 ✓ COHERENT
+N (Neuroticism      ): r= -0.982 ✓ COHERENT
+A (Agreeableness    ): r= -0.929 ✓ COHERENT
+C (Conscientiousness): r= -0.966 ✓ COHERENT
+O (Openness         ): r= -0.935 ✓ COHERENT
+
+POPULATION SIMILARITY METRICS
+--------------------------------------------------------------------------------
+Mean Absolute Error (MAE):       0.4135
+Jensen-Shannon Divergence:       0.0956
+Mean Correlation:                0.8615
+
+STATISTICAL TESTS
+--------------------------------------------------------------------------------
+K-S Test (Overall):              D=0.1600, p=0.5487 ✓ PASS
+
+Chi-Square Pass Rate (traits):   0.0% (0/5 traits)
+Chi-Square Overall:              χ²=21543.78, p=0.0000 ✗ FAIL
+
+CHI-SQUARE BY TRAIT
+--------------------------------------------------------------------------------
+E (Extraversion     ): χ²=5292.55, p=0.0000 ✗ FAIL
+N (Neuroticism      ): χ²=4144.19, p=0.0000 ✗ FAIL
+A (Agreeableness    ): χ²=7858.19, p=0.0000 ✗ FAIL
+C (Conscientiousness): χ²=8130.25, p=0.0000 ✗ FAIL
+O (Openness         ): χ²=1133.12, p=0.0000 ✗ FAIL
+
+DATA SUMMARY
+--------------------------------------------------------------------------------
+Synthetic responses:             1,746
+Ground truth responses:          8,753
+Test items evaluated:            50
+
+================================================================================
