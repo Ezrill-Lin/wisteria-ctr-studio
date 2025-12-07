@@ -1,191 +1,206 @@
+"""
+Wisteria CTR Studio - Demo Script
+
+This script demonstrates CTR prediction using SiliconSampling personas.
+
+Usage:
+    # Text ad prediction
+    python demo.py --ad "Special 0% APR credit card offer for travel rewards" --population-size 100
+    
+    # Image ad prediction (URL)
+    python demo.py --image-url "https://example.com/ad-image.jpg" --population-size 100
+    
+    # Image ad prediction (local file)
+    python demo.py --image-path "path/to/ad-image.jpg" --population-size 100
+    
+    # Specify persona version and strategy
+    python demo.py --ad "Shop our new summer collection!" --persona-version v2 --persona-strategy wpp --population-size 200
+    
+    # Save detailed results to JSON
+    python demo.py --ad "Premium noise-canceling headphones on sale" --output results.json --population-size 100
+"""
+
 import argparse
-import asyncio
-import csv
-import json
-import os
 import time
-from typing import Any, Dict, List
 
-from SiliconSampling.sampler import load_identity_bank, sample_identities
-from CTRPrediction.llm_click_model import LLMClickPredictor, DistributedLLMPredictor
-
-
-def compute_ctr(clicks: List[int]) -> float:
-    if not clicks:
-        return 0.0
-    return sum(1 for x in clicks if x) / float(len(clicks))
+from CTRPrediction import CTRPredictor
+from CTRPrediction.utils import encode_image_to_data_url
+from display_utils import print_result, print_separator, save_result_json
 
 
-def save_results_to_csv(personas: List[Dict[str, Any]], clicks: List[int], output_path: str) -> None:
-    """Save prediction results to a CSV file.
+def main():
+    parser = argparse.ArgumentParser(
+        description="CTR prediction using SiliconSampling personas",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Text ad prediction
+  python demo.py --ad "Special offer: 50%% off premium membership!"
+  
+  # Image ad prediction (URL)
+  python demo.py --image-url "https://example.com/ad-image.jpg"
+  
+  # Image ad prediction (local file)
+  python demo.py --image-path "ads/banner.jpg"
+  
+  # Use v2 personas with WPP strategy
+  python demo.py --ad "New eco-friendly product line" --persona-version v2 --persona-strategy wpp
+  
+  # Save results
+  python demo.py --ad "Sign up today!" --output my_results.json
+        """
+    )
     
-    Args:
-        personas: List of persona profiles.
-        clicks: List of corresponding click predictions (0/1).
-        output_path: Path to save the CSV file.
-    """
-    fieldnames = [
-        "id",
-        "age",
-        "gender",
-        "state",
-        "race",
-        "education",
-        "occupation",
-        "openness",
-        "conscientiousness",
-        "extraversion",
-        "agreeableness",
-        "neuroticism",
-        "click",
-    ]
-    with open(output_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for i, (p, c) in enumerate(zip(personas, clicks)):
-            demographics = p.get("demographics", {})
-            personality = p.get("personality", {})
-            scores = personality.get("scores", {})
-            
-            row = {
-                "id": p.get("id", i),
-                "age": demographics.get("age"),
-                "gender": demographics.get("gender"),
-                "state": demographics.get("state"),
-                "race": demographics.get("race"),
-                "education": demographics.get("educational_attainment"),
-                "occupation": demographics.get("occupation"),
-                "openness": scores.get("openness"),
-                "conscientiousness": scores.get("conscientiousness"),
-                "extraversion": scores.get("extraversion"),
-                "agreeableness": scores.get("agreeableness"),
-                "neuroticism": scores.get("neuroticism"),
-                "click": c,
-            }
-            writer.writerow(row)
-    print(f"Saved results to {output_path}")
-
-
-def main(args=None):
-    if args is None:
-        parser = argparse.ArgumentParser(description="Silicon sampling CTR demo with persona profiles")
-        parser.add_argument("--ad", required=True, help="Textual advertisement content")
-        parser.add_argument("--ad-platform", default="facebook", choices=["facebook", "tiktok", "amazon"], help="Platform where the ad is shown (default: facebook)")
-        parser.add_argument("--population-size", type=int, default=1000, help="Number of personas to sample")
-        parser.add_argument("--personas-file", default=os.path.join("SiliconSampling", "generated_personas.json"), help="Path to generated personas JSON")
-        parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-        parser.add_argument("--use-distributed", action="store_true", help="Use distributed load balancing across multiple providers (recommended)")
-        parser.add_argument("--provider", choices=["openai", "deepseek", "gemini", "vllm"], 
-                          default="openai", help="LLM provider to use (ignored if --use-distributed is set)")
-        parser.add_argument("--model", default="gpt-4o-mini", help="LLM model name (for openai, deepseek, gemini providers)")
-        parser.add_argument("--runpod-model", choices=["llama3.1-8b", "llama3.1-70b"], 
-                           default="llama3.1-8b", help="RunPod model selection (llama3.1-8b, llama3.1-70b)")
-        parser.add_argument("--batch-size", type=int, default=32, help="Batch size per LLM call")
-        parser.add_argument("--use-mock", action="store_true", help="Force mock LLM (no network)")
-        parser.add_argument("--api-key", default=None, help="Explicit API key override for provider")
-        parser.add_argument("--out", default=None, help="Optional CSV output of personas and clicks")
-
-        args = parser.parse_args()
-
-    # Load generated personas instead of identity bank
-    personas = load_identity_bank(args.personas_file)
-    print(f"Loaded {len(personas)} personas from {args.personas_file}")
+    # Ad content arguments (mutually exclusive)
+    ad_group = parser.add_mutually_exclusive_group(required=True)
+    ad_group.add_argument(
+        "--ad",
+        help="Advertisement text content"
+    )
+    ad_group.add_argument(
+        "--image-url",
+        help="Advertisement image URL"
+    )
+    ad_group.add_argument(
+        "--image-path",
+        help="Path to local advertisement image file"
+    )
     
-    # Sample personas from the loaded list
-    sampled_personas = sample_identities(args.population_size, personas, seed=args.seed)
-
-    # Determine which predictor to use
-    if args.use_distributed:
-        # Use distributed load balancing across multiple providers
-        print("[Mode] Distributed load balancing enabled")
-        predictor = DistributedLLMPredictor(
-            batch_size=args.batch_size,
-            use_mock=args.use_mock,
-            providers=["openai", "deepseek", "gemini"],  # All available providers
-        )
-        model_provider = "distributed"
-        model_name = "openai+deepseek+gemini"
-    elif args.provider == "vllm":
-        # Handle vLLM distributed inference via RunPod SDK
-        model = args.runpod_model
-        print(f"[vLLM Distributed] Using {model} model (auto-computed pod distribution)")
-        
-        predictor = LLMClickPredictor(
-            provider="vllm",
-            model=model,
-            batch_size=args.batch_size,
-            use_mock=args.use_mock,
-            api_key=args.api_key
-        )
-        model_provider = args.provider
-        model_name = model
+    # Persona configuration
+    parser.add_argument(
+        "--persona-version",
+        choices=["v1", "v2"],
+        default="v2",
+        help="Persona version to use (default: v2)"
+    )
+    
+    parser.add_argument(
+        "--persona-strategy",
+        choices=["random", "wpp", "ipip"],
+        default="random",
+        help="Persona generation strategy (default: random)"
+    )
+    
+    parser.add_argument(
+        "--population-size",
+        type=int,
+        default=100,
+        help="Number of personas to evaluate (default: 100)"
+    )
+    
+    # Platform configuration
+    parser.add_argument(
+        "--ad-platform",
+        choices=["facebook", "tiktok", "amazon", "instagram", "youtube"],
+        default="facebook",
+        help="Platform where ad is shown (default: facebook)"
+    )
+    
+    # Output configuration
+    parser.add_argument(
+        "--output",
+        default=None,
+        help="Save results to JSON file (optional)"
+    )
+    
+    parser.add_argument(
+        "--concurrent-requests",
+        type=int,
+        default=20,
+        help="Number of concurrent API requests (default: 20)"
+    )
+    
+    args = parser.parse_args()
+    
+    # Process image input
+    image_url = None
+    if args.image_url:
+        image_url = args.image_url
+    elif args.image_path:
+        try:
+            print(f"📁 Encoding local image: {args.image_path}")
+            image_url = encode_image_to_data_url(args.image_path)
+            print(f"✓ Image encoded successfully ({len(image_url)} bytes)")
+        except Exception as e:
+            print(f"\n❌ Error encoding image: {e}")
+            return
+    
+    # Print configuration
+    print("\n" + "="*80)
+    print("WISTERIA CTR STUDIO - DEMO")
+    print("="*80)
+    print(f"\n📢 Advertisement:")
+    if args.ad:
+        print(f"   Type: Text Ad")
+        print(f"   Content: \"{args.ad}\"")
     else:
-        # Standard single-provider configuration
-        predictor = LLMClickPredictor(
-            provider=args.provider,
-            model=args.model,
-            batch_size=args.batch_size,
-            use_mock=args.use_mock,
-            api_key=args.api_key,
+        print(f"   Type: Image Ad")
+        if args.image_url:
+            print(f"   Source: Remote URL")
+            print(f"   Image URL: {args.image_url}")
+        else:
+            print(f"   Source: Local File")
+            print(f"   Image Path: {args.image_path}")
+    print(f"\n⚙️  Configuration:")
+    print(f"   Platform: {args.ad_platform}")
+    print(f"   Population Size: {args.population_size:,}")
+    print(f"   Persona Version: {args.persona_version}")
+    print(f"   Persona Strategy: {args.persona_strategy}")
+    print("="*80 + "\n")
+    
+    # Create predictor
+    try:
+        predictor = CTRPredictor(
+            persona_version=args.persona_version,
+            persona_strategy=args.persona_strategy,
+            concurrent_requests=args.concurrent_requests
         )
-        model_provider = args.provider
-        model_name = args.model
-
-    # Start timing the prediction process
+    except FileNotFoundError as e:
+        print(f"\n❌ Error: {e}")
+        print("\nPlease generate personas first by running:")
+        print(f"   cd SiliconSampling/personas{'_v2' if args.persona_version == 'v2' else ''}")
+        print(f"   python generate_personas{'_v2' if args.persona_version == 'v2' else ''}.py --strategy {args.persona_strategy} --sample-size {args.population_size}")
+        return
+    except ValueError as e:
+        print(f"\n❌ Error: {e}")
+        return
+    
+    # Run prediction
     start_time = time.time()
     
-    # Use asynchronous parallel processing
-    clicks = asyncio.run(predictor.predict_clicks_async(args.ad, sampled_personas, args.ad_platform))
+    try:
+        if args.ad:
+            result = predictor.predict(
+                ad_text=args.ad,
+                population_size=args.population_size,
+                ad_platform=args.ad_platform
+            )
+        else:
+            result = predictor.predict(
+                image_url=image_url,
+                population_size=args.population_size,
+                ad_platform=args.ad_platform
+            )
+    except Exception as e:
+        print(f"\n❌ Prediction failed: {type(e).__name__}: {e}")
+        import traceback
+        traceback.print_exc()
+        return
     
-    end_time = time.time()
-    runtime = end_time - start_time
+    elapsed_time = time.time() - start_time
     
-    ctr = compute_ctr(clicks)
+    # Print results
+    print(f"\n⏱️  Total Time: {elapsed_time:.2f} seconds")
+    print(f"   Average Time per Persona: {elapsed_time / args.population_size:.2f} seconds\n")
     
-    # Check if fallback to mock was used during prediction
-    if hasattr(predictor, '_client'):
-        used_fallback = hasattr(predictor._client, 'used_fallback') and predictor._client.used_fallback
-    elif hasattr(predictor, '_clients'):
-        used_fallback = len(predictor._clients) == 0
-    else:
-        used_fallback = False
+    print_result(result)
     
-    if args.use_mock or used_fallback:
-        model_provider = "mock"
-        model_name = "mock model (no LLM)"
+    # Save to file if requested
+    if args.output:
+        save_result_json(result, args.output)
     
-    print(f"Sampled personas: {len(sampled_personas)}")
-    print(f"Ad platform: {args.ad_platform}")
-    print(f"Batch size: {args.batch_size}")
-    print(f"Model Provider: {model_provider} | Model: {model_name}")
-    print(f"Clicks: {sum(clicks)} | Non-clicks: {len(clicks) - sum(clicks)}")
-    print(f"CTR: {ctr:.4f}")
-    print(f"Runtime: {runtime:.2f} seconds")
-
-    if args.out:
-        save_results_to_csv(sampled_personas, clicks, args.out)
+    print("\n✅ Demo complete!\n")
 
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) == 1:
-        # Hardcoded parameters for quick testing when no CLI args provided
-        class Args:
-            pass
-        args = Args()
-        args.ad = '''Discover the ultimate travel experience with our exclusive vacation packages! Book now and save big on your next adventure.'''
-        args.ad_platform = "facebook"
-        args.population_size = 100  # Test with 100 personas for quick testing
-        args.batch_size = 32
-        args.provider = "openai"  # Use openai provider but with mock enabled
-        args.runpod_model = "llama3.1-8b" 
-        args.profiles_per_pod = 5000
-        args.use_mock = True  # Force mock mode for testing without API calls
-        args.personas_file = os.path.join("SiliconSampling", "generated_personas.json")
-        args.seed = 42
-        args.api_key = None  
-        args.out = None
-        args.model = "gpt-4o-mini"  # Fallback for other providers
-        main(args)
-    else:
-        main()
+    main()
