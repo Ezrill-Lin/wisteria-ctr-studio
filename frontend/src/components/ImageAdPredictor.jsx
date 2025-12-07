@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Results from './Results'
 
-const API_URL = 'https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app'
+// Use localhost for development. Update to Cloud Run URL after redeploying with CORS:
+// const API_URL = 'https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app'
+const API_URL = 'http://localhost:8080'
 
 function ImageAdPredictor() {
   const [formData, setFormData] = useState({
