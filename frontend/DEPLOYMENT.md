@@ -1,71 +1,82 @@
 # Frontend Deployment Guide
 
-## GitHub Pages Deployment (Automated)
+## Netlify Deployment (Recommended - Easiest)
 
 ### One-Time Setup
 
-1. **Enable GitHub Pages** in your repository:
-   - Go to: https://github.com/Ezrill-Lin/wisteria-ctr-studio/settings/pages
-   - Under "Source", select: **GitHub Actions**
-   - Click "Save"
+1. **Sign up for Netlify**: https://app.netlify.com/signup (free tier)
+2. **Connect GitHub**: Click "Add new site" → "Import an existing project"
+3. **Select your repository**: Choose `wisteria-ctr-studio`
+4. **Configure build settings**:
+   - Base directory: `frontend`
+   - Build command: `npm run build`
+   - Publish directory: `frontend/dist`
+5. **Click "Deploy"**
 
 ### Automatic Deployment
 
-The frontend automatically deploys when you push changes:
+After setup, Netlify automatically deploys when you push to GitHub:
+- Detects changes in `frontend/` directory
+- Builds and deploys in ~2-3 minutes
+- Provides a live URL like: `https://your-app-name.netlify.app`
+
+### Manual Deployment
+
+You can also deploy manually using Netlify CLI:
 
 ```bash
-# Make your changes to frontend code
-cd frontend
-# ... edit files ...
+# Install Netlify CLI (one-time)
+npm install -g netlify-cli
 
-# Commit and push (from root directory)
-cd ..
-git add -A
-git commit -m "Update frontend"
-git push
+# Login to Netlify
+netlify login
+
+# Deploy from frontend directory
+cd frontend
+npm run build
+netlify deploy --prod --dir=dist
 ```
 
-The GitHub Action will:
-1. Detect changes in the `frontend/` directory
-2. Build the production bundle
-3. Deploy to GitHub Pages
-4. Complete in ~2-3 minutes
+---
 
-### Manual Deployment Trigger
+## Alternative: GitHub Pages with GitHub Actions
 
-You can also trigger deployment manually:
-1. Go to: https://github.com/Ezrill-Lin/wisteria-ctr-studio/actions
-2. Select "Deploy Frontend to GitHub Pages"
-3. Click "Run workflow"
+### Setup
 
-### After Deployment
+1. **Enable GitHub Pages**:
+   - Go to repository Settings → Pages
+   - Source: **GitHub Actions**
 
-Your app will be available at:
-- **Production URL**: https://ezrill-lin.github.io/wisteria-ctr-studio/ (or custom domain if configured)
-- **Backend API**: https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app
+2. **Update your Personal Access Token** to include `workflow` scope:
+   - Go to: https://github.com/settings/tokens
+   - Click your token → Edit
+   - Check "workflow" scope
+   - Update token in your local git credentials
 
-### Local Development
+3. **Push the GitHub Actions workflow**:
+   ```bash
+   git push
+   ```
 
-To test locally before deploying:
+The `.github/workflows/deploy-frontend.yml` file will handle automatic deployment.
+
+---
+
+## Local Development
+
+To test locally:
 
 ```bash
-# Start development server
 cd frontend
 npm run dev
-
 # Open http://localhost:5173
 ```
 
-To use the local API (instead of production):
+To use local API instead of production:
 1. Change `API_URL` in both predictor components to `'http://localhost:8080'`
-2. Run `python api.py` from the root directory
+2. Run `python api.py` from root directory
 
-### Manual Build (Testing)
+## Production URLs
 
-To test the production build locally:
-
-```bash
-cd frontend
-npm run build
-npm run preview
-```
+- **Backend API**: https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app
+- **Frontend**: Will be provided after Netlify deployment
