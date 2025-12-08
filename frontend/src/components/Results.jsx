@@ -1,7 +1,12 @@
 function Results({ data, adType, adContent }) {
   if (!data) return null
 
-  const { estimated_ctr, clicks, population_size, analysis, persona_responses } = data
+  // Map API response fields to component variables
+  const ctr = data.ctr ?? data.estimated_ctr ?? 0
+  const clicks = data.total_clicks ?? data.clicks ?? 0
+  const population = data.total_personas ?? data.population_size ?? 0
+  const analysis = data.final_analysis ?? data.analysis ?? ''
+  const personaResponses = data.persona_responses ?? []
 
   return (
     <div className="space-y-6">
@@ -29,7 +34,7 @@ function Results({ data, adType, adContent }) {
           <div className="bg-white rounded-lg p-4 border border-purple-200">
             <p className="text-xs font-medium text-gray-500 uppercase mb-1">Estimated CTR</p>
             <p className="text-3xl font-bold text-purple-600">
-              {(estimated_ctr * 100).toFixed(2)}%
+              {(ctr * 100).toFixed(2)}%
             </p>
           </div>
           
@@ -40,7 +45,7 @@ function Results({ data, adType, adContent }) {
 
           <div className="bg-white rounded-lg p-4 border border-purple-200">
             <p className="text-xs font-medium text-gray-500 uppercase mb-1">Population</p>
-            <p className="text-3xl font-bold text-gray-700">{population_size}</p>
+            <p className="text-3xl font-bold text-gray-700">{population}</p>
           </div>
         </div>
       </div>
@@ -62,7 +67,7 @@ function Results({ data, adType, adContent }) {
       )}
 
       {/* Persona Responses (if included) */}
-      {persona_responses && persona_responses.length > 0 && (
+      {personaResponses && personaResponses.length > 0 && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
@@ -72,12 +77,12 @@ function Results({ data, adType, adContent }) {
               <h3 className="text-lg font-semibold text-gray-800">Individual Persona Responses</h3>
             </div>
             <span className="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-600">
-              {persona_responses.length} personas
+              {personaResponses.length} personas
             </span>
           </div>
 
           <div className="max-h-96 overflow-y-auto space-y-3">
-            {persona_responses.map((persona, index) => (
+            {personaResponses.map((persona, index) => (
               <div
                 key={index}
                 className={`border rounded-lg p-4 transition-colors ${
