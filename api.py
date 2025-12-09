@@ -271,6 +271,40 @@ async def health_check():
     )
 
 
+@app.get("/debug/personas", tags=["Debug"])
+async def debug_personas():
+    """Debug endpoint to check if persona files are accessible."""
+    from pathlib import Path
+    import os
+    
+    debug_info = {
+        "working_directory": os.getcwd(),
+        "siliconsampling_exists": Path("SiliconSampling").exists(),
+        "personas_v2_exists": Path("SiliconSampling/personas_v2").exists(),
+        "persona_files": {}
+    }
+    
+    # Check each persona strategy
+    for strategy in ["random", "wpp", "ipip"]:
+        file_path = Path(f"SiliconSampling/personas_v2/{strategy}_matching/personas_{strategy}_v2.jsonl")
+        debug_info["persona_files"][strategy] = {
+            "path": str(file_path),
+            "exists": file_path.exists(),
+            "size_bytes": file_path.stat().st_size if file_path.exists() else 0
+        }
+        
+        # Try to count lines
+        if file_path.exists():
+            try:
+                with open(file_path, 'r') as f:
+                    line_count = sum(1 for _ in f)
+                debug_info["persona_files"][strategy]["persona_count"] = line_count
+            except Exception as e:
+                debug_info["persona_files"][strategy]["error"] = str(e)
+    
+    return debug_info
+
+
 @app.get("/models", tags=["Info"])
 async def list_models():
     """List model configuration and persona information."""
