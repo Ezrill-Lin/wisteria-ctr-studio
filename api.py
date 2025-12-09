@@ -305,6 +305,22 @@ async def debug_personas():
     return debug_info
 
 
+@app.get("/debug/env", tags=["Debug"])
+async def debug_environment():
+    """Debug endpoint to check environment configuration."""
+    import os
+    
+    return {
+        "openai_api_key_set": bool(os.getenv("OPENAI_API_KEY")),
+        "openai_api_key_length": len(os.getenv("OPENAI_API_KEY", "")) if os.getenv("OPENAI_API_KEY") else 0,
+        "deepseek_api_key_set": bool(os.getenv("DEEPSEEK_API_KEY")),
+        "deepseek_api_key_length": len(os.getenv("DEEPSEEK_API_KEY", "")) if os.getenv("DEEPSEEK_API_KEY") else 0,
+        "deepseek_api_base": os.getenv("DEEPSEEK_API_BASE", "https://api.deepseek.com"),
+        "pythonpath": os.getenv("PYTHONPATH", ""),
+        "port": os.getenv("PORT", "8080")
+    }
+
+
 @app.get("/models", tags=["Info"])
 async def list_models():
     """List model configuration and persona information."""
