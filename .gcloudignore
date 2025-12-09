@@ -41,8 +41,25 @@ build/
 # Large unnecessary files
 workflow.png
 
+# Large data files (not needed for deployment - only .jsonl personas are needed)
+*.parquet
+*.xlsx
+*.csv
+!requirements.txt
+
+# Response files (test results, not needed for production)
+SiliconSampling/responses_v1/
+SiliconSampling/responses_v2/
+SiliconSampling/results/
+
+# Persona generation scripts and data (not needed - we only need the final .jsonl files)
+SiliconSampling/personas/data_prep/
+SiliconSampling/personas_v2/*/census_*.parquet
+SiliconSampling/personas_v2/*/census_*.csv
+SiliconSampling/test/
+
 # IMPORTANT: DO NOT exclude these - they are needed for the backend:
-# - SiliconSampling/ (contains personas)
+# - SiliconSampling/personas_v2/*/personas_*.jsonl (final persona files)
 # - CTRPrediction/ (contains core logic)
 # - api.py (main application)
 # - requirements.txt (dependencies)
