@@ -126,31 +126,45 @@ class CTRPredictor:
                 user_prompt = create_persona_user_prompt(ad_text, ad_platform)
                 user_content = user_prompt
             
-            # Call GPT-4o-mini for click decisions
-            try:
-                from openai import AsyncOpenAI
-                
-                client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-                
-                response = await client.chat.completions.create(
-                    model="gpt-4o-mini",
-                    messages=[
-                        {"role": "system", "content": system_message},
-                        {"role": "user", "content": user_content}
-                    ],
-                    temperature=0.3,
-                    max_tokens=500
-                )
-                content = response.choices[0].message.content
-                
-                # Parse JSON response
-                will_click, reasoning = parse_json_response(content)
-                
-            except Exception as e:
-                # Fallback on error
-                print(f"Warning: Error processing persona {persona.get('id', '?')}: {e}")
-                will_click = False
-                reasoning = f"[Error: {type(e).__name__}]"
+            # Call GPT-4o-mini for click decisions with retry logic
+            max_retries = 3
+            retry_delay = 1
+            
+            for attempt in range(max_retries):
+                try:
+                    from openai import AsyncOpenAI
+                    
+                    client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+                    
+                    response = await client.chat.completions.create(
+                        model="gpt-4o-mini",
+                        messages=[
+                            {"role": "system", "content": system_message},
+                            {"role": "user", "content": user_content}
+                        ],
+                        temperature=0.3,
+                        max_tokens=500
+                    )
+                    content = response.choices[0].message.content
+                    
+                    # Parse JSON response
+                    will_click, reasoning = parse_json_response(content)
+                    break  # Success, exit retry loop
+                    
+                except Exception as e:
+                    error_type = type(e).__name__
+                    
+                    # Retry on rate limit or timeout errors
+                    if attempt < max_retries - 1 and ('rate' in str(e).lower() or 'timeout' in str(e).lower()):
+                        await asyncio.sleep(retry_delay * (2 ** attempt))  # Exponential backoff
+                        continue
+                    
+                    # Final failure or non-retryable error
+                    error_msg = f"{error_type}: {str(e)[:100]}"
+                    print(f"Warning: Error processing persona {persona.get('id', '?')}: {error_msg}")
+                    will_click = False
+                    reasoning = "[API Error - response excluded from analysis]"
+                    break
             
             # Extract demographics info
             demographics = extract_demographics_string(persona.get('demographics', ''))
@@ -218,11 +232,15 @@ class CTRPredictor:
         
         # Calculate CTR
         total_clicks = sum(1 for r in persona_responses if r.will_click)
+        error_count = sum(1 for r in persona_responses if 'API Error' in r.reasoning)
         ctr = total_clicks / len(persona_responses) if persona_responses else 0.0
         
         print(f"\n✓ Collected {len(persona_responses):,} responses")
         print(f"  Predicted Clicks: {total_clicks}")
         print(f"  Predicted CTR: {ctr:.2%}")
+        if error_count > 0:
+            print(f"  ⚠️  API Errors: {error_count} ({error_count/len(persona_responses)*100:.1f}% of requests failed)")
+            print(f"     These responses were excluded from analysis.")
         
         # Generate final analysis
         print(f"\nGenerating final analysis...")

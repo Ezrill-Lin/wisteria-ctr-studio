@@ -167,9 +167,12 @@ def create_analysis_prompt(
     """
     system_message = """You are a marketing analyst. Analyze ad performance and give clear, simple recommendations that marketers can act on immediately."""
     
-    # Limit samples to 10 each for faster processing
-    click_sample = "\n".join([f"- {r}" for r in click_reasons[:10]])
-    no_click_sample = "\n".join([f"- {r}" for r in no_click_reasons[:10]])
+    # Filter out API errors and limit samples to 10 each for faster processing
+    valid_click_reasons = [r for r in click_reasons if not r.startswith('[') or 'API Error' not in r]
+    valid_no_click_reasons = [r for r in no_click_reasons if not r.startswith('[') or 'API Error' not in r]
+    
+    click_sample = "\n".join([f"- {r}" for r in valid_click_reasons[:10]])
+    no_click_sample = "\n".join([f"- {r}" for r in valid_no_click_reasons[:10]])
     
     user_prompt = f"""Ad tested on {ad_platform}:
 "{ad_content}"
