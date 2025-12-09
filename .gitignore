@@ -3,7 +3,6 @@ Wisteria-AI-CTR-Studio.zip
 
 # Test results and output files
 test_results.csv
-test_prompt.py
 
 # Python cache files
 __pycache__/

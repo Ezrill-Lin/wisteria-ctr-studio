@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Frontend API Call</title>
+</head>
+<body>
+    <h1>Test API Call</h1>
+    <button onclick="testAPI()">Test API</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            const API_URL = 'https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app';
+            
+            const requestData = {
+                ad_text: 'Get 50% Off Premium Coffee — Free Shipping Today!',
+                population_size: 100,
+                ad_platform: 'facebook',
+                persona_version: 'v2',
+                persona_strategy: 'random',
+                concurrent_requests: 20,
+                include_persona_details: false
+            };
+
+            console.log('Request:', requestData);
+            document.getElementById('result').textContent = 'Sending request...\n' + JSON.stringify(requestData, null, 2);
+
+            try {
+                const response = await fetch(`${API_URL}/predict/text`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Prediction failed');
+                }
+
+                const data = await response.json();
+                console.log('Response data:', data);
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('result').textContent = 'Error: ' + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
