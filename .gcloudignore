@@ -1,0 +1,49 @@
+# .gcloudignore - Files to exclude from Cloud Build
+# (Inverse of .gitignore - only exclude what we DON'T need)
+
+# Development files
+.git/
+.github/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.idea/
+
+# Documentation
+*.md
+!README.md
+
+# Frontend (deployed separately to Netlify)
+frontend/
+netlify.toml
+
+# Test files
+test_*.py
+test_frontend_api.html
+test_results.csv
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Environment files (use Cloud Run env vars instead)
+.env
+.env.*
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+*~
+
+# Large unnecessary files
+workflow.png
+
+# IMPORTANT: DO NOT exclude these - they are needed for the backend:
+# - SiliconSampling/ (contains personas)
+# - CTRPrediction/ (contains core logic)
+# - api.py (main application)
+# - requirements.txt (dependencies)
+# - demo.py (optional but useful)
