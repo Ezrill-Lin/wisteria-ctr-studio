@@ -165,43 +165,34 @@ def create_analysis_prompt(
     Returns:
         Tuple of (system_message, user_prompt)
     """
-    system_message = """You are an expert marketing analyst specializing in advertisement performance evaluation.
-Your task is to analyze CTR prediction results and provide actionable insights."""
+    system_message = """You are a marketing analyst. Analyze ad performance and give clear, simple recommendations that marketers can act on immediately."""
     
-    # Limit samples to 20 each
-    click_sample = "\n".join([f"- {r}" for r in click_reasons[:20]])
-    no_click_sample = "\n".join([f"- {r}" for r in no_click_reasons[:20]])
+    # Limit samples to 10 each for faster processing
+    click_sample = "\n".join([f"- {r}" for r in click_reasons[:10]])
+    no_click_sample = "\n".join([f"- {r}" for r in no_click_reasons[:10]])
     
-    user_prompt = f"""I ran a CTR prediction simulation on the following advertisement:
+    user_prompt = f"""Ad tested on {ad_platform}:
+"{ad_content}"
 
-Platform: {ad_platform}
-Advertisement Content:
-{ad_content}
+Results: {total_clicks}/{total_personas} clicked = {ctr:.1%} CTR
 
-Prediction Results:
-- Total Personas Evaluated: {total_personas}
-- Predicted Clicks: {total_clicks}
-- Predicted CTR: {ctr:.2%}
-
-Sample Reasons for CLICKING (from personas who would click):
+Why they clicked:
 {click_sample if click_reasons else "None"}
 
-Sample Reasons for NOT CLICKING (from personas who would not click):
+Why they didn't click:
 {no_click_sample if no_click_reasons else "None"}
 
-Based on this simulation, provide a comprehensive analysis covering:
+Provide a brief analysis (max 300 words):
 
-1. **Overall Assessment**: Is the predicted CTR good, average, or poor for {ad_platform}? Why?
+1. **Performance**: Is {ctr:.1%} good for {ad_platform}? (1-2 sentences)
 
-2. **What's Working Well**: What aspects of the ad are resonating with people who would click?
+2. **Strengths**: What works well? (2-3 bullet points)
 
-3. **What's Not Working**: What concerns or issues prevent people from clicking?
+3. **Weaknesses**: What doesn't work? (2-3 bullet points)  
 
-4. **Improvement Recommendations**: Provide 3-5 specific, actionable suggestions to improve this ad's CTR.
+4. **Quick Wins**: Top 3 specific changes to improve CTR
 
-5. **Target Audience Insights**: Based on who clicked vs. who didn't, what can we learn about the ideal target audience?
-
-Provide a well-structured analysis (use markdown formatting). Be specific and actionable."""
+Keep it simple and actionable. No jargon."""
     
     return system_message, user_prompt
 

@@ -58,7 +58,7 @@ async def generate_final_analysis(
                 {"role": "user", "content": user_prompt}
             ],
             temperature=0.7,
-            max_tokens=2000
+            max_tokens=500  # Reduced from 2000 for faster, concise analysis
         )
         analysis = response.choices[0].message.content
         
