@@ -94,7 +94,10 @@ function Results({ data, adType, adContent }) {
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-800">
-                      {persona.demographics || 'No demographic information available'}
+                      {persona.age || 'N/A'} years old, {persona.gender || 'N/A'}, {persona.occupation || 'N/A'}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {persona.education || 'N/A'} • {persona.location || 'N/A'}
                     </p>
                   </div>
                   <span

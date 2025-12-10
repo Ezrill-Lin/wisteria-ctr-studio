@@ -166,6 +166,11 @@ class PersonaResponseModel(BaseModel):
     will_click: bool
     reasoning: str
     demographics: str = ""
+    age: Optional[str] = None
+    gender: Optional[str] = None
+    occupation: Optional[str] = None
+    education: Optional[str] = None
+    location: Optional[str] = None
 
 
 class CTRResponse(BaseModel):
@@ -245,6 +250,61 @@ app.add_middleware(
 AVAILABLE_PERSONA_VERSIONS = ["v1", "v2"]
 AVAILABLE_PERSONA_STRATEGIES = ["random", "wpp", "ipip"]
 AVAILABLE_PLATFORMS = ["facebook", "tiktok", "amazon", "instagram", "youtube"]
+
+
+def parse_demographics_string(demographics_str: str) -> dict:
+    """Parse demographics string into structured fields.
+    
+    Args:
+        demographics_str: Demographics string like "69-year-old, female, working as..."
+        
+    Returns:
+        Dictionary with age, gender, occupation, education, location
+    """
+    import re
+    
+    result = {
+        "age": None,
+        "gender": None,
+        "occupation": None,
+        "education": None,
+        "location": None
+    }
+    
+    if not demographics_str:
+        return result
+    
+    # Extract age: "XX-year-old"
+    age_match = re.search(r'(\d+)-year-old', demographics_str)
+    if age_match:
+        result["age"] = age_match.group(1)
+    
+    # Extract gender: "male" or "female"
+    gender_match = re.search(r'\b(male|female)\b', demographics_str, re.IGNORECASE)
+    if gender_match:
+        result["gender"] = gender_match.group(1).capitalize()
+    
+    # Extract occupation: "working as XXX"
+    occupation_match = re.search(r'working as ([^,]+)', demographics_str)
+    if occupation_match:
+        occ = occupation_match.group(1).strip()
+        # Clean up common patterns
+        if "N/A" in occ or "less than 16" in occ or "NILF" in occ:
+            result["occupation"] = "Not in Labor Force"
+        else:
+            result["occupation"] = occ
+    
+    # Extract education: "with XXX"
+    education_match = re.search(r'with ([^,]+?)(?:,\s*living|$)', demographics_str)
+    if education_match:
+        result["education"] = education_match.group(1).strip()
+    
+    # Extract location: "living in XXX"
+    location_match = re.search(r'living in ([^,]+)', demographics_str)
+    if location_match:
+        result["location"] = location_match.group(1).strip()
+    
+    return result
 
 
 @app.get("/", tags=["Info"])
@@ -482,7 +542,8 @@ async def predict_text_ad_ctr(request: CTRTextRequest):
                     persona_id=r.persona_id,
                     will_click=r.will_click,
                     reasoning=r.reasoning,
-                    demographics=r.demographics
+                    demographics=r.demographics,
+                    **parse_demographics_string(r.demographics)
                 )
                 for r in result.persona_responses
             ]
@@ -601,7 +662,8 @@ async def predict_image_ad_ctr(request: CTRImageRequest):
                     persona_id=r.persona_id,
                     will_click=r.will_click,
                     reasoning=r.reasoning,
-                    demographics=r.demographics
+                    demographics=r.demographics,
+                    **parse_demographics_string(r.demographics)
                 )
                 for r in result.persona_responses
             ]
@@ -615,6 +677,9 @@ async def predict_image_ad_ctr(request: CTRImageRequest):
             status_code=500,
             detail=f"Internal server error: {str(e)}"
         )
+
+
+@app.get("/health", response_model=HealthResponse, tags=["Info"])
 
 
 # Error handlers
