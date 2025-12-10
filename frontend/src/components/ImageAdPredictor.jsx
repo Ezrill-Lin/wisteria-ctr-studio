@@ -256,7 +256,22 @@ function ImageAdPredictor() {
             {/* Persona Version */}
             <div>
               <label htmlFor="persona_version" className="block text-sm font-medium text-gray-700 mb-2">
-                Persona Version
+                <span className="flex items-center gap-1.5">
+                  Persona Version
+                  <div className="group relative">
+                    <svg className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                    </svg>
+                    <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10">
+                      <div className="font-semibold mb-1">Choose persona depth:</div>
+                      <div className="space-y-1">
+                        <div><span className="font-medium">v2 (recommended):</span> Includes detailed behavioral tendencies and core beliefs for more realistic predictions</div>
+                        <div><span className="font-medium">v1:</span> Uses simpler demographic-only personas</div>
+                      </div>
+                      <div className="absolute left-4 top-full w-2 h-2 bg-gray-900 transform rotate-45 -mt-1"></div>
+                    </div>
+                  </div>
+                </span>
               </label>
               <select
                 id="persona_version"
@@ -273,7 +288,23 @@ function ImageAdPredictor() {
             {/* Persona Strategy */}
             <div>
               <label htmlFor="persona_strategy" className="block text-sm font-medium text-gray-700 mb-2">
-                Persona Strategy
+                <span className="flex items-center gap-1.5">
+                  Persona Strategy
+                  <div className="group relative">
+                    <svg className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                    </svg>
+                    <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10">
+                      <div className="font-semibold mb-1">How personalities are assigned:</div>
+                      <div className="space-y-1">
+                        <div><span className="font-medium">Random:</span> Baseline with randomly assigned personality traits across demographics</div>
+                        <div><span className="font-medium">WPP:</span> Uses research-based personality distributions correlated by country/demographics</div>
+                        <div><span className="font-medium">IPIP:</span> Matches personality traits based on demographic patterns</div>
+                      </div>
+                      <div className="absolute left-4 top-full w-2 h-2 bg-gray-900 transform rotate-45 -mt-1"></div>
+                    </div>
+                  </div>
+                </span>
               </label>
               <select
                 id="persona_strategy"
