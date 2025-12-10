@@ -16,7 +16,7 @@ async def generate_final_analysis(
     persona_responses: List,
     ctr: float
 ) -> str:
-    """Generate final analysis from all persona responses using DeepSeek.
+    """Generate final analysis from all persona responses using Gemini.
     
     Args:
         ad_content: Original ad content (text or image description)
@@ -42,25 +42,25 @@ async def generate_final_analysis(
         no_click_reasons=no_click_reasons
     )
     
-    # Call DeepSeek for analysis
+    # Call Gemini for analysis
     try:
-        from openai import AsyncOpenAI
+        from google import genai
         
-        client = AsyncOpenAI(
-            api_key=os.getenv("DEEPSEEK_API_KEY"),
-            base_url=os.getenv("DEEPSEEK_API_BASE", "https://api.deepseek.com")
-        )
+        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
         
-        response = await client.chat.completions.create(
-            model="deepseek-chat",
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=0.7,
-            max_tokens=500  # Reduced from 2000 for faster, concise analysis
+        # Combine system message and user prompt
+        full_prompt = f"{system_message}\n\n{user_prompt}"
+        
+        response = await client.aio.models.generate_content(
+            model='gemini-2.5-flash-lite',
+            contents=full_prompt,
+            config=genai.types.GenerateContentConfig(
+                temperature=0.3,
+                top_p=0.9,
+                max_output_tokens=5000
+            )
         )
-        analysis = response.choices[0].message.content
+        analysis = response.text
         
     except Exception as e:
         analysis = f"[Error generating analysis: {type(e).__name__}: {e}]"

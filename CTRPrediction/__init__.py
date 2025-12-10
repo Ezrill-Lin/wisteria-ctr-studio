@@ -9,10 +9,10 @@ Main Components:
 - CTRPredictionResult: Complete prediction results with CTR, responses, and analysis
 
 Features:
-- Text & Image Support: Handle both text and image ads using gpt-4o-mini with vision capabilities
+- Text & Image Support: Handle both text and image ads using Gemini 2.5 Flash with native vision capabilities
 - Persona-based prediction: Uses SiliconSampling v1/v2 personas with full psychological profiles
 - Individual reasoning: Each persona provides click decision + 1-3 sentence reasoning
-- Final analysis: DeepSeek-powered insights about ad effectiveness and recommendations
+- Final analysis: Gemini 2.5 Flash-powered insights about ad effectiveness and recommendations
 - Async processing: Concurrent API calls with semaphore control
 """
 

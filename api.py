@@ -72,6 +72,16 @@ class CTRTextRequest(BaseModel):
         description="Include individual persona responses in output",
         example=False
     )
+    realistic_mode: bool = Field(
+        default=True,
+        description="Use enhanced real-world browsing context (recommended for accurate CTR)",
+        example=True
+    )
+    decision_model: str = Field(
+        default="gemini-2.5-flash",
+        description="Model for click decisions and analysis (gemini-2.5-flash, gemini-1.5-flash)",
+        example="gemini-2.5-flash"
+    )
 
     class Config:
         schema_extra = {
@@ -130,6 +140,11 @@ class CTRImageRequest(BaseModel):
         description="Include individual persona responses in output",
         example=False
     )
+    realistic_mode: bool = Field(
+        default=True,
+        description="Use enhanced real-world browsing context (recommended for accurate CTR)",
+        example=True
+    )
 
     class Config:
         schema_extra = {
@@ -177,8 +192,8 @@ class CTRResponse(BaseModel):
                 "total_clicks": 247,
                 "total_personas": 1000,
                 "runtime_seconds": 45.6,
-                "provider_used": "openai",
-                "model_used": "gpt-4o-mini",
+                "provider_used": "google",
+                "model_used": "gemini-2.5-flash",
                 "ad_platform": "facebook",
                 "persona_version": "v2",
                 "persona_strategy": "random",
@@ -194,8 +209,7 @@ class HealthResponse(BaseModel):
     status: str
     timestamp: str
     version: str
-    click_decision_model: str
-    analysis_model: str
+    model: str
     available_persona_versions: List[str]
     available_persona_strategies: List[str]
     available_platforms: List[str]
@@ -241,8 +255,7 @@ async def root():
         "version": "3.1.0",
         "description": "REST API for CTR prediction using SiliconSampling personas",
         "models": {
-            "click_decisions": "gpt-4o-mini (supports text and images)",
-            "final_analysis": "deepseek-chat"
+            "unified_model": "gemini-2.5-flash (click decisions & analysis, supports text and images)"
         },
         "endpoints": {
             "health": "/health",
@@ -263,8 +276,7 @@ async def health_check():
         status="healthy",
         timestamp=datetime.utcnow().isoformat() + "Z",
         version="3.1.0",
-        click_decision_model="gpt-4o-mini",
-        analysis_model="deepseek-chat",
+        model="gemini-2.5-flash (unified for decisions & analysis)",
         available_persona_versions=AVAILABLE_PERSONA_VERSIONS,
         available_persona_strategies=AVAILABLE_PERSONA_STRATEGIES,
         available_platforms=AVAILABLE_PLATFORMS
@@ -311,11 +323,8 @@ async def debug_environment():
     import os
     
     return {
-        "openai_api_key_set": bool(os.getenv("OPENAI_API_KEY")),
-        "openai_api_key_length": len(os.getenv("OPENAI_API_KEY", "")) if os.getenv("OPENAI_API_KEY") else 0,
-        "deepseek_api_key_set": bool(os.getenv("DEEPSEEK_API_KEY")),
-        "deepseek_api_key_length": len(os.getenv("DEEPSEEK_API_KEY", "")) if os.getenv("DEEPSEEK_API_KEY") else 0,
-        "deepseek_api_base": os.getenv("DEEPSEEK_API_BASE", "https://api.deepseek.com"),
+        "gemini_api_key_set": bool(os.getenv("GEMINI_API_KEY")),
+        "gemini_api_key_length": len(os.getenv("GEMINI_API_KEY", "")) if os.getenv("GEMINI_API_KEY") else 0,
         "pythonpath": os.getenv("PYTHONPATH", ""),
         "port": os.getenv("PORT", "8080")
     }
@@ -325,18 +334,12 @@ async def debug_environment():
 async def list_models():
     """List model configuration and persona information."""
     model_info = {
-        "click_decisions": {
-            "model": "gpt-4o-mini",
-            "provider": "OpenAI",
-            "description": "Fast, cost-effective model for individual click decisions",
-            "capabilities": ["text", "images (via vision)"],
-            "env_var": "OPENAI_API_KEY"
-        },
-        "final_analysis": {
-            "model": "deepseek-chat",
-            "provider": "DeepSeek",
-            "description": "Powerful model for generating comprehensive analysis and recommendations",
-            "env_var": "DEEPSEEK_API_KEY"
+        "unified_model": {
+            "model": "gemini-2.5-flash",
+            "provider": "Google",
+            "description": "Best price-performance model with native multimodal support for click decisions and analysis",
+            "capabilities": ["text", "images (native vision)", "analysis generation"],
+            "env_var": "GEMINI_API_KEY"
         }
     }
     
@@ -381,8 +384,8 @@ async def predict_text_ad_ctr(request: CTRTextRequest):
     
     This endpoint:
     1. Loads synthetic personas based on specified version and strategy
-    2. For each persona, gets LLM prediction of click decision + reasoning using gpt-4o-mini
-    3. Aggregates results and generates final analysis with recommendations using deepseek-chat
+    2. For each persona, gets LLM prediction of click decision + reasoning
+    3. Aggregates results and generates final analysis with recommendations using Gemini
     
     **Parameters:**
     - **ad_text**: Advertisement text to evaluate
@@ -392,6 +395,7 @@ async def predict_text_ad_ctr(request: CTRTextRequest):
     - **persona_strategy**: OCEAN assignment strategy (random, wpp, ipip)
     - **concurrent_requests**: Parallelism level for API calls
     - **include_persona_details**: Include individual persona responses
+    - **decision_model**: LLM model for decisions (default: gemini-2.5-flash)
     
     **Returns:**
     - Predicted CTR, click counts, runtime statistics
@@ -423,7 +427,9 @@ async def predict_text_ad_ctr(request: CTRTextRequest):
             predictor = CTRPredictor(
                 persona_version=request.persona_version,
                 persona_strategy=request.persona_strategy,
-                concurrent_requests=request.concurrent_requests
+                concurrent_requests=request.concurrent_requests,
+                realistic_mode=request.realistic_mode,
+                decision_model=request.decision_model
             )
         except FileNotFoundError as e:
             raise HTTPException(
@@ -499,8 +505,8 @@ async def predict_image_ad_ctr(request: CTRImageRequest):
     
     This endpoint:
     1. Loads synthetic personas based on specified version and strategy
-    2. For each persona, gets LLM prediction of click decision + reasoning using gpt-4o-mini (vision)
-    3. Aggregates results and generates final analysis with recommendations using deepseek-chat
+    2. For each persona, gets LLM prediction of click decision + reasoning using Gemini (vision)
+    3. Aggregates results and generates final analysis with recommendations using Gemini
     
     **Parameters:**
     - **image_url**: Advertisement image URL (http/https or data URL with base64)
@@ -541,7 +547,8 @@ async def predict_image_ad_ctr(request: CTRImageRequest):
             predictor = CTRPredictor(
                 persona_version=request.persona_version,
                 persona_strategy=request.persona_strategy,
-                concurrent_requests=request.concurrent_requests
+                concurrent_requests=request.concurrent_requests,
+                realistic_mode=request.realistic_mode
             )
         except FileNotFoundError as e:
             raise HTTPException(
@@ -646,9 +653,8 @@ if __name__ == "__main__":
     print("   Docs: http://localhost:8080/docs")
     print("   ReDoc: http://localhost:8080/redoc")
     print("   Health: http://localhost:8080/health")
-    print("\n💡 Models:")
-    print("   Click Decisions: gpt-4o-mini (text & images)")
-    print("   Final Analysis: deepseek-chat")
+    print("\n💡 Model:")
+    print("   Unified: gemini-2.5-flash (click decisions, analysis, text & images)")
     print("\n📚 Endpoints:")
     print("   POST /predict/text - Text ad prediction")
     print("   POST /predict/image - Image ad prediction")

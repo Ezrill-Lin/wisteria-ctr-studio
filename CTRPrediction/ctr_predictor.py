@@ -1,7 +1,7 @@
 """
 CTR Predictor Module
 
-Unified predictor for both text and image-based advertisements using GPT-4o-mini.
+Unified predictor for both text and image-based advertisements using Gemini.
 """
 
 import asyncio
@@ -52,31 +52,34 @@ class CTRPredictor:
         self,
         persona_version: str = 'v2',
         persona_strategy: str = 'random',
-        concurrent_requests: int = 10
+        concurrent_requests: int = 10,
+        realistic_mode: bool = True,
+        decision_model: str = 'gemini-2.5-flash-lite'
     ):
         """Initialize CTR predictor.
-        
-        Uses gpt-4o-mini for individual click decisions and deepseek-chat for final analysis.
         
         Args:
             persona_version: Version of personas to use ('v1' or 'v2')
             persona_strategy: Strategy for persona generation ('random', 'wpp', 'ipip')
             concurrent_requests: Number of concurrent API calls
+            realistic_mode: If True, uses enhanced real-world browsing context (recommended)
+            decision_model: Model for click decisions ('gemini-2.5-pro', 'gemini-2.5-flash', 'gemini-1.5-flash')
         """
         self.persona_version = persona_version
         self.persona_strategy = persona_strategy
         self.concurrent_requests = concurrent_requests
+        self.realistic_mode = realistic_mode
+        self.decision_model = decision_model
         
-        # Validate API keys
-        if not os.getenv("OPENAI_API_KEY"):
-            raise ValueError("OPENAI_API_KEY environment variable not set")
+        # Validate API key
+        if not os.getenv("GEMINI_API_KEY"):
+            raise ValueError("GEMINI_API_KEY environment variable not set")
         
-        if not os.getenv("DEEPSEEK_API_KEY"):
-            raise ValueError("DEEPSEEK_API_KEY environment variable not set")
+        if not decision_model.startswith('gemini'):
+            raise ValueError(f"Unsupported model: {decision_model}. Only Gemini models are supported.")
         
         print(f"✓ Initialized CTR Predictor")
-        print(f"  Click Decision Model: gpt-4o-mini")
-        print(f"  Analysis Model: deepseek-chat")
+        print(f"  Unified Model: {decision_model} (decisions & analysis)")
         print(f"  Persona Version: {persona_version}")
         print(f"  Persona Strategy: {persona_strategy}")
     
@@ -117,45 +120,62 @@ class CTRPredictor:
             if image_url:
                 # Image ad - use vision capabilities
                 user_prompt = create_image_ad_prompt(ad_platform)
-                user_content = [
-                    {"type": "text", "text": user_prompt},
-                    {"type": "image_url", "image_url": {"url": image_url}}
-                ]
             else:
-                # Text ad
-                user_prompt = create_persona_user_prompt(ad_text, ad_platform)
-                user_content = user_prompt
+                # Text ad with realistic mode option
+                user_prompt = create_persona_user_prompt(ad_text, ad_platform, realistic_mode=self.realistic_mode)
             
-            # Call GPT-4o-mini for click decisions with retry logic
+            # Call LLM for click decisions with retry logic
             max_retries = 3
             retry_delay = 1
             
             for attempt in range(max_retries):
                 try:
-                    from openai import AsyncOpenAI
-                    
-                    client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-                    
-                    response = await client.chat.completions.create(
-                        model="gpt-4o-mini",
-                        messages=[
-                            {"role": "system", "content": system_message},
-                            {"role": "user", "content": user_content}
-                        ],
-                        temperature=0.3,
-                        max_tokens=500
-                    )
-                    content = response.choices[0].message.content
-                    
-                    # Parse JSON response
-                    will_click, reasoning = parse_json_response(content)
-                    break  # Success, exit retry loop
+                    if self.decision_model.startswith('gemini'):
+                        # Use Gemini API (new google-genai SDK pattern)
+                        from google import genai
+                        
+                        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+                        
+                        # Combine system and user messages for Gemini
+                        full_prompt = f"{system_message}\n\n{user_prompt}"
+                        
+                        # Generate response (async)
+                        response = await client.aio.models.generate_content(
+                            model=self.decision_model,
+                            contents=full_prompt,
+                            config=genai.types.GenerateContentConfig(
+                                temperature=0.3,
+                                top_p=0.9,
+                                max_output_tokens=8000  # Match SiliconSampling to prevent truncation
+                            )
+                        )
+                        
+                        # Get text from response
+                        content = response.text
+                        if not content:
+                            # Check finish reason like SiliconSampling does
+                            finish_reason = response.candidates[0].finish_reason if response.candidates else 'Unknown'
+                            raise ValueError(f"Gemini returned empty text. Finish reason: {finish_reason}")
+                        
+                        # Strip markdown code blocks if present (Gemini wraps JSON in ```json ... ```)
+                        content = content.strip()
+                        if content.startswith('```json'):
+                            content = content[7:]  # Remove ```json
+                        elif content.startswith('```'):
+                            content = content[3:]  # Remove ```
+                        if content.endswith('```'):
+                            content = content[:-3]  # Remove closing ```
+                        content = content.strip()
+                        
+                        # Parse JSON response
+                        will_click, reasoning = parse_json_response(content)
+                        break  # Success, exit retry loop
                     
                 except Exception as e:
                     error_type = type(e).__name__
                     
                     # Retry on rate limit or timeout errors
-                    if attempt < max_retries - 1 and ('rate' in str(e).lower() or 'timeout' in str(e).lower()):
+                    if attempt < max_retries - 1 and ('rate' in str(e).lower() or 'timeout' in str(e).lower() or '429' in str(e) or '503' in str(e)):
                         await asyncio.sleep(retry_delay * (2 ** attempt))  # Exponential backoff
                         continue
                     
@@ -256,8 +276,8 @@ class CTRPredictor:
             total_clicks=total_clicks,
             persona_responses=persona_responses,
             final_analysis=final_analysis,
-            provider_used="gpt-4o-mini + deepseek-chat",
-            model_used="gpt-4o-mini (decisions), deepseek-chat (analysis)",
+            provider_used=f"{self.decision_model}",
+            model_used=f"{self.decision_model} (decisions & analysis)",
             ad_platform=ad_platform
         )
     
