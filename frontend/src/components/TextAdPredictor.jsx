@@ -67,28 +67,34 @@ function TextAdPredictor() {
             <label htmlFor="ad_text" className="block text-sm font-medium text-gray-700 mb-2">
               Advertisement Text *
             </label>
-            <textarea
-              id="ad_text"
-              name="ad_text"
-              rows={4}
-              required
-              value={formData.ad_text}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-              placeholder="e.g., Special 0% APR credit card offer for travel rewards"
-            />
-            <p className="mt-1 text-xs text-gray-500">
-              Example (click to copy): 
-              <button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard.writeText('Special 0% APR credit card offer for travel rewards');
+            <div className="relative">
+              {!formData.ad_text && (
+                <div 
+                  className="absolute inset-0 px-4 py-3 text-gray-400 whitespace-pre-wrap"
+                  style={{ 
+                    userSelect: 'text',
+                    pointerEvents: 'none',
+                    zIndex: 1
+                  }}
+                >
+                  <span style={{ userSelect: 'text', pointerEvents: 'auto' }}>e.g., Special 0% APR credit card offer for travel rewards</span>
+                </div>
+              )}
+              <textarea
+                id="ad_text"
+                name="ad_text"
+                rows={4}
+                required
+                value={formData.ad_text}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative"
+                style={{ 
+                  backgroundColor: formData.ad_text ? 'white' : 'transparent',
+                  zIndex: 2
                 }}
-                className="ml-1 text-purple-600 hover:text-purple-700 underline cursor-pointer"
-              >
-                Special 0% APR credit card offer for travel rewards
-              </button>
-            </p>
+              />
+            </div>
+            <p className="mt-1 text-xs text-gray-500">Enter the advertisement text you want to test</p>
           </div>
 
           {/* Configuration Grid */}
