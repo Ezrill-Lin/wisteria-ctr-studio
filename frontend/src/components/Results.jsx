@@ -80,8 +80,8 @@ function Results({ data, adType, adContent }) {
                   continue;
                 }
                 
-                // Check if it's a section header (e.g., **Performance**: or **Strengths**)
-                const headerMatch = line.match(/^\*\*(.+?)\*\*:?$/);
+                // Check if it's a section header (e.g., **Performance**: content or **Strengths**)
+                const headerMatch = line.match(/^\*\*(.+?)\*\*:?\s*(.*)$/);
                 if (headerMatch) {
                   // Save previous section
                   if (currentSection && currentContent.length > 0) {
@@ -90,6 +90,10 @@ function Results({ data, adType, adContent }) {
                   // Start new section
                   currentSection = headerMatch[1].trim();
                   currentContent = [];
+                  // If there's content on the same line as the header, add it
+                  if (headerMatch[2].trim()) {
+                    currentContent.push(headerMatch[2].trim());
+                  }
                 } else if (currentSection && line) {
                   // Add content to current section
                   currentContent.push(line);
@@ -140,43 +144,55 @@ function Results({ data, adType, adContent }) {
                       {content.split('\n').map((line, idx) => {
                         const trimmedLine = line.trim();
                         
-                        // Bullet points
-                        if (/^[\*\-•]\s/.test(trimmedLine)) {
-                          const text = trimmedLine.replace(/^[\*\-•]\s+/, '');
-                          const boldMatch = text.match(/^\*\*(.+?)\*\*:?\s*(.*)$/);
-                          if (boldMatch) {
-                            return (
-                              <div key={idx} className="flex gap-2">
-                                <span className="text-purple-600 mt-0.5">•</span>
-                                <p className="flex-1">
-                                  <span className="font-semibold">{boldMatch[1]}:</span>{' '}
-                                  {boldMatch[2]}
-                                </p>
-                              </div>
-                            );
+                        // Helper function to render text with bold formatting
+                        const renderTextWithBold = (text) => {
+                          const parts = [];
+                          let lastIndex = 0;
+                          const boldRegex = /\*\*(.+?)\*\*/g;
+                          let match;
+                          
+                          while ((match = boldRegex.exec(text)) !== null) {
+                            // Add text before the bold part
+                            if (match.index > lastIndex) {
+                              parts.push(text.substring(lastIndex, match.index));
+                            }
+                            // Add bold part
+                            parts.push(<strong key={match.index}>{match[1]}</strong>);
+                            lastIndex = match.index + match[0].length;
                           }
-                          return (
-                            <div key={idx} className="flex gap-2">
-                              <span className="text-purple-600 mt-0.5">•</span>
-                              <p className="flex-1">{text}</p>
-                            </div>
-                          );
-                        }
+                          // Add remaining text
+                          if (lastIndex < text.length) {
+                            parts.push(text.substring(lastIndex));
+                          }
+                          
+                          return parts.length > 0 ? parts : text;
+                        };
                         
-                        // Numbered items
+                        // Numbered items - convert to bullet points
                         const numMatch = trimmedLine.match(/^(\d+)\.\s+(.+)$/);
                         if (numMatch) {
                           return (
                             <div key={idx} className="flex gap-2">
-                              <span className="font-semibold text-purple-700">{numMatch[1]}.</span>
-                              <p className="flex-1">{numMatch[2]}</p>
+                              <span className="text-purple-600 mt-0.5">•</span>
+                              <p className="flex-1">{renderTextWithBold(numMatch[2])}</p>
+                            </div>
+                          );
+                        }
+                        
+                        // Bullet points
+                        if (/^[\*\-•]\s/.test(trimmedLine)) {
+                          const text = trimmedLine.replace(/^[\*\-•]\s+/, '');
+                          return (
+                            <div key={idx} className="flex gap-2">
+                              <span className="text-purple-600 mt-0.5">•</span>
+                              <p className="flex-1">{renderTextWithBold(text)}</p>
                             </div>
                           );
                         }
                         
                         // Regular text
                         if (trimmedLine) {
-                          return <p key={idx}>{trimmedLine}</p>;
+                          return <p key={idx}>{renderTextWithBold(trimmedLine)}</p>;
                         }
                         return null;
                       })}
