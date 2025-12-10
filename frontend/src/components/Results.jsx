@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 function Results({ data, adType, adContent }) {
   if (!data) return null
 
@@ -7,6 +9,15 @@ function Results({ data, adType, adContent }) {
   const population = data.total_personas ?? data.population_size ?? 0
   const analysis = data.final_analysis ?? data.analysis ?? ''
   const personaResponses = data.persona_responses ?? []
+
+  // Filter state for persona responses
+  const [filter, setFilter] = useState('all') // 'all', 'clicked', 'not-clicked'
+
+  const filteredPersonas = personaResponses.filter(persona => {
+    if (filter === 'clicked') return persona.clicked
+    if (filter === 'not-clicked') return !persona.clicked
+    return true
+  })
 
   return (
     <div className="space-y-6">
@@ -215,13 +226,49 @@ function Results({ data, adType, adContent }) {
               </svg>
               <h3 className="text-lg font-semibold text-gray-800">Individual Persona Responses</h3>
             </div>
-            <span className="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-600">
-              {personaResponses.length} personas
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-600">
+                {filteredPersonas.length} of {personaResponses.length} personas
+              </span>
+            </div>
+          </div>
+
+          {/* Filter Buttons */}
+          <div className="flex gap-2 mb-4 p-1 bg-gray-100 rounded-lg">
+            <button
+              onClick={() => setFilter('all')}
+              className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                filter === 'all'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setFilter('clicked')}
+              className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                filter === 'clicked'
+                  ? 'bg-white text-green-700 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              ✓ Clicked ({personaResponses.filter(p => p.clicked).length})
+            </button>
+            <button
+              onClick={() => setFilter('not-clicked')}
+              className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                filter === 'not-clicked'
+                  ? 'bg-white text-gray-700 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              ✗ Not Clicked ({personaResponses.filter(p => !p.clicked).length})
+            </button>
           </div>
 
           <div className="max-h-96 overflow-y-auto space-y-3">
-            {personaResponses.map((persona, index) => (
+            {filteredPersonas.map((persona, index) => (
               <div
                 key={index}
                 className={`border rounded-lg p-4 transition-colors ${

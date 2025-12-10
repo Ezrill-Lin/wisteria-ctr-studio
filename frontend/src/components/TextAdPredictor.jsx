@@ -13,7 +13,7 @@ function TextAdPredictor() {
     persona_version: 'v2',
     persona_strategy: 'random',
     concurrent_requests: 20,
-    include_persona_details: false
+    include_persona_details: true
   })
   
   const [loading, setLoading] = useState(false)
