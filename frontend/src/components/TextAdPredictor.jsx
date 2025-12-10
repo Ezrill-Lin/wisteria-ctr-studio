@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Results from './Results'
+import HistoryPage from './HistoryPage'
 
 // Production API URL (Cloud Run with CORS enabled)
 const API_URL = 'https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app'
@@ -20,6 +21,7 @@ function TextAdPredictor() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
   const [predictionHistory, setPredictionHistory] = useState([])
+  const [showHistory, setShowHistory] = useState(false)
 
   const downloadHistory = () => {
     if (predictionHistory.length === 0) {
@@ -62,7 +64,7 @@ function TextAdPredictor() {
       const data = await response.json()
       setResult(data)
       
-      // Add to history with timestamp
+      // Add to history with timestamp and full data
       const historyEntry = {
         timestamp: new Date().toISOString(),
         type: 'text',
@@ -77,7 +79,8 @@ function TextAdPredictor() {
           ctr: data.ctr ?? data.estimated_ctr ?? 0,
           clicks: data.total_clicks ?? data.clicks ?? 0,
           population: data.total_personas ?? data.population_size ?? 0
-        }
+        },
+        fullData: data // Store complete response for detail view
       }
       setPredictionHistory(prev => [...prev, historyEntry])
     } catch (err) {
@@ -93,6 +96,11 @@ function TextAdPredictor() {
       ...prev,
       [name]: type === 'checkbox' ? checked : type === 'number' ? parseInt(value) : value
     }))
+  }
+
+  // Show history page if requested
+  if (showHistory) {
+    return <HistoryPage history={predictionHistory} onClose={() => setShowHistory(false)} />
   }
 
   return (
@@ -115,15 +123,28 @@ function TextAdPredictor() {
                 </p>
               </div>
             </div>
-            <button
-              onClick={downloadHistory}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 transition-colors text-sm font-medium"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Download History
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowHistory(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                View History
+              </button>
+              <button
+                type="button"
+                onClick={downloadHistory}
+                className="flex items-center gap-2 px-4 py-2 bg-white border border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 transition-colors text-sm font-medium"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download All
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -167,11 +188,26 @@ function TextAdPredictor() {
                     setFormData(prev => ({ ...prev, ad_text: '' }));
                   }
                 }}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[100px] text-gray-400 outline-none"
+                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[100px] text-gray-400 outline-none"
                 style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}
               >
                 e.g., Special 0% APR credit card offer for travel rewards
               </div>
+              {!formData.ad_text && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText('Special 0% APR credit card offer for travel rewards');
+                    alert('Example copied to clipboard!');
+                  }}
+                  className="absolute right-2 top-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
+                  title="Copy example text"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              )}
               <input
                 type="hidden"
                 name="ad_text"
