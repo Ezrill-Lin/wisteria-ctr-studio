@@ -6,8 +6,10 @@ const API_URL = 'https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app'
 // For local development, use: const API_URL = 'http://localhost:8080'
 
 function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
+  const defaultExample = 'Special 0% APR credit card offer for travel rewards'
+  
   const [formData, setFormData] = useState({
-    ad_text: '',
+    ad_text: defaultExample,
     population_size: 100,
     ad_platform: 'facebook',
     persona_version: 'v2',
@@ -105,65 +107,28 @@ function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
             <label htmlFor="ad_text" className="block text-sm font-medium text-gray-700 mb-2">
               Advertisement Text *
             </label>
-            <div className="relative">
-              <div
-                contentEditable
-                suppressContentEditableWarning
-                onInput={(e) => {
-                  const text = e.currentTarget.textContent;
-                  // If user is typing and placeholder is still there, clear it first
-                  if (text !== 'e.g., Special 0% APR credit card offer for travel rewards') {
-                    e.currentTarget.classList.remove('text-gray-400');
-                    e.currentTarget.classList.add('text-gray-900');
-                  }
-                  setFormData(prev => ({ ...prev, ad_text: text === 'e.g., Special 0% APR credit card offer for travel rewards' ? '' : text }));
-                }}
-                onKeyDown={(e) => {
-                  // Clear placeholder when user starts typing (but not on selection keys)
-                  const isTextInput = e.key.length === 1 || e.key === 'Enter' || e.key === 'Backspace';
-                  if (isTextInput && e.currentTarget.textContent === 'e.g., Special 0% APR credit card offer for travel rewards') {
-                    e.currentTarget.textContent = '';
-                    e.currentTarget.classList.remove('text-gray-400');
-                    e.currentTarget.classList.add('text-gray-900');
-                  }
-                }}
-                onBlur={(e) => {
-                  // Restore placeholder if empty
-                  if (!e.currentTarget.textContent.trim()) {
-                    e.currentTarget.textContent = 'e.g., Special 0% APR credit card offer for travel rewards';
-                    e.currentTarget.classList.add('text-gray-400');
-                    e.currentTarget.classList.remove('text-gray-900');
-                    setFormData(prev => ({ ...prev, ad_text: '' }));
-                  }
-                }}
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[100px] text-gray-400 outline-none"
-                style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}
-              >
-                e.g., Special 0% APR credit card offer for travel rewards
-              </div>
-              {!formData.ad_text && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText('Special 0% APR credit card offer for travel rewards');
-                    alert('Example copied to clipboard!');
-                  }}
-                  className="absolute right-2 top-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
-                  title="Copy example text"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </button>
-              )}
-              <input
-                type="hidden"
-                name="ad_text"
-                value={formData.ad_text}
-                required
-              />
-            </div>
-            <p className="mt-1 text-xs text-gray-500">Enter the advertisement text you want to test</p>
+            <textarea
+              id="ad_text"
+              name="ad_text"
+              value={formData.ad_text}
+              onChange={handleChange}
+              onFocus={(e) => {
+                // Clear default example when user clicks in
+                if (e.target.value === defaultExample) {
+                  setFormData(prev => ({ ...prev, ad_text: '' }))
+                }
+              }}
+              onBlur={(e) => {
+                // Restore default example if empty when user clicks out
+                if (!e.target.value.trim()) {
+                  setFormData(prev => ({ ...prev, ad_text: defaultExample }))
+                }
+              }}
+              required
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[100px] resize-vertical"
+              placeholder="Enter your ad text here..."
+            />
+            <p className="mt-1 text-xs text-gray-500">Default example loaded - click to edit or predict directly</p>
           </div>
 
           {/* Configuration Grid */}
