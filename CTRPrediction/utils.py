@@ -197,17 +197,17 @@ Why they clicked:
 Why they didn't click:
 {no_click_sample if no_click_reasons else "None"}
 
-Provide a brief analysis (max 300 words):
+Provide a brief analysis (max 300 words). Format your response with these sections:
 
-1. **Performance**: Is {ctr:.1%} good for {ad_platform}? (1-2 sentences)
+**Performance**: Is {ctr:.1%} good for {ad_platform}? (1-2 sentences)
 
-2. **Strengths**: What works well? (2-3 bullet points)
+**Strengths**: What works well? (2-3 bullet points)
 
-3. **Weaknesses**: What doesn't work? (2-3 bullet points)  
+**Weaknesses**: What doesn't work? (2-3 bullet points)  
 
-4. **Quick Wins**: Top 3 specific changes to improve CTR
+**Quick Wins**: Top 3 specific changes to improve CTR
 
-Keep it simple and actionable. No jargon."""
+Keep it simple and actionable. No jargon. Start directly with the Performance section - no introduction needed."""
     
     return system_message, user_prompt
 

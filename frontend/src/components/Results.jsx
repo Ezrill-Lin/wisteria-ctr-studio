@@ -63,13 +63,23 @@ function Results({ data, adType, adContent }) {
           <div className="prose prose-sm max-w-none">
             <div className="text-gray-700 leading-relaxed space-y-4">
               {analysis.split('\n\n').map((section, idx) => {
+                // Skip "Here's an analysis..." and "Analysis:" lines
+                if (section.trim().toLowerCase().startsWith("here's an analysis") ||
+                    section.trim().toLowerCase() === "analysis:" ||
+                    section.trim() === "**Analysis**") {
+                  return null;
+                }
+                
                 // Check if section is a header (starts with **)
                 if (section.trim().startsWith('**') && section.trim().endsWith('**')) {
                   const headerText = section.trim().replace(/\*\*/g, '');
                   return (
-                    <h4 key={idx} className="font-semibold text-gray-900 mt-6 mb-3 text-base">
-                      {headerText}
-                    </h4>
+                    <div key={idx}>
+                      {idx > 0 && <hr className="border-gray-200 my-6" />}
+                      <h4 className="font-semibold text-purple-700 mb-3 text-base">
+                        {headerText}
+                      </h4>
+                    </div>
                   );
                 }
                 
