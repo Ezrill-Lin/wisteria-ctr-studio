@@ -67,37 +67,28 @@ function TextAdPredictor() {
             <label htmlFor="ad_text" className="block text-sm font-medium text-gray-700 mb-2">
               Advertisement Text *
             </label>
-            <div className="relative">
-              <textarea
-                id="ad_text"
-                name="ad_text"
-                rows={4}
-                required
-                value={formData.ad_text}
-                onChange={handleChange}
-                onFocus={(e) => {
-                  // If clicking on empty field with placeholder visible, don't focus yet
-                  if (!formData.ad_text && window.getSelection().toString()) {
-                    e.target.blur();
-                  }
+            <textarea
+              id="ad_text"
+              name="ad_text"
+              rows={4}
+              required
+              value={formData.ad_text}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              placeholder="e.g., Special 0% APR credit card offer for travel rewards"
+            />
+            <p className="mt-1 text-xs text-gray-500">
+              Example (click to copy): 
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText('Special 0% APR credit card offer for travel rewards');
                 }}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative z-10 bg-transparent"
-              />
-              {!formData.ad_text && (
-                <div 
-                  className="absolute inset-0 px-4 py-3 select-text cursor-text"
-                  onClick={(e) => {
-                    // Only focus textarea if not selecting text
-                    if (!window.getSelection().toString()) {
-                      document.getElementById('ad_text').focus();
-                    }
-                  }}
-                >
-                  <span className="text-gray-400 select-text">e.g., Special 0% APR credit card offer for travel rewards</span>
-                </div>
-              )}
-            </div>
-            <p className="mt-1 text-xs text-gray-500">Enter the advertisement text you want to test</p>
+                className="ml-1 text-purple-600 hover:text-purple-700 underline cursor-pointer"
+              >
+                Special 0% APR credit card offer for travel rewards
+              </button>
+            </p>
           </div>
 
           {/* Configuration Grid */}
