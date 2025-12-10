@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import Results from './Results'
-import HistoryPage from './HistoryPage'
 
 // Production API URL (Cloud Run with CORS enabled)
 const API_URL = 'https://wisteria-ctr-studio-azlh47c4pq-uc.a.run.app'
 // For local development, use: const API_URL = 'http://localhost:8080'
 
-function TextAdPredictor() {
+function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
   const [formData, setFormData] = useState({
     ad_text: '',
     population_size: 100,
@@ -20,8 +19,6 @@ function TextAdPredictor() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
-  const [predictionHistory, setPredictionHistory] = useState([])
-  const [showHistory, setShowHistory] = useState(false)
 
   const downloadHistory = () => {
     if (predictionHistory.length === 0) {
@@ -98,11 +95,6 @@ function TextAdPredictor() {
     }))
   }
 
-  // Show history page if requested
-  if (showHistory) {
-    return <HistoryPage history={predictionHistory} onClose={() => setShowHistory(false)} />
-  }
-
   return (
     <div className="space-y-6">
       {/* History Download Button */}
@@ -123,28 +115,16 @@ function TextAdPredictor() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowHistory(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                View History
-              </button>
-              <button
-                type="button"
-                onClick={downloadHistory}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 transition-colors text-sm font-medium"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download All
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={downloadHistory}
+              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Download All
+            </button>
           </div>
         </div>
       )}
