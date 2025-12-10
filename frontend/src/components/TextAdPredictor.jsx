@@ -77,7 +77,11 @@ function TextAdPredictor() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               placeholder="e.g., Special 0% APR credit card offer for travel rewards"
             />
-            <p className="mt-1 text-xs text-gray-500">Enter the advertisement text you want to test</p>
+            <div className="mt-2 flex items-start gap-2">
+              <p className="text-xs text-gray-600 select-text flex-1">
+                Example: <span className="select-text">Special 0% APR credit card offer for travel rewards</span>
+              </p>
+            </div>
           </div>
 
           {/* Configuration Grid */}
