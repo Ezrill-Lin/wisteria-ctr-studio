@@ -50,9 +50,9 @@ function Results({ data, adType, adContent }) {
         </div>
       </div>
 
-      {/* Analysis Card */}
+      {/* AI Analysis - Card-based layout */}
       {analysis && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div>
           <div className="flex items-center gap-2 mb-4">
             <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
@@ -60,86 +60,116 @@ function Results({ data, adType, adContent }) {
             </svg>
             <h3 className="text-lg font-semibold text-gray-800">AI Analysis</h3>
           </div>
-          <div className="prose prose-sm max-w-none">
-            <div className="text-gray-700 leading-relaxed space-y-4">
-              {analysis.split('\n\n').map((section, idx) => {
-                // Skip "Here's an analysis..." and "Analysis:" lines
-                if (section.trim().toLowerCase().startsWith("here's an analysis") ||
-                    section.trim().toLowerCase() === "analysis:" ||
-                    section.trim() === "**Analysis**") {
-                  return null;
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {(() => {
+              const sections = {};
+              let currentSection = null;
+              let currentContent = [];
+              
+              // Parse analysis into sections
+              analysis.split('\n\n').forEach(block => {
+                const trimmed = block.trim();
+                
+                // Skip intro lines
+                if (trimmed.toLowerCase().startsWith("here's an analysis") ||
+                    trimmed.toLowerCase() === "analysis:" ||
+                    trimmed === "**Analysis**") {
+                  return;
                 }
                 
-                // Check if section is a header (starts with **)
-                if (section.trim().startsWith('**') && section.trim().endsWith('**')) {
-                  const headerText = section.trim().replace(/\*\*/g, '');
-                  return (
-                    <div key={idx}>
-                      {idx > 0 && <hr className="border-gray-200 my-6" />}
-                      <h4 className="font-semibold text-purple-700 mb-3 text-base">
-                        {headerText}
-                      </h4>
-                    </div>
-                  );
+                // Check if it's a section header
+                if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+                  // Save previous section
+                  if (currentSection && currentContent.length > 0) {
+                    sections[currentSection] = currentContent.join('\n\n');
+                  }
+                  // Start new section
+                  currentSection = trimmed.replace(/\*\*/g, '').replace(':', '');
+                  currentContent = [];
+                } else if (currentSection) {
+                  currentContent.push(trimmed);
                 }
+              });
+              
+              // Save last section
+              if (currentSection && currentContent.length > 0) {
+                sections[currentSection] = currentContent.join('\n\n');
+              }
+              
+              // Define section icons and colors
+              const sectionConfig = {
+                'Performance': { icon: '📊', color: 'blue' },
+                'Strengths': { icon: '✅', color: 'green' },
+                'Weaknesses': { icon: '⚠️', color: 'orange' },
+                'Quick Wins': { icon: '🎯', color: 'purple' }
+              };
+              
+              return Object.entries(sections).map(([title, content]) => {
+                const config = sectionConfig[title] || { icon: '📝', color: 'gray' };
+                const colorClasses = {
+                  blue: 'border-blue-200 bg-blue-50',
+                  green: 'border-green-200 bg-green-50',
+                  orange: 'border-orange-200 bg-orange-50',
+                  purple: 'border-purple-200 bg-purple-50',
+                  gray: 'border-gray-200 bg-gray-50'
+                };
                 
-                // Regular paragraphs or bullet lists
-                const lines = section.split('\n');
                 return (
-                  <div key={idx}>
-                    {lines.map((line, lineIdx) => {
-                      const trimmedLine = line.trim();
-                      
-                      // Numbered list (1., 2., 3.)
-                      if (/^\d+\.\s/.test(trimmedLine)) {
-                        const match = trimmedLine.match(/^(\d+)\.\s+(.+)$/);
-                        if (match) {
-                          const [, num, text] = match;
+                  <div key={title} className={`bg-white rounded-lg shadow-sm border-2 ${colorClasses[config.color]} p-5`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-2xl">{config.icon}</span>
+                      <h4 className="font-semibold text-gray-900 text-base">{title}</h4>
+                    </div>
+                    <div className="text-sm text-gray-700 space-y-2">
+                      {content.split('\n').map((line, idx) => {
+                        const trimmedLine = line.trim();
+                        
+                        // Bullet points
+                        if (/^[\*\-•]\s/.test(trimmedLine)) {
+                          const text = trimmedLine.replace(/^[\*\-•]\s+/, '');
+                          const boldMatch = text.match(/^\*\*(.+?)\*\*:?\s*(.*)$/);
+                          if (boldMatch) {
+                            return (
+                              <div key={idx} className="flex gap-2">
+                                <span className="text-purple-600 mt-0.5">•</span>
+                                <p className="flex-1">
+                                  <span className="font-semibold">{boldMatch[1]}:</span>{' '}
+                                  {boldMatch[2]}
+                                </p>
+                              </div>
+                            );
+                          }
                           return (
-                            <div key={lineIdx} className="flex gap-3 mb-2">
-                              <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-xs font-semibold">
-                                {num}
-                              </span>
-                              <p className="flex-1 text-gray-700">{text}</p>
+                            <div key={idx} className="flex gap-2">
+                              <span className="text-purple-600 mt-0.5">•</span>
+                              <p className="flex-1">{text}</p>
                             </div>
                           );
                         }
-                      }
-                      
-                      // Bullet points (*, -, •)
-                      if (/^[\*\-•]\s/.test(trimmedLine)) {
-                        const text = trimmedLine.replace(/^[\*\-•]\s+/, '');
-                        // Check for bold subheadings in bullets
-                        const boldMatch = text.match(/^\*\*(.+?)\*\*:?\s*(.*)$/);
-                        if (boldMatch) {
+                        
+                        // Numbered items
+                        const numMatch = trimmedLine.match(/^(\d+)\.\s+(.+)$/);
+                        if (numMatch) {
                           return (
-                            <div key={lineIdx} className="flex gap-2 mb-2 ml-4">
-                              <span className="text-purple-600 mt-1.5">•</span>
-                              <p className="flex-1">
-                                <span className="font-semibold text-gray-900">{boldMatch[1]}:</span>{' '}
-                                <span className="text-gray-700">{boldMatch[2]}</span>
-                              </p>
+                            <div key={idx} className="flex gap-2">
+                              <span className="font-semibold text-purple-700">{numMatch[1]}.</span>
+                              <p className="flex-1">{numMatch[2]}</p>
                             </div>
                           );
                         }
-                        return (
-                          <div key={lineIdx} className="flex gap-2 mb-2 ml-4">
-                            <span className="text-purple-600 mt-1.5">•</span>
-                            <p className="flex-1 text-gray-700">{text}</p>
-                          </div>
-                        );
-                      }
-                      
-                      // Regular paragraph text
-                      if (trimmedLine) {
-                        return <p key={lineIdx} className="text-gray-700 mb-2">{trimmedLine}</p>;
-                      }
-                      return null;
-                    })}
+                        
+                        // Regular text
+                        if (trimmedLine) {
+                          return <p key={idx}>{trimmedLine}</p>;
+                        }
+                        return null;
+                      })}
+                    </div>
                   </div>
                 );
-              })}
-            </div>
+              });
+            })()}
           </div>
         </div>
       )}
