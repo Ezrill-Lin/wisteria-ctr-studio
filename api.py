@@ -37,11 +37,11 @@ class CTRTextRequest(BaseModel):
         example="Special 0% APR credit card offer for travel rewards"
     )
     population_size: int = Field(
-        default=100,
+        default=1000,
         description="Number of personas to evaluate",
         ge=1,
-        le=10000,
-        example=100
+        le=1000000,
+        example=1000
     )
     ad_platform: str = Field(
         default="facebook",
@@ -61,11 +61,11 @@ class CTRTextRequest(BaseModel):
         example="random"
     )
     concurrent_requests: int = Field(
-        default=20,
+        default=10,
         description="Number of concurrent API requests",
         ge=1,
         le=50,
-        example=20
+        example=10
     )
     include_persona_details: bool = Field(
         default=False,
