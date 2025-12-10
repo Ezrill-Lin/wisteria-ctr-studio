@@ -67,21 +67,23 @@ function TextAdPredictor() {
             <label htmlFor="ad_text" className="block text-sm font-medium text-gray-700 mb-2">
               Advertisement Text *
             </label>
-            <textarea
-              id="ad_text"
-              name="ad_text"
-              rows={4}
-              required
-              value={formData.ad_text}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-              placeholder="e.g., Special 0% APR credit card offer for travel rewards"
-            />
-            <div className="mt-2 flex items-start gap-2">
-              <p className="text-xs text-gray-600 select-text flex-1">
-                Example: <span className="select-text">Special 0% APR credit card offer for travel rewards</span>
-              </p>
+            <div className="relative">
+              <textarea
+                id="ad_text"
+                name="ad_text"
+                rows={4}
+                required
+                value={formData.ad_text}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative z-10 bg-transparent"
+              />
+              {!formData.ad_text && (
+                <div className="absolute inset-0 px-4 py-3 pointer-events-none select-text">
+                  <span className="text-gray-400 select-text">e.g., Special 0% APR credit card offer for travel rewards</span>
+                </div>
+              )}
             </div>
+            <p className="mt-1 text-xs text-gray-500">Enter the advertisement text you want to test</p>
           </div>
 
           {/* Configuration Grid */}
