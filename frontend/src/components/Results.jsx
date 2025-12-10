@@ -61,7 +61,75 @@ function Results({ data, adType, adContent }) {
             <h3 className="text-lg font-semibold text-gray-800">AI Analysis</h3>
           </div>
           <div className="prose prose-sm max-w-none">
-            <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">{analysis}</p>
+            <div className="text-gray-700 leading-relaxed space-y-4">
+              {analysis.split('\n\n').map((section, idx) => {
+                // Check if section is a header (starts with **)
+                if (section.trim().startsWith('**') && section.trim().endsWith('**')) {
+                  const headerText = section.trim().replace(/\*\*/g, '');
+                  return (
+                    <h4 key={idx} className="font-semibold text-gray-900 mt-6 mb-3 text-base">
+                      {headerText}
+                    </h4>
+                  );
+                }
+                
+                // Regular paragraphs or bullet lists
+                const lines = section.split('\n');
+                return (
+                  <div key={idx}>
+                    {lines.map((line, lineIdx) => {
+                      const trimmedLine = line.trim();
+                      
+                      // Numbered list (1., 2., 3.)
+                      if (/^\d+\.\s/.test(trimmedLine)) {
+                        const match = trimmedLine.match(/^(\d+)\.\s+(.+)$/);
+                        if (match) {
+                          const [, num, text] = match;
+                          return (
+                            <div key={lineIdx} className="flex gap-3 mb-2">
+                              <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-xs font-semibold">
+                                {num}
+                              </span>
+                              <p className="flex-1 text-gray-700">{text}</p>
+                            </div>
+                          );
+                        }
+                      }
+                      
+                      // Bullet points (*, -, •)
+                      if (/^[\*\-•]\s/.test(trimmedLine)) {
+                        const text = trimmedLine.replace(/^[\*\-•]\s+/, '');
+                        // Check for bold subheadings in bullets
+                        const boldMatch = text.match(/^\*\*(.+?)\*\*:?\s*(.*)$/);
+                        if (boldMatch) {
+                          return (
+                            <div key={lineIdx} className="flex gap-2 mb-2 ml-4">
+                              <span className="text-purple-600 mt-1.5">•</span>
+                              <p className="flex-1">
+                                <span className="font-semibold text-gray-900">{boldMatch[1]}:</span>{' '}
+                                <span className="text-gray-700">{boldMatch[2]}</span>
+                              </p>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={lineIdx} className="flex gap-2 mb-2 ml-4">
+                            <span className="text-purple-600 mt-1.5">•</span>
+                            <p className="flex-1 text-gray-700">{text}</p>
+                          </div>
+                        );
+                      }
+                      
+                      // Regular paragraph text
+                      if (trimmedLine) {
+                        return <p key={lineIdx} className="text-gray-700 mb-2">{trimmedLine}</p>;
+                      }
+                      return null;
+                    })}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
