@@ -360,44 +360,30 @@ function ImageAdPredictor() {
       {/* Loading Progress */}
       {loading && (
         <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-6">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <svg className="animate-spin h-8 w-8 text-purple-600" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900">Processing CTR Prediction</h3>
-                <p className="text-xs text-gray-600 mt-0.5">Evaluating {formData.population_size} synthetic personas with AI</p>
-              </div>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="relative">
+              <svg className="animate-spin h-10 w-10 text-purple-600" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            </div>
+            <div className="text-center">
+              <h3 className="text-base font-semibold text-gray-900">Processing CTR Prediction</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Simulating {formData.population_size} personas with Gemini 2.5 Flash Lite (Vision)
+              </p>
+              <p className="text-xs text-gray-500 mt-2">
+                Running {formData.concurrent_requests} concurrent requests • Please wait...
+              </p>
             </div>
           </div>
           
-          {/* Progress Steps */}
-          <div className="space-y-2 mt-4">
-            <div className="flex items-center gap-3 text-sm">
-              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="text-gray-700">Loading synthetic personas ({formData.persona_version} - {formData.persona_strategy})</span>
-            </div>
-            
-            <div className="flex items-center gap-3 text-sm">
-              <div className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-purple-600 animate-pulse"></div>
-              <span className="text-gray-700">Simulating user decisions with vision AI ({formData.concurrent_requests} concurrent)</span>
-            </div>
-            
-            <div className="flex items-center gap-3 text-sm">
-              <div className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-gray-300"></div>
-              <span className="text-gray-400">Analyzing results and generating insights</span>
-            </div>
+          {/* Progress bar */}
+          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full animate-pulse" style={{ width: '100%' }}></div>
           </div>
           
-          <div className="mt-4 text-xs text-gray-500 text-center">
+          <div className="mt-3 text-xs text-gray-500 text-center">
             Estimated time: {Math.ceil(formData.population_size / formData.concurrent_requests)}–{Math.ceil(formData.population_size / formData.concurrent_requests) + 5} seconds
           </div>
         </div>
