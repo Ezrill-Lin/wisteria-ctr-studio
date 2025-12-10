@@ -67,34 +67,49 @@ function Results({ data, adType, adContent }) {
               let currentSection = null;
               let currentContent = [];
               
-              // Parse analysis into sections
-              analysis.split('\n\n').forEach(block => {
-                const trimmed = block.trim();
+              // Parse analysis line by line
+              const lines = analysis.split('\n');
+              
+              for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
                 
                 // Skip intro lines
-                if (trimmed.toLowerCase().startsWith("here's an analysis") ||
-                    trimmed.toLowerCase() === "analysis:" ||
-                    trimmed === "**Analysis**") {
-                  return;
+                if (line.toLowerCase().startsWith("here's an analysis") ||
+                    line.toLowerCase() === "analysis:" ||
+                    line === "**Analysis**") {
+                  continue;
                 }
                 
-                // Check if it's a section header
-                if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+                // Check if it's a section header (e.g., **Performance**: or **Strengths**)
+                const headerMatch = line.match(/^\*\*(.+?)\*\*:?$/);
+                if (headerMatch) {
                   // Save previous section
                   if (currentSection && currentContent.length > 0) {
-                    sections[currentSection] = currentContent.join('\n\n');
+                    sections[currentSection] = currentContent.join('\n');
                   }
                   // Start new section
-                  currentSection = trimmed.replace(/\*\*/g, '').replace(':', '');
+                  currentSection = headerMatch[1].trim();
                   currentContent = [];
-                } else if (currentSection) {
-                  currentContent.push(trimmed);
+                } else if (currentSection && line) {
+                  // Add content to current section
+                  currentContent.push(line);
                 }
-              });
+              }
               
               // Save last section
               if (currentSection && currentContent.length > 0) {
-                sections[currentSection] = currentContent.join('\n\n');
+                sections[currentSection] = currentContent.join('\n');
+              }
+              
+              // If no sections were found, display the raw analysis as fallback
+              if (Object.keys(sections).length === 0) {
+                return (
+                  <div className="bg-white rounded-lg shadow-sm border-2 border-gray-200 bg-gray-50 p-5">
+                    <div className="text-sm text-gray-700 whitespace-pre-wrap">
+                      {analysis}
+                    </div>
+                  </div>
+                );
               }
               
               // Define section icons and colors
