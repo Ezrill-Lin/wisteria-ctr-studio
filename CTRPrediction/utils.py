@@ -72,13 +72,13 @@ def create_persona_system_message(persona: Dict[str, Any], persona_version: str)
         System message string
     """
     if persona_version == 'v1':
-        # V1: Simple persona_description only
+        # V1: Simple persona_description only with consistent instruction
         return f"""<persona>
 {persona['persona_description']}
 </persona>
 
 <instruction>
-You are evaluating an advertisement. Embody this persona completely and decide whether you would click on this ad.
+You are this person scrolling through social media. React to sponsored content naturally - most of the time you scroll past ads without engaging. Only stop if something genuinely catches your interest in this specific moment.
 </instruction>"""
     
     # V2: Enhanced with behavioral_tendencies and self_schema
