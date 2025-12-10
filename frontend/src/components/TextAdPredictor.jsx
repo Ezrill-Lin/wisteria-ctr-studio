@@ -97,38 +97,6 @@ function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
 
   return (
     <div className="space-y-6">
-      {/* History Download Button */}
-      {predictionHistory.length > 0 && (
-        <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-              </svg>
-              <div>
-                <p className="text-sm font-medium text-gray-900">
-                  Prediction History
-                </p>
-                <p className="text-xs text-gray-600">
-                  {predictionHistory.length} prediction{predictionHistory.length > 1 ? 's' : ''} cached this session
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={downloadHistory}
-              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Download All
-            </button>
-          </div>
-        </div>
-      )}
-      
       {/* Form */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -344,32 +312,16 @@ function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
 
       {/* Loading Progress */}
       {loading && (
-        <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-6">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="relative">
-              <svg className="animate-spin h-10 w-10 text-purple-600" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-            </div>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-center gap-3">
+            <svg className="animate-spin h-8 w-8 text-purple-600" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
             <div className="text-center">
-              <h3 className="text-base font-semibold text-gray-900">Processing CTR Prediction</h3>
-              <p className="text-sm text-gray-600 mt-1">
-                Simulating {formData.population_size} personas with Gemini 2.5 Flash Lite
-              </p>
-              <p className="text-xs text-gray-500 mt-2">
-                Running {formData.concurrent_requests} concurrent requests • Please wait...
-              </p>
+              <p className="text-sm font-medium text-gray-900">Analyzing {formData.population_size} personas...</p>
+              <p className="text-xs text-gray-500 mt-1">This may take a few moments</p>
             </div>
-          </div>
-          
-          {/* Progress bar */}
-          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full animate-pulse" style={{ width: '100%' }}></div>
-          </div>
-          
-          <div className="mt-3 text-xs text-gray-500 text-center">
-            Estimated time: {Math.ceil(formData.population_size / formData.concurrent_requests)}–{Math.ceil(formData.population_size / formData.concurrent_requests) + 5} seconds
           </div>
         </div>
       )}
