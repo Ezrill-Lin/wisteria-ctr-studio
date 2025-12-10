@@ -22,7 +22,7 @@ function App() {
             </div>
             <div className="flex items-center gap-2 text-xs text-gray-500">
               <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full">v3.1.0</span>
-              <span className="hidden sm:inline">Powered by GPT-4o-mini & DeepSeek</span>
+              <span className="hidden sm:inline">Powered by Gemini 2.5 Flash Lite</span>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ function App() {
       {/* Footer */}
       <footer className="mt-12 pb-8 text-center text-sm text-gray-500">
         <p>Wisteria CTR Studio • Using SiliconSampling v2 synthetic personas</p>
-        <p className="mt-1">Models: gpt-4o-mini (decisions) + deepseek-chat (analysis)</p>
+        <p className="mt-1">Model: gemini-2.5-flash-lite (unified for decisions & analysis)</p>
       </footer>
     </div>
   )
