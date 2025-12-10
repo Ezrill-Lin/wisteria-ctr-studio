@@ -19,6 +19,25 @@ function TextAdPredictor() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
+  const [predictionHistory, setPredictionHistory] = useState([])
+
+  const downloadHistory = () => {
+    if (predictionHistory.length === 0) {
+      alert('No prediction history to download')
+      return
+    }
+
+    const dataStr = JSON.stringify(predictionHistory, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `wisteria-ctr-history-${new Date().toISOString().split('T')[0]}.json`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -42,6 +61,25 @@ function TextAdPredictor() {
 
       const data = await response.json()
       setResult(data)
+      
+      // Add to history with timestamp
+      const historyEntry = {
+        timestamp: new Date().toISOString(),
+        type: 'text',
+        adContent: formData.ad_text,
+        parameters: {
+          population_size: formData.population_size,
+          ad_platform: formData.ad_platform,
+          persona_version: formData.persona_version,
+          persona_strategy: formData.persona_strategy
+        },
+        results: {
+          ctr: data.ctr ?? data.estimated_ctr ?? 0,
+          clicks: data.total_clicks ?? data.clicks ?? 0,
+          population: data.total_personas ?? data.population_size ?? 0
+        }
+      }
+      setPredictionHistory(prev => [...prev, historyEntry])
     } catch (err) {
       setError(err.message)
     } finally {
@@ -59,6 +97,37 @@ function TextAdPredictor() {
 
   return (
     <div className="space-y-6">
+      {/* History Download Button */}
+      {predictionHistory.length > 0 && (
+        <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-sm font-medium text-gray-900">
+                  Prediction History
+                </p>
+                <p className="text-xs text-gray-600">
+                  {predictionHistory.length} prediction{predictionHistory.length > 1 ? 's' : ''} cached this session
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={downloadHistory}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 transition-colors text-sm font-medium"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Download History
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Form */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -73,11 +142,17 @@ function TextAdPredictor() {
                 suppressContentEditableWarning
                 onInput={(e) => {
                   const text = e.currentTarget.textContent;
-                  setFormData(prev => ({ ...prev, ad_text: text }));
+                  // If user is typing and placeholder is still there, clear it first
+                  if (text !== 'e.g., Special 0% APR credit card offer for travel rewards') {
+                    e.currentTarget.classList.remove('text-gray-400');
+                    e.currentTarget.classList.add('text-gray-900');
+                  }
+                  setFormData(prev => ({ ...prev, ad_text: text === 'e.g., Special 0% APR credit card offer for travel rewards' ? '' : text }));
                 }}
-                onFocus={(e) => {
-                  // Remove placeholder styling when focused
-                  if (e.currentTarget.textContent === 'e.g., Special 0% APR credit card offer for travel rewards') {
+                onKeyDown={(e) => {
+                  // Clear placeholder when user starts typing (but not on selection keys)
+                  const isTextInput = e.key.length === 1 || e.key === 'Enter' || e.key === 'Backspace';
+                  if (isTextInput && e.currentTarget.textContent === 'e.g., Special 0% APR credit card offer for travel rewards') {
                     e.currentTarget.textContent = '';
                     e.currentTarget.classList.remove('text-gray-400');
                     e.currentTarget.classList.add('text-gray-900');
