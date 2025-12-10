@@ -14,8 +14,8 @@ function Results({ data, adType, adContent }) {
   const [filter, setFilter] = useState('all') // 'all', 'clicked', 'not-clicked'
 
   const filteredPersonas = personaResponses.filter(persona => {
-    if (filter === 'clicked') return persona.clicked
-    if (filter === 'not-clicked') return !persona.clicked
+    if (filter === 'clicked') return persona.will_click
+    if (filter === 'not-clicked') return !persona.will_click
     return true
   })
 
@@ -253,7 +253,7 @@ function Results({ data, adType, adContent }) {
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              ✓ Clicked ({personaResponses.filter(p => p.clicked).length})
+              ✓ Clicked ({personaResponses.filter(p => p.will_click).length})
             </button>
             <button
               onClick={() => setFilter('not-clicked')}
@@ -263,7 +263,7 @@ function Results({ data, adType, adContent }) {
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              ✗ Not Clicked ({personaResponses.filter(p => !p.clicked).length})
+              ✗ Not Clicked ({personaResponses.filter(p => !p.will_click).length})
             </button>
           </div>
 
@@ -272,7 +272,7 @@ function Results({ data, adType, adContent }) {
               <div
                 key={index}
                 className={`border rounded-lg p-4 transition-colors ${
-                  persona.clicked
+                  persona.will_click
                     ? 'bg-green-50 border-green-200'
                     : 'bg-gray-50 border-gray-200'
                 }`}
@@ -288,12 +288,12 @@ function Results({ data, adType, adContent }) {
                   </div>
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      persona.clicked
+                      persona.will_click
                         ? 'bg-green-100 text-green-700'
                         : 'bg-gray-200 text-gray-600'
                     }`}
                   >
-                    {persona.clicked ? '✓ Clicked' : '✗ No Click'}
+                    {persona.will_click ? '✓ Clicked' : '✗ No Click'}
                   </span>
                 </div>
 
