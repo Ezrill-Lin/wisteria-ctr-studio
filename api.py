@@ -78,9 +78,9 @@ class CTRTextRequest(BaseModel):
         example=True
     )
     decision_model: str = Field(
-        default="gemini-2.5-flash",
-        description="Model for click decisions and analysis (gemini-2.5-flash, gemini-1.5-flash)",
-        example="gemini-2.5-flash"
+        default="gemini-2.5-flash-lite",
+        description="Model for click decisions and analysis (gemini-2.5-flash-lite, gemini-2.5-flash, gemini-1.5-flash)",
+        example="gemini-2.5-flash-lite"
     )
 
     class Config:
@@ -255,7 +255,7 @@ async def root():
         "version": "3.1.0",
         "description": "REST API for CTR prediction using SiliconSampling personas",
         "models": {
-            "unified_model": "gemini-2.5-flash (click decisions & analysis, supports text and images)"
+            "unified_model": "gemini-2.5-flash-lite (click decisions & analysis, supports text and images)"
         },
         "endpoints": {
             "health": "/health",
@@ -276,7 +276,7 @@ async def health_check():
         status="healthy",
         timestamp=datetime.utcnow().isoformat() + "Z",
         version="3.1.0",
-        model="gemini-2.5-flash (unified for decisions & analysis)",
+        model="gemini-2.5-flash-lite (unified for decisions & analysis)",
         available_persona_versions=AVAILABLE_PERSONA_VERSIONS,
         available_persona_strategies=AVAILABLE_PERSONA_STRATEGIES,
         available_platforms=AVAILABLE_PLATFORMS
@@ -335,9 +335,9 @@ async def list_models():
     """List model configuration and persona information."""
     model_info = {
         "unified_model": {
-            "model": "gemini-2.5-flash",
+            "model": "gemini-2.5-flash-lite",
             "provider": "Google",
-            "description": "Best price-performance model with native multimodal support for click decisions and analysis",
+            "description": "Fastest and most cost-effective model with native multimodal support for click decisions and analysis",
             "capabilities": ["text", "images (native vision)", "analysis generation"],
             "env_var": "GEMINI_API_KEY"
         }
@@ -654,7 +654,7 @@ if __name__ == "__main__":
     print("   ReDoc: http://localhost:8080/redoc")
     print("   Health: http://localhost:8080/health")
     print("\n💡 Model:")
-    print("   Unified: gemini-2.5-flash (click decisions, analysis, text & images)")
+    print("   Unified: gemini-2.5-flash-lite (click decisions, analysis, text & images)")
     print("\n📚 Endpoints:")
     print("   POST /predict/text - Text ad prediction")
     print("   POST /predict/image - Image ad prediction")
