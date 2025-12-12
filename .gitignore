@@ -19,4 +19,8 @@ SiliconSampling/data/acs_pums_2023_labeled.parquet
 SiliconSampling/data/data.parquet
 SiliconSampling/data/synth_demo.parquet
 
+# Jupyter notebooks - SiliconSampling/personas/data_prep
+SiliconSampling/personas/data_prep/generate_synthetic_census.ipynb
+SiliconSampling/personas/data_prep/figures/
+
 # Note: synthetic_demographics_1m.parquet (3.89MB) and .csv (0.11MB) are kept in repo
