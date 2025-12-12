@@ -70,7 +70,7 @@ def load_metrics_for_setting(response_file, ground_truth_df, test_cols):
 
 def create_comparison_figure(all_metrics, settings, output_path):
     """Create comparison figure with all settings overlaid"""
-    fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+    fig, axes = plt.subplots(2, 2, figsize=(12, 9))
     
     # Plot 1: MAE Distribution (overlaid histograms/KDE)
     ax = axes[0, 0]
@@ -194,7 +194,7 @@ def main():
     # Create output directory
     result_dir = Path('results')
     result_dir.mkdir(exist_ok=True)
-    output_path = result_dir / 'comparison.png'
+    output_path = result_dir / 'version_comparison.png'
     
     # Create comparison figure
     print("\nCreating comparison figure...")
