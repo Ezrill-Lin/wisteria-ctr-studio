@@ -33,7 +33,7 @@ sns.set_style("whitegrid")
 # Define settings to compare
 SETTINGS = [
     {
-        'name': 'V1 No Persona',
+        'name': 'No Persona',
         'path': 'responses_v1/no_persona/deepseek/responses_v1_no_persona_deepseek-chat.jsonl',
         'color': '#1f77b4',  # Blue
         'marker': 'o'
@@ -70,7 +70,7 @@ def load_metrics_for_setting(response_file, ground_truth_df, test_cols):
 
 def create_comparison_figure(all_metrics, settings, output_path):
     """Create comparison figure with all settings overlaid"""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 9))
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10.5))
     
     # Plot 1: MAE Distribution (overlaid histograms/KDE)
     ax = axes[0, 0]

@@ -248,10 +248,10 @@ def create_image_ad_prompt(ad_platform: str) -> str:
         User prompt string for image ad evaluation
     """
     platform_contexts = {
-        "facebook": "This ad image appears in your Facebook news feed while you browse social content.",
+        "facebook": "This ad image appears in your Facebook news feed while you browse social content (news, recreational contents, or just random browsing).",
         "tiktok": "This ad image appears between TikTok videos as you scroll through short-form content.",
         "amazon": "This ad image appears on Amazon while you are shopping or browsing products.",
-        "instagram": "This ad image appears in your Instagram feed or stories.",
+        "instagram": "This ad image appears in your Instagram feed or stories while you browse recreational content or connect with friends.",
         "youtube": "This ad image appears before or during a YouTube video you're watching."
     }
     
