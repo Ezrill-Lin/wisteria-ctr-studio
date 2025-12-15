@@ -115,6 +115,7 @@ def create_persona_user_prompt(ad_content: str, ad_platform: str, realistic_mode
         User prompt string with neutral, unbiased framing
     """
     platform_contexts = {
+        "x": "You're scrolling through X (Twitter), checking out posts and trending topics from your feed.",
         "facebook": "You're scrolling through your Facebook feed, casually browsing posts from friends and family.",
         "tiktok": "You're quickly scrolling through TikTok videos, looking for entertaining content.",
         "amazon": "You're browsing Amazon, either shopping for something specific or just exploring deals.",
@@ -122,7 +123,7 @@ def create_persona_user_prompt(ad_content: str, ad_platform: str, realistic_mode
         "youtube": "You're on YouTube watching videos. This ad appears before or during your video."
     }
     
-    platform_context = platform_contexts.get(ad_platform.lower(), platform_contexts["facebook"])
+    platform_context = platform_contexts.get(ad_platform.lower(), platform_contexts["x"])
     
     if realistic_mode:
         # Enhanced prompt with real-world context (neutral, no anchoring)
@@ -248,27 +249,36 @@ def create_image_ad_prompt(ad_platform: str) -> str:
         User prompt string for image ad evaluation
     """
     platform_contexts = {
-        "facebook": "This ad image appears in your Facebook news feed while you browse social content (news, recreational contents, or just random browsing).",
-        "tiktok": "This ad image appears between TikTok videos as you scroll through short-form content.",
-        "amazon": "This ad image appears on Amazon while you are shopping or browsing products.",
-        "instagram": "This ad image appears in your Instagram feed or stories while you browse recreational content or connect with friends.",
-        "youtube": "This ad image appears before or during a YouTube video you're watching."
+        "x": "You're scrolling through X (Twitter), checking out posts and trending topics from your feed.",
+        "facebook": "You're scrolling through your Facebook feed, casually browsing posts from friends and family.",
+        "tiktok": "You're quickly scrolling through TikTok videos, looking for entertaining content.",
+        "amazon": "You're browsing Amazon, either shopping for something specific or just exploring deals.",
+        "instagram": "You're scrolling through Instagram, checking out photos and stories from people you follow.",
+        "youtube": "You're on YouTube watching videos. This ad appears before or during your video."
     }
     
-    platform_context = platform_contexts.get(ad_platform.lower(), platform_contexts["facebook"])
+    platform_context = platform_contexts.get(ad_platform.lower(), platform_contexts["x"])
     
-    return f"""Platform: {ad_platform}
-Context: {platform_context}
+    return f"""SITUATION:
+Platform: {ad_platform}
+What you're doing: {platform_context}
 
-Instructions:
-1. Look at this advertisement image carefully.
-2. Based on your persona (demographics, personality, behaviors, and beliefs), would you click on this ad?
-3. Provide your decision and 1-3 sentences of reasoning.
+As you scroll, you see this sponsored post (image ad):
+
+RESPONSE:
+Would you click on this ad?
+
+Consider:
+- Does this appeal to your interests or needs?
+- Is the offer/message relevant to you?
+- How does it fit with what you value or enjoy?
+
+Respond based on your genuine reaction.
 
 Output your response in the following JSON format:
 {{
   "will_click": true,  // or false
-  "reasoning": "Your 1-3 sentence explanation here"
+  "reasoning": "Your honest explanation in 1-3 sentences"
 }}
 
 Output ONLY valid JSON, nothing else."""

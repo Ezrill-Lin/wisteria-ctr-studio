@@ -88,7 +88,7 @@ class CTRTextRequest(BaseModel):
             "example": {
                 "ad_text": "Special 0% APR credit card offer for travel rewards",
                 "population_size": 100,
-                "ad_platform": "facebook",
+                "ad_platform": "x",
                 "persona_version": "v2",
                 "persona_strategy": "random",
                 "concurrent_requests": 20,
@@ -151,7 +151,7 @@ class CTRImageRequest(BaseModel):
             "example": {
                 "image_url": "https://example.com/ad-image.jpg",
                 "population_size": 100,
-                "ad_platform": "facebook",
+                "ad_platform": "x",
                 "persona_version": "v2",
                 "persona_strategy": "random",
                 "concurrent_requests": 20,
@@ -199,7 +199,7 @@ class CTRResponse(BaseModel):
                 "runtime_seconds": 45.6,
                 "provider_used": "google",
                 "model_used": "gemini-2.5-flash",
-                "ad_platform": "facebook",
+                "ad_platform": "x",
                 "persona_version": "v2",
                 "persona_strategy": "random",
                 "timestamp": "2025-12-06T10:30:00Z",
@@ -249,7 +249,7 @@ app.add_middleware(
 # Configuration
 AVAILABLE_PERSONA_VERSIONS = ["v1", "v2"]
 AVAILABLE_PERSONA_STRATEGIES = ["random", "wpp", "ipip"]
-AVAILABLE_PLATFORMS = ["facebook", "tiktok", "amazon", "instagram", "youtube"]
+AVAILABLE_PLATFORMS = ["x", "facebook", "tiktok", "amazon", "instagram", "youtube"]
 
 
 def parse_demographics_string(demographics_str: str) -> dict:

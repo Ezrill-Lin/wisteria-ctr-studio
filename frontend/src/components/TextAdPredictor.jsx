@@ -11,7 +11,7 @@ function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
   const [formData, setFormData] = useState({
     ad_text: defaultExample,
     population_size: 100,
-    ad_platform: 'facebook',
+    ad_platform: 'x',
     persona_version: 'v2',
     persona_strategy: 'random',
     concurrent_requests: 20,
@@ -163,6 +163,7 @@ function TextAdPredictor({ predictionHistory, setPredictionHistory }) {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
+                <option value="x">X (Twitter)</option>
                 <option value="facebook">Facebook</option>
                 <option value="instagram">Instagram</option>
                 <option value="tiktok">TikTok</option>

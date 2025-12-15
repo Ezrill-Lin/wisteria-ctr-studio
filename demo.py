@@ -84,7 +84,7 @@ Examples:
     parser.add_argument(
         "--population-size",
         type=int,
-        default=100,
+        default=1000,
         help="Number of personas to evaluate (default: 100)"
     )
     
