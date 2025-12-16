@@ -24,7 +24,7 @@ function Results({ data, adType, adContent }) {
       {/* CTR Summary Card */}
       <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg border border-purple-200 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-800">Prediction Results</h2>
+          <h2 className="text-xl font-semibold text-gray-800">Simulation Results</h2>
           <span className="px-3 py-1 bg-white rounded-full text-sm font-medium text-purple-700 border border-purple-200">
             {adType === 'text' ? '📝 Text Ad' : '🖼️ Image Ad'}
           </span>

@@ -24,7 +24,7 @@ function ImageAdPredictor({ predictionHistory, setPredictionHistory }) {
 
   const downloadHistory = () => {
     if (predictionHistory.length === 0) {
-      alert('No prediction history to download')
+      alert('No simulation history to download')
       return
     }
 
@@ -85,7 +85,7 @@ function ImageAdPredictor({ predictionHistory, setPredictionHistory }) {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.error || 'Prediction failed')
+        throw new Error(errorData.error || 'Simulation failed')
       }
 
       const data = await response.json()
@@ -304,7 +304,7 @@ function ImageAdPredictor({ predictionHistory, setPredictionHistory }) {
                     <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10">
                       <div className="font-semibold mb-1">Choose persona depth:</div>
                       <div className="space-y-1">
-                        <div><span className="font-medium">v2 (recommended):</span> Includes detailed behavioral tendencies and core beliefs for more realistic predictions</div>
+                        <div><span className="font-medium">v2 (recommended):</span> Includes detailed behavioral tendencies and core beliefs for more realistic simulations</div>
                         <div><span className="font-medium">v1:</span> Uses simpler demographic-only personas</div>
                       </div>
                       <div className="absolute left-4 top-full w-2 h-2 bg-gray-900 transform rotate-45 -mt-1"></div>
